@@ -2,14 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/css/style.css" />
-   <link rel="stylesheet" href="/css/menu.css" />
-   <link rel="stylesheet" href="/css/servicios.css" />
+  <link rel="stylesheet" href="/css/menu.css" />
+  <link rel="stylesheet" href="/css/servicios.css" />
   <title>Iyayku – Innova Editores</title>
 </head>
 <body class="bg-blue-800 text-white font-sans">
-<!-- HEADER -->
+
+  <!-- HEADER -->
   <header class="bg-white text-black flex flex-wrap items-center justify-between px-6 py-4 shadow-md">
     
     <!-- LOGO -->
@@ -19,182 +20,131 @@
 
     <!-- MENÚ -->
     <nav>
-        <ul class="flex gap-4 letras_menu">
-            <li><a href="/index.html" class="hover-effect">Inicio</a></li>
-            <li><a href="/Pages/nosotros.html" class="hover-effect">Nosotros</a></li>
-            <li><a href="/Pages/editorial.html" class="hover-effect">Editorial</a></li>
-            <li><a href="/Pages/servicios.html" class="hover-effect">Servicios</a></li>
-            <li><a href="/Pages/registro_login.html" class="hover-effect">Registro</a></li>
-            <li><a href="/Pages/contacto.html" class="hover-effect">Contáctanos</a></li>
-        </ul>
+      <ul class="flex gap-4 letras_menu">
+        <li><a href="/index.html" class="hover-effect">Inicio</a></li>
+        <li><a href="/Pages/nosotros.html" class="hover-effect">Nosotros</a></li>
+        <li><a href="/Pages/editorial.html" class="hover-effect">Editorial</a></li>
+        <li><a href="/Pages/servicios.html" class="hover-effect">Servicios</a></li>
+        <li><a href="/Pages/registro_login.html" class="hover-effect">Registro</a></li>
+        <li><a href="/Pages/contacto.html" class="hover-effect">Contáctanos</a></li>
+      </ul>
     </nav>
 
-    <div class="social-icons">
-            <!-- WhatsApp -->
-            <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D"
-                target="_blank" rel="noopener noreferrer">
-                <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" class="h-5 w-5 hover:scale-110 transition" />
-            </a>
-
-            <!-- Facebook -->
-            <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
-                <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" class="h-5 w-5 hover:scale-110 transition" />
-            </a>
-
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
-                <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" class="h-5 w-5 hover:scale-110 transition" />
-            </a>
-
-            <!-- Buscar -->
-            <a id="searchToggle" class="cursor-pointer">
-                <img src="/svgs/searchmagnifierinterfacesymbol1_79893.svg" alt="Buscar" class="h-5 w-5 hover:scale-110 transition" />
-            </a>
-
-            <!-- Campo de búsqueda oculto -->
-            <input id="searchInput" type="text" placeholder="Buscar..."
-                class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
-</div>
-
+    <!-- ICONOS SOCIALES Y BÚSQUEDA -->
+    <div class="social-icons flex items-center gap-2">
+      <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D"
+        target="_blank" rel="noopener noreferrer">
+        <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" class="h-5 w-5 hover:scale-110 transition" />
+      </a>
+      <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
+        <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" class="h-5 w-5 hover:scale-110 transition" />
+      </a>
+      <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
+        <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" class="h-5 w-5 hover:scale-110 transition" />
+      </a>
+      <a id="searchToggle" class="cursor-pointer">
+        <img src="/svgs/searchmagnifierinterfacesymbol1_79893.svg" alt="Buscar" class="h-5 w-5 hover:scale-110 transition" />
+      </a>
+      <input id="searchInput" type="text" placeholder="Buscar..."
+        class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
+    </div>
   </header>
 
   <!-- MAIN -->
   <main>
 
+    <!-- SERVICIOS -->
     <section class="nuestros-servicios">
-            <div class="servicios-texto">
-                <h2>Nuestros Servicios</h2>
-                <p> Nuestro equipo de especialistas en publicaciones científicas está dedicado a nutrir tu trabajo desde la idea inicial hasta su publicación en revistas de alto impacto</p>
-                <ul>
-                <li>Desarrollo de proyectos y planes de investigación</li>
-                <li>Desarrollo de Tesis de Pregrado, Posgrado y Doctorado</li>
-                <li>Publicación de artículos en: SCOPUS (Q1-Q4), WoS, Scielo, Latindex Catálogo 2.0, otros</li>
-                <li>Publicación de libros digitales y físicos</li>
-                <li>Publicación de Tesis como libro o artículo científico</li>
-                <li>Creación de revistas científicas a nivel nacional e internacional</li>
-                <li>Asesorías para Indexación de revistas en Latindex 2.0, Scielo y Scopus</li>
-                <li>Capacitación personalizada en todas las áreas</li>
-                </ul>
-            </div>
-        <div class="servicios-imagen">
-            <img src="/Images/servicios.jpg" alt="Nuestros Servicios">
-        </div>
+      <div class="servicios-texto">
+        <h2>Nuestros Servicios</h2>
+        <p>
+          Nuestro equipo de especialistas en publicaciones científicas está dedicado a nutrir tu trabajo desde la idea inicial hasta su publicación en revistas de alto impacto
+        </p>
+        <ul>
+          <li>Desarrollo de proyectos y planes de investigación</li>
+          <li>Desarrollo de Tesis de Pregrado, Posgrado y Doctorado</li>
+          <li>Publicación de artículos en: SCOPUS (Q1-Q4), WoS, Scielo, Latindex Catálogo 2.0, otros</li>
+          <li>Publicación de libros digitales y físicos</li>
+          <li>Publicación de Tesis como libro o artículo científico</li>
+          <li>Creación de revistas científicas a nivel nacional e internacional</li>
+          <li>Asesorías para Indexación de revistas en Latindex 2.0, Scielo y Scopus</li>
+          <li>Capacitación personalizada en todas las áreas</li>
+        </ul>
+      </div>
+      <div class="servicios-imagen">
+        <img src="/Images/servicios.jpg" alt="Nuestros Servicios" />
+      </div>
     </section>
-    
-    <section class="estadisticas">
-        <div class="contenedor-estadisticas">
-            <div class="bloque-estadistica">
-                <h2 class="numero">100%</h2>
-                <p class="descripcion">Revistas Indexadas</p>
-            </div>
-            <div class="bloque-estadistica">
-                <h2 class="numero">250+</h2>
-                <p class="descripcion">Artículos Publicados</p>
-            </div>
-        </div>
-    </section>
-    <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #003366;
-      color: #fff;
-      padding: 1em;
-      text-align: center;
-    }
-    .contenedor {
-      padding: 2em;
-    }
-    .servicio {
-      background: #fff;
-      padding: 1.5em;
-      border-radius: 8px;
-      margin-bottom: 1em;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .servicio h3 {
-      margin-top: 0;
-    }
-    .precio {
-      font-weight: bold;
-      color: #006600;
-    }
-    .btn-agregar {
-      background: #0066cc;
-      color: white;
-      border: none;
-      padding: 0.5em 1em;
-      margin-top: 0.5em;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .carrito {
-      position: fixed;
-      top: 1em;
-      right: 1em;
-      background: white;
-      border: 1px solid #ccc;
-      padding: 1em;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-    .carrito h4 {
-      margin-top: 0;
-    }
-  </style>
-</head>
 
-    <div class="servicio">
-      <h3>Asesoría en Investigación</h3>
-      <p class="precio">$250</p>
-      <button class="btn-agregar" onclick="agregar('Asesoría en Investigación', 250)">Agregar al carrito</button>
-    </div>
-    <div class="servicio">
-      <h3>Desarrollo de Artículos Científicos</h3>
-      <p class="precio">$300</p>
-      <button class="btn-agregar" onclick="agregar('Desarrollo de Artículos Científicos', 300)">Agregar al carrito</button>
-    </div>
-    <div class="servicio">
-      <h3>Publicación de Artículos Científicos</h3>
-      <p class="precio">$180</p>
-      <button class="btn-agregar" onclick="agregar('Publicación de Artículos Científicos', 180)">Agregar al carrito</button>
-    </div>
-    <div class="servicio">
-      <h3>Creación y Publicación de Libros</h3>
-      <p class="precio">$400</p>
-      <button class="btn-agregar" onclick="agregar('Creación y Publicación de Libros', 400)">Agregar al carrito</button>
-    </div>
-    <div class="servicio">
-      <h3>Creación de Revistas Científicas</h3>
-      <p class="precio">$280</p>
-      <button class="btn-agregar" onclick="agregar('Creación de Revistas Científicas', 280)">Agregar al carrito</button>
-    </div>
-    <div class="servicio">
-      <h3>Capacitación Personalizada</h3>
-      <p class="precio">$150</p>
-      <button class="btn-agregar" onclick="agregar('Capacitación Personalizada', 150)">Agregar al carrito</button>
-    </div>
-    <div class="servicio">
-      <h3>Marketing Político</h3>
-      <p class="precio">$320</p>
-      <button class="btn-agregar" onclick="agregar('Marketing Político', 320)">Agregar al carrito</button>
-    </div>
-    <div class="servicio">
-      <h3>Consultoría Tecnológica</h3>
-      <p class="precio">$290</p>
-      <button class="btn-agregar" onclick="agregar('Consultoría Tecnológica', 290)">Agregar al carrito</button>
-    </div>
-  </div>  <div class="carrito">
-    <h4>Carrito</h4>
-    <ul id="items"></ul>
-    <p><strong>Total: $<span id="total">0</span></strong></p>
-  </div>  
+    <!-- ESTADÍSTICAS -->
+    <section class="estadisticas">
+      <div class="contenedor-estadisticas">
+        <div class="bloque-estadistica">
+          <h2 class="numero">100%</h2>
+          <p class="descripcion">Revistas Indexadas</p>
+        </div>
+        <div class="bloque-estadistica">
+          <h2 class="numero">250+</h2>
+          <p class="descripcion">Artículos Publicados</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS CON PRECIO -->
+    <section class="servicios-con-precio">
+      <div class="servicio">
+        <h3>Asesoría en Investigación</h3>
+        <p class="precio">$250</p>
+        <button class="btn-agregar" onclick="agregar('Asesoría en Investigación', 250)">Agregar al carrito</button>
+      </div>
+      <div class="servicio">
+        <h3>Desarrollo de Artículos Científicos</h3>
+        <p class="precio">$300</p>
+        <button class="btn-agregar" onclick="agregar('Desarrollo de Artículos Científicos', 300)">Agregar al carrito</button>
+      </div>
+      <div class="servicio">
+        <h3>Publicación de Artículos Científicos</h3>
+        <p class="precio">$180</p>
+        <button class="btn-agregar" onclick="agregar('Publicación de Artículos Científicos', 180)">Agregar al carrito</button>
+      </div>
+      <div class="servicio">
+        <h3>Creación y Publicación de Libros</h3>
+        <p class="precio">$400</p>
+        <button class="btn-agregar" onclick="agregar('Creación y Publicación de Libros', 400)">Agregar al carrito</button>
+      </div>
+      <div class="servicio">
+        <h3>Creación de Revistas Científicas</h3>
+        <p class="precio">$280</p>
+        <button class="btn-agregar" onclick="agregar('Creación de Revistas Científicas', 280)">Agregar al carrito</button>
+      </div>
+      <div class="servicio">
+        <h3>Capacitación Personalizada</h3>
+        <p class="precio">$150</p>
+        <button class="btn-agregar" onclick="agregar('Capacitación Personalizada', 150)">Agregar al carrito</button>
+      </div>
+      <div class="servicio">
+        <h3>Marketing Político</h3>
+        <p class="precio">$320</p>
+        <button class="btn-agregar" onclick="agregar('Marketing Político', 320)">Agregar al carrito</button>
+      </div>
+      <div class="servicio">
+        <h3>Consultoría Tecnológica</h3>
+        <p class="precio">$290</p>
+        <button class="btn-agregar" onclick="agregar('Consultoría Tecnológica', 290)">Agregar al carrito</button>
+      </div>
+    </section>
+
+    <!-- CARRITO -->
+    <section class="carrito">
+      <h4>Carrito</h4>
+      <ul id="items"></ul>
+      <p><strong>Total: $<span id="total">0</span></strong></p>
+    </section>
 
   </main>
-<script src="/script.js"></script>
+
+  <!-- SCRIPT -->
+  <script src="/script.js"></script>
+
 </body>
 </html>

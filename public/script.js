@@ -79,14 +79,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-    const items = document.getElementById('items');
-    const total = document.getElementById('total');
-    let suma = 0;
+const items = document.getElementById('items');
+const total = document.getElementById('total');
+let suma = 0;
 
-    function agregar(nombre, precio) {
-      const li = document.createElement('li');
-      li.textContent = ${nombre} - $${precio};
-      items.appendChild(li);
-      suma += precio;
-      total.textContent = suma;
-    }
+function agregar(nombre, precio) {
+  const li = document.createElement('li');
+  li.textContent = `${nombre} - $${precio}`;  // Usamos backticks correctamente
+  items.appendChild(li);
+  suma += Number(precio);  // Asegura que sea numérico
+  total.textContent = suma.toFixed(2); // Muestra el total con dos decimales
+}
