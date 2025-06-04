@@ -1,0 +1,45 @@
+
+.publicaciones-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  background: transparent;
+  color: white;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.publicaciones-texto {
+  max-width: 800px;
+}
+
+.publicaciones-texto h2 {
+  font-size: 2.8rem;
+  margin-bottom: 30px;
+  color: white;
+  text-align: center;
+}
+
+.publicaciones-texto ul {
+  list-style: none;
+  padding: 0;
+  text-align: justify;
+}
+
+.publicaciones-texto li {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: white;
+  position: relative;
+  padding-left: 25px;
+}
+
+.publicaciones-texto li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: white;
+  font-weight: bold;
+}

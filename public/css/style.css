@@ -1,0 +1,262 @@
+/* Estilos base (desktop-first) */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  background-image: url('/Images/fondo.jpg');
+  background-size: cover;
+  background-repeat: repeat-x;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 30px 400px;
+}
+
+nav {
+  flex: 0.95;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 20;
+  margin: 0 20px 0 0;
+}
+
+
+
+.estadisticas {
+  background-color: #ffffff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.contenedor-estadisticas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.bloque-estadistica {
+  flex: 1 1 200px;
+}
+
+.numero {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #007BFF;
+  margin: 0;
+}
+
+.descripcion {
+  font-size: 1.2rem;
+  color: #007BFF;
+  margin-top: 10px;
+}
+
+/* Dispositivos medianos (tablets, 768px y superiores) */
+@media (max-width: 1024px) {
+  header {
+    padding: 30px 60px;
+  }
+
+  .slider-container {
+    gap: 100px;
+  }
+
+  .nuestros-servicios {
+    gap: 60px;
+  }
+
+  .servicios-imagen img {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .contenedor-estadisticas {
+    gap: 50px;
+  }
+}
+
+/* Dispositivos pequeños (teléfonos, 767px y inferiores) */
+@media (max-width: 767px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  nav {
+    justify-content: center;
+    width: 100%;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .slider-container {
+    gap: 30px;
+  }
+
+  .slider-container img {
+    max-height: 100px;
+  }
+
+  .nuestros-servicios {
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px 20px;
+  }
+
+  .servicios-texto,
+  .servicios-imagen {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .servicios-imagen img {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .contenedor-estadisticas {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .numero {
+    font-size: 3rem;
+  }
+
+  .descripcion {
+    font-size: 1rem;
+  }
+}
+
+.mision-nosotros {
+  display: flex;
+  width: 100vw; 
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  padding: 60px 20px;
+  gap: 180px;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin: 0; 
+}
+
+.mision-texto {
+  flex: 1 1 400px;
+  max-width: 600px;
+}
+
+.mision-texto h2 {
+  font-size: 3.1rem;
+  margin-bottom: 15px;
+  color: #000;
+}
+
+.mision-texto p {
+  font-size: 1.3rem;
+  margin-bottom: 45px;
+  color: rgb(3, 3, 3);
+  line-height: 1.5;
+}
+
+
+.editoriales {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: transparent;
+  padding: 60px 20px;
+  gap: 40px;
+}
+
+.editorial {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex: 1 1 450px;
+  max-width: 500px;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.editorial:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.editorial h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+.editorial p {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.frase-final {
+  margin-top: 20px;
+  font-style: italic;
+  font-weight: bold;
+  color: #0077cc;
+}
+
+.boton-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-editorial {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #005da0;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-editorial:hover {
+  background-color: #002844;
+}
+
+
+.slider-section {
+  padding: 2em 1em;
+  background-color: transparent;
+  text-align: center;
+}
+
+.slider-title {
+  font-size: 2.4rem;
+  margin-bottom: 1.5em;
+  color: #ffffff;
+}
+

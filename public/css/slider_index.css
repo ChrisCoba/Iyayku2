@@ -1,0 +1,73 @@
+
+.titulo-convenios {
+  text-align: center;
+  padding: 30px 20px 10px;
+}
+
+.titulo-convenios h2 {
+  font-size: 40px;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.titulo-convenios p {
+  font-size: 25px;
+  color: #ffffff;
+  margin: 10;
+}
+
+.slider-convenios {
+  background-color: white;
+  padding: 100px 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.slider-container {
+  display: flex;
+  gap: 300px;
+  transition: transform 0.5s ease-in-out;
+  align-items: center;
+  will-change: transform;
+}
+
+.slider-container img {
+  max-height: 180px;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.slider-container img:hover {
+  transform: scale(1.05);
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #000;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 2;
+  transition: background-color 0.3s ease;
+}
+
+.slider-btn:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.slider-btn.prev {
+  left: 0;
+}
+
+.slider-btn.next {
+  right: 0;
+}

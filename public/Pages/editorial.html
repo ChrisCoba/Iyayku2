@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="/css/style.css" />
+   <link rel="stylesheet" href="/css/menu.css" />
+   <link rel="stylesheet" href="/css/slider_index.css" />
+    <link rel="stylesheet" href="/css/cards.css" />
+    <link rel="stylesheet" href="/css/publicaciones.css" />
+  <title>Iyayku – Innova Editores</title>
+</head>
+<body class="bg-blue-800 text-white font-sans">
+
+    <header class="bg-white text-black flex flex-wrap items-center justify-between px-6 py-4 shadow-md">
+
+   <!-- LOGO -->
+    <div class="logo">
+      <img src="/Images/logo.png" alt="Logo" class="h-12 object-contain" />
+    </div>
+
+    <!-- MENÚ -->
+    <nav>
+        <ul class="flex gap-4 letras_menu">
+            <li><a href="/index.html" class="hover-effect">Inicio</a></li>
+            <li><a href="/Pages/nosotros.html" class="hover-effect">Nosotros</a></li>
+            <li><a href="/Pages/editorial.html" class="hover-effect">Editorial</a></li>
+            <li><a href="/Pages/servicios.html" class="hover-effect">Servicios</a></li>
+            <li><a href="/Pages/registro_login.html" class="hover-effect">Registro</a></li>
+            <li><a href="/Pages/contacto.html" class="hover-effect">Contáctanos</a></li>
+        </ul>
+    </nav>
+
+    <div class="social-icons">
+            <!-- WhatsApp -->
+            <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D"
+                target="_blank" rel="noopener noreferrer">
+                <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" class="h-5 w-5 hover:scale-110 transition" />
+            </a>
+
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
+                <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" class="h-5 w-5 hover:scale-110 transition" />
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
+                <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" class="h-5 w-5 hover:scale-110 transition" />
+            </a>
+
+            <!-- Buscar -->
+            <a id="searchToggle" class="cursor-pointer">
+                <img src="/svgs/searchmagnifierinterfacesymbol1_79893.svg" alt="Buscar" class="h-5 w-5 hover:scale-110 transition" />
+            </a>
+
+            <!-- Campo de búsqueda oculto -->
+            <input id="searchInput" type="text" placeholder="Buscar..."
+                class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
+</div>
+
+  </header>
+  <!-- MAIN -->
+  <main>
+      <section class="titulo-convenios">
+                <h2>NUESTRAS EDITORIALES</h2>
+       </section>
+    <section class="editoriales">
+        <div class="editorial">
+            <h2>Editorial Innova</h2>
+            <p>
+            Editorial Innova es una editorial académica ecuatoriana, fundada y dirigida por profesionales especializados en investigación, que forman parte de la empresa Iyayku Innovación Tecnológica Iyaykutec Cía. Ltda. Esta editorial brinda a la comunidad científica cuatro revistas arbitradas, de acceso abierto, con una periodicidad semestral y un formato de publicación continua. Las revistas son editadas en Ecuador y cubren una amplia variedad de disciplinas.
+            </p>
+            <p class="frase-final">¡Innovación que trasciende, ideas que perduran!</p>
+            <div class="boton-container">
+                <a href="https://editorialinnova.com/" class="btn-editorial" target="_blank">Visitar Sitio</a>
+            </div>
+        </div>
+
+               
+        <div class="editorial">
+            <h2>Editorial Sphaera</h2>
+            <p>
+            Editorial Sphaera es una editorial académica ecuatoriana, fundada y dirigida por profesionales especializados en investigación, que forman parte de la empresa Iyayku Innovación Tecnológica Iyaykutec Cía. Ltda. Esta editorial brinda a la comunidad científica cuatro revistas arbitradas, de acceso abierto, con una periodicidad semestral y un formato de publicación continua. Las revistas son editadas en Ecuador y cubren una amplia variedad de disciplinas.
+            </p>
+           <div class="boton-container">
+                <a href="https://editorialsphaera.com/" class="btn-editorial" target="_blank">Visitar Sitio</a>
+            </div>
+        </div>
+    </section>
+    
+         <section class="titulo-convenios">
+                <h2>Indexaciones</h2>
+                <p>Formamos parte de índices conocidos</p>
+            </section>
+
+            <section class="slider-convenios">
+                <div class="slider-container" id="slider">
+                    <img src="/convenios/Crossref-Logo.jpeg" alt="Crossref">
+                    <img src="/convenios/google-scholar4372_0.jpg" alt="Google Scholar">
+                    <img src="/convenios/DOI_logo.svg.png" alt="DOI">
+                    <img src="/convenios/ISSN_logo.svg.png" alt="ISSN">
+                    <img src="/convenios/latindex-catalogo2.png" alt="Latindex">
+                    <img src="/convenios/scilit.png" alt="Scilit">
+                    <img src="/convenios/MIAR.png" alt="MIAR">
+                    <img src="/convenios/Harvard_Library_Logo.svg.png" alt="Harvard">
+                </div>
+
+                <button class="slider-btn prev" onclick="moveSlider(-1)">&#10094;</button>
+                <button class="slider-btn next" onclick="moveSlider(1)">&#10095;</button>
+    </section>
+
+    <section class="slider-section">
+        <h2 class="slider-title">Revistas Publicadas</h2>
+        <div class="card-slider" id="slider">
+            <a href="https://editorialinnova.com/index.php/rig" target="_blank" class="card">
+            <img src="/Images/IngenioGlobal.png" alt="RIG">
+            </a>
+            <a href="https://editorialinnova.com/index.php/rck" target="_blank" class="card">
+            <img src="/Images/kosmos.png" alt="RCK">
+            </a>
+            <a href="https://editorialinnova.com/index.php/nrj" target="_blank" class="card">
+            <img src="/Images/nexus.png" alt="NRJ">
+            </a>
+            <a href="https://editorialinnova.com/index.php/bij" target="_blank" class="card">
+            <img src="/Images/bastcorp.png" alt="BIJ">
+            </a>
+        </div>
+        
+    </section>
+
+     <section class="publicaciones-info">
+        <div class="publicaciones-texto">
+            <h2>¿Qué Ofrecemos en Publicaciones?</h2>
+            <ul>
+            <li>Desarrollo de proyectos y planes de investigación</li>
+            <li>Desarrollo de Tesis de Pregrado, Posgrado y Doctorado</li>
+            <li>Publicación de artículos en: SCOPUS (Q1-Q4), WoS, Scielo, Latindex Catálogo 2.0, otros</li>
+            <li>Publicación de libros digitales y físicos</li>
+            <li>Publicación de Tesis como libro o artículo científico</li>
+            <li>Creación de revistas científicas a nivel nacional e internacional</li>
+            <li>Asesorías para Indexación de revistas en Latindex 2.0, Scielo y Scopus</li>
+            <li>Capacitación personalizada en todas las áreas</li>
+            </ul>
+        </div>
+    </section>
+
+  </main>
+    <script src="/script.js"></script>
+</body>
+</html>

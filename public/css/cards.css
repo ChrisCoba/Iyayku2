@@ -1,0 +1,26 @@
+/* Centrar los cards */
+.card-slider {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2em;
+}
+
+/* Estilo de las tarjetas */
+.card {
+  transition: all 0.3s ease;
+  width: 250px; /* o el tamaño que necesites */
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 15px;
+}
+
+/* Hover suave */
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}

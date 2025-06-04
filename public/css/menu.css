@@ -1,0 +1,62 @@
+
+.letras_menu a {
+  font-size: 14px;
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.letras_menu a:hover {
+  color: blue;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+}
+
+.social-icons > a + a {
+  margin-left: 16px;
+}
+
+.social-icons a img,
+#searchToggle img {
+  width: 28px;
+  height: 28px;
+  transition: transform 0.1s ease;
+}
+
+.social-icons a:hover img,
+#searchToggle:hover img {
+  transform: scale(1.1);
+}
+
+
+#searchInput {
+  display: none;
+  margin-left: 10px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: opacity 0.3s ease;
+  color: black;
+}
+
+#searchInput.visible {
+  display: inline-block;
+}
+
+a {
+  cursor: pointer;
+}
