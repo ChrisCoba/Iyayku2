@@ -260,3 +260,77 @@ nav ul {
   color: #ffffff;
 }
 
+/* Tarjetas de servicios */
+.servicio {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  width: 300px;
+  transition: transform 0.2s ease;
+}
+
+.servicio:hover {
+  transform: translateY(-5px);
+}
+
+.servicio h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.servicio p {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.precio {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Carrito */
+.carrito {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  margin-top: 2rem;
+}
+
+.carrito h2 {
+  margin-bottom: 1rem;
+}
+
+#items {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
+#items li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.total {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
