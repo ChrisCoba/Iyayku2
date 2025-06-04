@@ -1,21 +1,32 @@
 const express = require('express');
 const path = require('path');
+const pool = require('./db');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Ruta a tu carpeta pública (donde están los HTML, CSS, JS del frontend)
+// Carpeta pública
 const publicPath = path.join(__dirname, '..', 'public');
-
-// Middleware para servir archivos estáticos
 app.use(express.static(publicPath));
 
-// Ruta principal (por si quieres redirigir al index.html)
+// Ruta principal para servir el frontend
 app.get('/', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));
 });
 
-// Levantar el servidor
+// Ruta para probar conexión a PostgreSQL
+app.get('/test-db', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.send(`Conectado exitosamente a PostgreSQL: ${result.rows[0].now}`);
+  } catch (err) {
+    console.error('Error conectando a PostgreSQL:', err);
+    res.status(500).send('Error de conexión a la base de datos');
+  }
+});
+
+// Arrancar el servidor
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
