@@ -93,7 +93,107 @@
             </div>
         </div>
     </section>
-    
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #003366;
+      color: #fff;
+      padding: 1em;
+      text-align: center;
+    }
+    .contenedor {
+      padding: 2em;
+    }
+    .servicio {
+      background: #fff;
+      padding: 1.5em;
+      border-radius: 8px;
+      margin-bottom: 1em;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .servicio h3 {
+      margin-top: 0;
+    }
+    .precio {
+      font-weight: bold;
+      color: #006600;
+    }
+    .btn-agregar {
+      background: #0066cc;
+      color: white;
+      border: none;
+      padding: 0.5em 1em;
+      margin-top: 0.5em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .carrito {
+      position: fixed;
+      top: 1em;
+      right: 1em;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 1em;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .carrito h4 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+
+    <div class="servicio">
+      <h3>Asesoría en Investigación</h3>
+      <p class="precio">$250</p>
+      <button class="btn-agregar" onclick="agregar('Asesoría en Investigación', 250)">Agregar al carrito</button>
+    </div>
+    <div class="servicio">
+      <h3>Desarrollo de Artículos Científicos</h3>
+      <p class="precio">$300</p>
+      <button class="btn-agregar" onclick="agregar('Desarrollo de Artículos Científicos', 300)">Agregar al carrito</button>
+    </div>
+    <div class="servicio">
+      <h3>Publicación de Artículos Científicos</h3>
+      <p class="precio">$180</p>
+      <button class="btn-agregar" onclick="agregar('Publicación de Artículos Científicos', 180)">Agregar al carrito</button>
+    </div>
+    <div class="servicio">
+      <h3>Creación y Publicación de Libros</h3>
+      <p class="precio">$400</p>
+      <button class="btn-agregar" onclick="agregar('Creación y Publicación de Libros', 400)">Agregar al carrito</button>
+    </div>
+    <div class="servicio">
+      <h3>Creación de Revistas Científicas</h3>
+      <p class="precio">$280</p>
+      <button class="btn-agregar" onclick="agregar('Creación de Revistas Científicas', 280)">Agregar al carrito</button>
+    </div>
+    <div class="servicio">
+      <h3>Capacitación Personalizada</h3>
+      <p class="precio">$150</p>
+      <button class="btn-agregar" onclick="agregar('Capacitación Personalizada', 150)">Agregar al carrito</button>
+    </div>
+    <div class="servicio">
+      <h3>Marketing Político</h3>
+      <p class="precio">$320</p>
+      <button class="btn-agregar" onclick="agregar('Marketing Político', 320)">Agregar al carrito</button>
+    </div>
+    <div class="servicio">
+      <h3>Consultoría Tecnológica</h3>
+      <p class="precio">$290</p>
+      <button class="btn-agregar" onclick="agregar('Consultoría Tecnológica', 290)">Agregar al carrito</button>
+    </div>
+  </div>  <div class="carrito">
+    <h4>Carrito</h4>
+    <ul id="items"></ul>
+    <p><strong>Total: $<span id="total">0</span></strong></p>
+  </div>  
+
   </main>
 <script src="/script.js"></script>
 </body>

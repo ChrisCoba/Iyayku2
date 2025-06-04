@@ -77,3 +77,16 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(() => moveSlider(1), 2500);
   }
 });
+
+
+    const items = document.getElementById('items');
+    const total = document.getElementById('total');
+    let suma = 0;
+
+    function agregar(nombre, precio) {
+      const li = document.createElement('li');
+      li.textContent = ${nombre} - $${precio};
+      items.appendChild(li);
+      suma += precio;
+      total.textContent = suma;
+    }
