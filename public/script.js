@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   menuItems.forEach(item => {
     item.addEventListener('mouseenter', () => item.style.color = 'blue');
     item.addEventListener('mouseleave', () => item.style.color = 'black');
+  });
 
   // Search toggle
   const searchToggle = document.getElementById('searchToggle');
@@ -123,69 +124,3 @@ const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
   // Al cargar la página
   actualizarCarrito();
-
-const video = document.getElementById("miVideo");
-  const playPause = document.getElementById("playPause");
-  const progreso = document.getElementById("progreso");
-  const tiempoActual = document.getElementById("tiempoActual");
-  const duracion = document.getElementById("duracion");
-  const mute = document.getElementById("mute");
-  const volumen = document.getElementById("volumen");
-  const pantallaCompleta = document.getElementById("pantallaCompleta");
-
-  if (video && playPause && progreso && tiempoActual && duracion && mute && volumen && pantallaCompleta) {
-    // Play / Pause
-    playPause.addEventListener("click", () => {
-      if (video.paused) {
-        video.play();
-        playPause.textContent = "⏸️";
-      } else {
-        video.pause();
-        playPause.textContent = "▶️";
-      }
-    });
-
-    // Duración y tiempo actual
-    video.addEventListener("loadedmetadata", () => {
-      duracion.textContent = formatearTiempo(video.duration);
-    });
-
-    video.addEventListener("timeupdate", () => {
-      progreso.value = (video.currentTime / video.duration) * 100;
-      tiempoActual.textContent = formatearTiempo(video.currentTime);
-    });
-
-    progreso.addEventListener("input", () => {
-      video.currentTime = (progreso.value / 100) * video.duration;
-    });
-
-    // Volumen
-    volumen.addEventListener("input", () => {
-      video.volume = volumen.value;
-      mute.textContent = video.volume === 0 ? "🔇" : "🔈";
-    });
-
-    mute.addEventListener("click", () => {
-      video.muted = !video.muted;
-      mute.textContent = video.muted ? "🔇" : "🔈";
-    });
-
-    // Pantalla completa
-    pantallaCompleta.addEventListener("click", () => {
-      if (video.requestFullscreen) {
-        video.requestFullscreen();
-      } else if (video.webkitRequestFullscreen) {
-        video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) {
-        video.msRequestFullscreen();
-      }
-    });
-
-    // Formatear tiempo a mm:ss
-    function formatearTiempo(segundos) {
-      const m = Math.floor(segundos / 60);
-      const s = Math.floor(segundos % 60);
-      return `${m}:${s < 10 ? "0" + s : s}`;
-    }
-  }
-});
