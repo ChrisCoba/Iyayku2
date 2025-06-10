@@ -1,9 +1,10 @@
+// db.js  (CommonJS)
 const { Pool } = require('pg');
-require('dotenv').config();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false } // Railway lo necesita
+  connectionString: process.env.DATABASE_URL, // Railway la inyecta
+  ssl: { rejectUnauthorized: false }
 });
 
 module.exports = pool;
+
