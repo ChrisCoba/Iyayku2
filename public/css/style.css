@@ -90,7 +90,7 @@ nav ul {
 }
 
 /* Dispositivos pequeños (teléfonos, 767px y inferiores) */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   header {
     flex-direction: column;
     align-items: flex-start;
@@ -302,84 +302,6 @@ button {
 
 button:hover {
   background-color: #2980b9;
-}
-
-/* Carrito */
-.carrito {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 400px;
-  margin-top: 2rem;
-}
-
-.carrito h2 {
-  margin-bottom: 1rem;
-}
-
-#items {
-  list-style: none;
-  margin-bottom: 1rem;
-}
-
-#items li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
-}
-
-.total {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-/* Sección general */
-#video-presentacion {
-  padding: 2rem;
-  background-color: #f5f5f5;
-  color: #000;
-}
-
-
-/* Estilo del contenedor */
-.video-container {
-  position: relative;
-  width: 100%;
-  max-width: 640px;
-  margin: 1rem auto;
-  background-color: #000;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-}
-
-video {
-  width: 100%;
-  display: block;
-}
-
-/* Controles */
-.controles {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: rgba(15, 23, 42, 0.85); /* oscuro translúcido */
-  padding: 0.75rem;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  color: #fff;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-}
-
-.controles input[type="range"] {
-  flex: 1;
-  cursor: pointer;
-  accent-color: #60a5fa; /* azul clarito */
 }
 
 .btn {
