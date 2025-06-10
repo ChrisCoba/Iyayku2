@@ -1,194 +1,95 @@
-/* Carrito */
-.carrito {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 400px;
-  margin-top: 2rem;
-}
-
-.carrito h2 {
-  margin-bottom: 1rem;
-}
-
-#items {
-  list-style: none;
-  margin-bottom: 1rem;
-}
-
-#items li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
-}
-
-.total {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-.mision-servicios {
-  flex-wrap: wrap;
-  gap: 40px;
+.seccion-servicios {
+  padding: 2rem;
+  background-color: #f8f8f8;
   position: relative;
 }
 
-.mision-servicios .servicios-imagen {
-  flex: 1 1 320px;
+.contenedor-servicios {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
   justify-content: center;
 }
 
-.mision-servicios .mision-texto {
-  flex: 2 1 400px;
-  max-width: 700px;
-}
-
-.servicios-lista {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.servicio {
-  background: #fff;
-  color: #222;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+.tarjeta-servicio {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   padding: 1rem;
-  width: 260px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  width: 250px;
+  text-align: center;
+  transition: transform 0.3s ease;
 }
 
-.servicio h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
+.tarjeta-servicio:hover {
+  transform: translateY(-5px);
 }
 
-.servicio .precio {
+.precio {
   font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: #3498db;
+  margin: 0.5rem 0;
+  display: block;
 }
 
 .btn-agregar {
-  background-color: #3498db;
+  background-color: #007bff;
   color: white;
-  border: none;
   padding: 0.5rem 1rem;
-  border-radius: 5px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
-  transition: background 0.2s;
-  margin-top: auto;
+  transition: background-color 0.3s ease;
 }
 
 .btn-agregar:hover {
-  background-color: #217dbb;
+  background-color: #0056b3;
 }
 
-/* FAB Carrito */
-.carrito-fab {
+.btn-carrito {
   position: fixed;
-  bottom: 32px;
-  right: 32px;
-  z-index: 1000;
-  background: #3498db;
-  color: #fff;
+  bottom: 20px;
+  right: 20px;
+  background: #28a745;
+  color: white;
+  padding: 1rem;
   border: none;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  font-size: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 1.2rem;
   cursor: pointer;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 10;
 }
 
-/* Panel Carrito */
-.carrito-panel {
-  display: none;
+.overlay {
   position: fixed;
-  bottom: 100px;
-  right: 32px;
-  z-index: 1001;
-  background: #fff;
-  color: #222;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-  width: 320px;
-  max-width: 90vw;
-  padding: 1.5em;
-}
-
-.carrito-panel h4 {
-  margin-top: 0;
-}
-
-.carrito-panel ul {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 1em;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.carrito-panel li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
-}
-
-.btn-comprar {
-  background: #22c55e;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  padding: 0.7em 1em;
+  top: 0;
+  left: 0;
   width: 100%;
-  margin-bottom: 0.5em;
-  cursor: pointer;
-  transition: background 0.2s;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
 }
 
-.btn-comprar:hover {
-  background: #16a34a;
+.contenido-carrito {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 300px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
 }
 
-.cerrar-carrito {
+.btn-cerrar {
   position: absolute;
-  top: 8px;
-  right: 12px;
-  background: none;
+  top: 10px;
+  right: 15px;
+  background: transparent;
   border: none;
-  font-size: 1.3em;
+  font-size: 1.5rem;
+  color: red;
   cursor: pointer;
-  color: #888;
-}
-
-.cerrar-carrito:hover {
-  color: #222;
-}
-
-@media (max-width: 900px) {
-  .mision-servicios {
-    flex-direction: column;
-    gap: 20px;
-  }
-  .servicios-lista {
-    justify-content: center;
-  }
-  .carrito-panel {
-    right: 10px;
-    width: 95vw;
-    min-width: 220px;
-  }
 }

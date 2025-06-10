@@ -71,65 +71,30 @@
         </div>
       </div>
     </section>
-
-    <!-- SERVICIOS CON PRECIO -->
-    <section class="servicios-con-precio">
-      <div class="servicio">
-        <h3>Asesoría en Investigación</h3>
-        <p class="precio">$250</p>
-        <button class="btn-agregar" onclick="agregar('Asesoría en Investigación', 250)">Agregar al carrito</button>
-      </div>
-      <div class="servicio">
-        <h3>Desarrollo de Artículos Científicos</h3>
-        <p class="precio">$300</p>
-        <button class="btn-agregar" onclick="agregar('Desarrollo de Artículos Científicos', 300)">Agregar al carrito</button>
-      </div>
-      <div class="servicio">
-        <h3>Publicación de Artículos Científicos</h3>
-        <p class="precio">$180</p>
-        <button class="btn-agregar" onclick="agregar('Publicación de Artículos Científicos', 180)">Agregar al carrito</button>
-      </div>
-      <div class="servicio">
-        <h3>Creación y Publicación de Libros</h3>
-        <p class="precio">$400</p>
-        <button class="btn-agregar" onclick="agregar('Creación y Publicación de Libros', 400)">Agregar al carrito</button>
-      </div>
-      <div class="servicio">
-        <h3>Creación de Revistas Científicas</h3>
-        <p class="precio">$280</p>
-        <button class="btn-agregar" onclick="agregar('Creación de Revistas Científicas', 280)">Agregar al carrito</button>
-      </div>
-      <div class="servicio">
-        <h3>Capacitación Personalizada</h3>
-        <p class="precio">$150</p>
-        <button class="btn-agregar" onclick="agregar('Capacitación Personalizada', 150)">Agregar al carrito</button>
-      </div>
-      <div class="servicio">
-        <h3>Marketing Político</h3>
-        <p class="precio">$320</p>
-        <button class="btn-agregar" onclick="agregar('Marketing Político', 320)">Agregar al carrito</button>
-      </div>
-      <div class="servicio">
-        <h3>Consultoría Tecnológica</h3>
-        <p class="precio">$290</p>
-        <button class="btn-agregar" onclick="agregar('Consultoría Tecnológica', 290)">Agregar al carrito</button>
-      </div>
-    </section>
-
-    <!-- BOTÓN FLOTANTE DEL CARRITO -->
-    <button id="carrito-fab" style="position:fixed;bottom:32px;right:32px;z-index:1000;background:#3498db;color:#fff;border:none;border-radius:50%;width:60px;height:60px;box-shadow:0 2px 8px rgba(0,0,0,0.2);font-size:2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-      🛒
-    </button>
-
-    <!-- PANEL DESPLEGABLE DEL CARRITO -->
-    <div id="carrito-panel" style="display:none;position:fixed;bottom:100px;right:32px;z-index:1001;background:#fff;color:#222;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.18);width:320px;max-width:90vw;padding:1.5em;">
-      <h4 style="margin-top:0;">Carrito</h4>
-      <ul id="items" style="list-style:none;padding:0;margin-bottom:1em;"></ul>
-      <p><strong>Total: $<span id="total">0</span></strong></p>
-      <button id="btn-comprar" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-2" style="width:100%;">Comprar</button>
-      <button id="cerrar-carrito" style="position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.3em;cursor:pointer;">✖</button>
+<section id="servicios-precio" class="seccion-servicios">
+  <h2>Servicios con Precio</h2>
+  <div class="contenedor-servicios">
+    <div class="tarjeta-servicio">
+      <h3>Servicio Premium</h3>
+      <p>Descripción breve del servicio</p>
+      <span class="precio">$25.00</span>
+      <button class="btn-agregar" onclick="agregar('Servicio Premium', 25)">Agregar</button>
     </div>
+    <!-- Repite tarjetas según necesites -->
+  </div>
 
+  <button id="btn-ver-carrito" class="btn-carrito">🛒 Ver Carrito (<span id="cantidad-carrito">0</span>)</button>
+
+  <div id="overlay-carrito" class="overlay">
+    <div class="contenido-carrito">
+      <button id="cerrar-overlay" class="btn-cerrar">×</button>
+      <h3>Tu Carrito</h3>
+      <ul id="items"></ul>
+      <p>Total: $<span id="total">0.00</span></p>
+      <button id="btn-comprar">Comprar</button>
+    </div>
+  </div>
+</section>
   </main>
 
   <script src="/script.js"></script>
