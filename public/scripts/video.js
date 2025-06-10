@@ -11,10 +11,13 @@ if (
   video && playPause && progreso &&
   tiempoActual && duracion && mute && volumen && pantallaCompleta
 ) {
-  // Play / Pause
+  // Asegura que el video pueda reproducirse tras interacción
   playPause.addEventListener("click", () => {
-    if (video.paused) {
-      video.play();
+    if (video.paused || video.ended) {
+      video.play().catch(() => {
+        // Si hay error, muestra controles nativos como fallback
+        video.setAttribute("controls", "controls");
+      });
     } else {
       video.pause();
     }
@@ -78,6 +81,15 @@ if (
       video.webkitRequestFullscreen();
     } else if (video.msRequestFullscreen) {
       video.msRequestFullscreen();
+    }
+  });
+
+  // Permite reproducir el video al hacer click sobre él
+  video.addEventListener("click", () => {
+    if (video.paused || video.ended) {
+      video.play();
+    } else {
+      video.pause();
     }
   });
 }

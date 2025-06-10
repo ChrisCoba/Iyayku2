@@ -304,41 +304,5 @@ button:hover {
   background-color: #2980b9;
 }
 
-/* Carrito */
-.carrito {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 400px;
-  margin-top: 2rem;
-}
 
-.carrito h2 {
-  margin-bottom: 1rem;
-}
-
-#items {
-  list-style: none;
-  margin-bottom: 1rem;
-}
-
-#items li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
-}
-
-.total {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-/* Sección general */
-#video-presentacion {
-  padding: 2rem;
-  background-color: #f5f5f5;
-  color: #000;
-}
 

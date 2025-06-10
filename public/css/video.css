@@ -1,4 +1,12 @@
 
+
+/* Sección general */
+#video-presentacion {
+  padding: 2rem;
+  background-color: #f5f5f5;
+  color: #000;
+}
+
 /* Estilo del contenedor */
 .video-container {
   position: relative;
