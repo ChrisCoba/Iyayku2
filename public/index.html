@@ -27,6 +27,11 @@
         <li><a href="/Pages/servicios.html" class="hover-effect block py-2 px-4">Servicios</a></li>
         <li><a href="/Pages/registro_login.html" class="hover-effect block py-2 px-4">Registro</a></li>
         <li><a href="/Pages/contacto.html" class="hover-effect block py-2 px-4">Contáctanos</a></li>
+        <li>
+          <button id="toggle-dark" class="toggle-dark-btn" type="button" aria-label="Modo oscuro">
+            🌙
+          </button>
+        </li>
       </ul>
     </nav>
     
@@ -100,6 +105,11 @@
     </section>
   <!-- SERVICIOS CON PRECIO -->
 <<section class="seccion-servicios">
+    <section class="nuestros-servicios">
+      <div class="servicios-texto">
+        <h2>Nuestros Precios</h2>
+      </div>
+    </section>
   <div class="contenedor-servicios">
     <div class="tarjeta-servicio">
       <h3>Asesoría en Investigación</h3>
@@ -162,6 +172,25 @@
 
   <script src="/script.js"></script>
    <script src="/scripts/carrito.js"></script>
-
+   <script>
+  // Modo oscuro
+  const toggleDark = document.getElementById('toggle-dark');
+  function setDarkMode(enabled) {
+    if (enabled) {
+      document.body.classList.add('modo-oscuro');
+      localStorage.setItem('modoOscuro', '1');
+      toggleDark.textContent = '☀️';
+    } else {
+      document.body.classList.remove('modo-oscuro');
+      localStorage.setItem('modoOscuro', '0');
+      toggleDark.textContent = '🌙';
+    }
+  }
+  // Inicializar según preferencia
+  setDarkMode(localStorage.getItem('modoOscuro') === '1');
+  toggleDark.addEventListener('click', () => {
+    setDarkMode(!document.body.classList.contains('modo-oscuro'));
+  });
+</script>
 </body>
 </html>

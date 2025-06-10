@@ -395,14 +395,82 @@ video {
   color: #60a5fa;
 }
 
-@media (max-width: 640px) {
-  .controles {
-    font-size: 0.8rem;
-    flex-direction: column;
-    align-items: stretch;
-  }
+/* Botón modo oscuro */
+.toggle-dark-btn {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  padding: 0 0.5em;
+  transition: color 0.2s;
+}
+.toggle-dark-btn:hover {
+  color: #0a74da;
+}
 
-  .controles input[type="range"] {
-    width: 100%;
-  }
+/* Modo oscuro global */
+body.modo-oscuro {
+  background: #181c23 !important;
+  color: #e5e7eb !important;
+}
+
+body.modo-oscuro header,
+body.modo-oscuro .carrito,
+body.modo-oscuro .contacto,
+body.modo-oscuro .estadisticas,
+body.modo-oscuro .mision-nosotros,
+body.modo-oscuro .editorial,
+body.modo-oscuro .contenido-carrito,
+body.modo-oscuro .tarjeta-servicio,
+body.modo-oscuro .carrito-panel {
+  background: #23272f !important;
+  color: #e5e7eb !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
+body.modo-oscuro nav,
+body.modo-oscuro nav ul,
+body.modo-oscuro nav li,
+body.modo-oscuro nav a {
+  background: transparent !important;
+  color: #e5e7eb !important;
+}
+
+body.modo-oscuro input,
+body.modo-oscuro select,
+body.modo-oscuro textarea {
+  background: #23272f !important;
+  color: #e5e7eb !important;
+  border-color: #444 !important;
+}
+
+body.modo-oscuro .btn-agregar,
+body.modo-oscuro button,
+body.modo-oscuro .btn-comprar {
+  background: #0a74da !important;
+  color: #fff !important;
+}
+
+body.modo-oscuro .btn-agregar:hover,
+body.modo-oscuro button:hover,
+body.modo-oscuro .btn-comprar:hover {
+  background: #095aba !important;
+}
+
+body.modo-oscuro .precio {
+  color: #60a5fa !important;
+}
+
+body.modo-oscuro .carrito-panel,
+body.modo-oscuro .overlay .contenido-carrito {
+  background: #23272f !important;
+  color: #e5e7eb !important;
+}
+
+body.modo-oscuro .btn-cerrar {
+  color: #f87171 !important;
+}
+
+body.modo-oscuro .btn-cerrar:hover {
+  color: #fff !important;
 }
