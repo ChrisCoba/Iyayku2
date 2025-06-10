@@ -78,4 +78,21 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-
+// Modo oscuro
+  const toggleDark = document.getElementById('toggle-dark');
+  function setDarkMode(enabled) {
+    if (enabled) {
+      document.body.classList.add('modo-oscuro');
+      localStorage.setItem('modoOscuro', '1');
+      toggleDark.textContent = '☀️';
+    } else {
+      document.body.classList.remove('modo-oscuro');
+      localStorage.setItem('modoOscuro', '0');
+      toggleDark.textContent = '🌙';
+    }
+  }
+  // Inicializar según preferencia
+  setDarkMode(localStorage.getItem('modoOscuro') === '1');
+  toggleDark.addEventListener('click', () => {
+    setDarkMode(!document.body.classList.contains('modo-oscuro'));
+  });
