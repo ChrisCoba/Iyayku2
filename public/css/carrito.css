@@ -92,3 +92,45 @@
   color: red;
   cursor: pointer;
 }
+
+body.modo-oscuro .tarjeta-servicio {
+  background: #23272f !important;
+  color: #e5e7eb !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+body.modo-oscuro .tarjeta-servicio h3,
+body.modo-oscuro .tarjeta-servicio .precio {
+  color: #60a5fa !important;
+}
+
+body.modo-oscuro .btn-agregar {
+  background: #0a74da !important;
+  color: #fff !important;
+}
+
+body.modo-oscuro .btn-agregar:hover {
+  background: #095aba !important;
+}
+
+body.modo-oscuro .btn-carrito {
+  background: #0a74da !important;
+  color: #fff !important;
+}
+
+body.modo-oscuro .overlay {
+  background: rgba(24,28,35,0.95) !important;
+}
+
+body.modo-oscuro .contenido-carrito {
+  background: #23272f !important;
+  color: #e5e7eb !important;
+}
+
+body.modo-oscuro .btn-cerrar {
+  color: #f87171 !important;
+}
+
+body.modo-oscuro .btn-cerrar:hover {
+  color: #fff !important;
+}

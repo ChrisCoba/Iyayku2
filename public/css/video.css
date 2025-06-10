@@ -1,5 +1,3 @@
-
-
 /* Sección general */
 #video-presentacion {
   padding: 2rem;
@@ -57,6 +55,32 @@ video {
 
 .btn:hover {
   color: #60a5fa;
+}
+
+body.modo-oscuro #video-presentacion {
+  background-color: #23272f !important;
+  color: #e5e7eb !important;
+}
+
+body.modo-oscuro .video-container {
+  background-color: #181c23 !important;
+}
+
+body.modo-oscuro .controles {
+  background-color: rgba(24,28,35,0.95) !important;
+  color: #e5e7eb !important;
+}
+
+body.modo-oscuro .controles input[type="range"] {
+  accent-color: #60a5fa !important;
+}
+
+body.modo-oscuro .btn {
+  color: #e5e7eb !important;
+}
+
+body.modo-oscuro .btn:hover {
+  color: #60a5fa !important;
 }
 
 @media (max-width: 640px) {

@@ -395,19 +395,6 @@ video {
   color: #60a5fa;
 }
 
-/* Botón modo oscuro */
-.toggle-dark-btn {
-  background: none;
-  border: none;
-  font-size: 1.5em;
-  cursor: pointer;
-  padding: 0 0.5em;
-  transition: color 0.2s;
-}
-.toggle-dark-btn:hover {
-  color: #0a74da;
-}
-
 /* Modo oscuro global */
 body.modo-oscuro {
   background: #181c23 !important;
@@ -436,12 +423,37 @@ body.modo-oscuro nav a {
   color: #e5e7eb !important;
 }
 
+body.modo-oscuro nav a,
+body.modo-oscuro .hover-effect,
+body.modo-oscuro .letras_menu a {
+  color: #e5e7eb !important;
+}
+
+body.modo-oscuro nav a:hover,
+body.modo-oscuro .hover-effect:hover {
+  color: #60a5fa !important;
+}
+
+body.modo-oscuro h1,
+body.modo-oscuro h2,
+body.modo-oscuro h3,
+body.modo-oscuro h4,
+body.modo-oscuro h5,
+body.modo-oscuro h6 {
+  color: #fff !important;
+}
+
 body.modo-oscuro input,
 body.modo-oscuro select,
 body.modo-oscuro textarea {
   background: #23272f !important;
   color: #e5e7eb !important;
   border-color: #444 !important;
+}
+
+body.modo-oscuro input::placeholder,
+body.modo-oscuro textarea::placeholder {
+  color: #b0b4ba !important;
 }
 
 body.modo-oscuro .btn-agregar,
@@ -457,7 +469,9 @@ body.modo-oscuro .btn-comprar:hover {
   background: #095aba !important;
 }
 
-body.modo-oscuro .precio {
+body.modo-oscuro .precio,
+body.modo-oscuro .numero,
+body.modo-oscuro .descripcion {
   color: #60a5fa !important;
 }
 
@@ -472,5 +486,22 @@ body.modo-oscuro .btn-cerrar {
 }
 
 body.modo-oscuro .btn-cerrar:hover {
+  color: #fff !important;
+}
+
+body.modo-oscuro .frase-final {
+  color: #60a5fa !important;
+}
+
+body.modo-oscuro .editorial p,
+body.modo-oscuro .servicio p,
+body.modo-oscuro .servicios-texto,
+body.modo-oscuro .servicios-imagen,
+body.modo-oscuro .mision-texto,
+body.modo-oscuro .mision-nosotros {
+  color: #e5e7eb !important;
+}
+
+body.modo-oscuro .slider-title {
   color: #fff !important;
 }
