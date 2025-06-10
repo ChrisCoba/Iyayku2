@@ -85,19 +85,37 @@ app.post('/api/login', async (req, res) => {
 // ----------  Logout  ----------
 app.get('/api/logout', (_q, res) => res.clearCookie('token').json({ ok: true }));
 
-// ----------  Buscar certificados  ----------
+// ----------  Verificar Status del Usuario  ----------
+// Este endpoint usa el middleware 'auth' para verificar el token
+// y devuelve los datos del usuario si está logueado.
+app.get('/api/status', auth, (req, res) => {
+  // Si el middleware 'auth' pasa, significa que el token es válido.
+  // req.user fue añadido por el middleware.
+  res.json({ usuario: req.user });
+});
+
+// ----------  Buscar certificados (CORREGIDO) ----------
 app.get('/api/certificados', auth, async (req, res) => {
-  const nombre = (req.query.nombre || '').trim();
-  try {
-    const { rows } = await pool.query(
-      'SELECT titulo AS nombre, archivo_url FROM publicaciones WHERE titulo ILIKE $1',
-      [`%${nombre}%`]
-    );
-    res.json(rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ msg: 'Error al buscar certificados' });
-  }
+    const nombreUsuario = (req.query.nombre || '').trim();
+    if (!nombreUsuario) {
+        return res.status(400).json({ msg: 'Debes proporcionar un nombre para buscar.' });
+    }
+    try {
+        const query = `
+      SELECT 
+        p.titulo, 
+        p.archivo_url, 
+        u.nombre AS autor
+      FROM publicaciones p
+      JOIN usuarios u ON p.usuario_id = u.id
+      WHERE u.nombre ILIKE $1;
+    `;
+        const { rows } = await pool.query(query, [`%${nombreUsuario}%`]);
+        res.json(rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: 'Error al buscar los certificados' });
+    }
 });
 
 // ----------  Start server  ----------

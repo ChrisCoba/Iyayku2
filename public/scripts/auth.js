@@ -1,54 +1,97 @@
-// Registro e inicio de sesión con alertas
-
 document.addEventListener('DOMContentLoaded', () => {
-  // Registro
-  const registroForm = document.querySelector('.sign-up form');
-  if (registroForm) {
-    registroForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      // Lógica real de registro
-      const name = registroForm.querySelector('input[type="text"]').value.trim();
-      const email = registroForm.querySelector('input[type="email"]').value.trim();
-      const password = registroForm.querySelector('input[type="password"]').value;
+    // --- SELECCIÓN DE ELEMENTOS DEL DOM ---
+    const container = document.getElementById('container');
+    const registerBtn = document.getElementById('register');
+    const loginBtn = document.getElementById('login');
+    
+    const formRegister = document.getElementById('form-register');
+    const formLogin = document.getElementById('form-login');
 
-      if (!name || !email || !password) {
-        alert('Por favor, completa todos los campos.');
-        return;
-      }
+    // --- MANEJO DE LA ANIMACIÓN DEL PANEL ---
+    // Si los elementos para la animación existen, se les añade el evento
+    if (registerBtn && loginBtn && container) {
+        registerBtn.addEventListener('click', () => {
+            container.classList.add('active');
+        });
 
-      // Simula almacenamiento en localStorage (solo para demo, no seguro para producción)
-      let users = JSON.parse(localStorage.getItem('users')) || [];
-      if (users.find(u => u.email === email)) {
-        alert('Este correo ya está registrado.');
-        return;
-      }
-      users.push({ name, email, password });
-      localStorage.setItem('users', JSON.stringify(users));
+        loginBtn.addEventListener('click', () => {
+            container.classList.remove('active');
+        });
 
-      alert('¡Registro exitoso! Ya estás registrado.');
-      registroForm.reset();
-    });
-  }
+      
+    }
 
-  // Login
-  const loginForm = document.querySelector('.sign-in form');
-  if (loginForm) {
-    loginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      // Lógica real de login
-      const email = loginForm.querySelector('input[type="email"]').value.trim();
-      const password = loginForm.querySelector('input[type="password"]').value;
+    // --- MANEJO DEL FORMULARIO DE REGISTRO ---
+    if (formRegister) {
+        formRegister.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Evita que la página se recargue al enviar el formulario
 
-      let users = JSON.parse(localStorage.getItem('users')) || [];
-      const user = users.find(u => u.email === email && u.password === password);
+            // Captura de los valores de los inputs
+            const nombre = document.getElementById('register-nombre').value;
+            const correo = document.getElementById('register-correo').value;
+            const contrasena = document.getElementById('register-contrasena').value;
 
-      if (user) {
-        alert('¡Inicio de sesión exitoso!');
-        loginForm.reset();
-        // Aquí podrías redirigir o guardar sesión
-      } else {
-        alert('Correo o contraseña incorrectos.');
-      }
-    });
-  }
+            try {
+                // Petición a la API del backend para registrar
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre, correo, contraseña: contrasena })
+                });
+
+                // Convertimos la respuesta del servidor a JSON
+                const data = await response.json();
+
+                // Si la respuesta NO fue exitosa (ej: status 400, 500)
+                if (!response.ok) {
+                    throw new Error(data.msg || 'Error en el registro');
+                }
+                
+                // Si la respuesta fue exitosa
+                alert('¡Usuario registrado con éxito! Ahora, por favor, inicia sesión.');
+                formRegister.reset(); // Limpia el formulario
+                container.classList.remove('active'); // Muestra el panel de login
+
+            } catch (error) {
+                // Muestra cualquier error en una alerta
+                alert(error.message);
+            }
+        });
+    }
+
+    // --- MANEJO DEL FORMULARIO DE LOGIN ---
+    if (formLogin) {
+        formLogin.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Captura de los valores de los inputs
+            const correo = document.getElementById('login-correo').value;
+            const contraseña = document.getElementById('login-contrasena').value;
+
+            try {
+                // Petición a la API del backend para iniciar sesión
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ correo, contraseña })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    // Si el servidor responde con un error (ej: credenciales inválidas)
+                    throw new Error(data.msg || 'Error al iniciar sesión');
+                }
+                
+                // ¡LOGIN EXITOSO!
+                alert('¡Login exitoso!');
+                
+                // Redirigimos al usuario a la página de pago para completar la compra
+                window.location.href = '/Pages/pago.html';
+
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    }
 });

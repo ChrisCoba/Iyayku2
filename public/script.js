@@ -1,4 +1,51 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+  // --- LÓGICA PARA VERIFICAR SI EL USUARIO ESTÁ LOGUEADO ---
+    // Esta función se ejecuta en cada carga de página
+    async function verificarLogin() {
+        try {
+            const response = await fetch('/api/status');
+            if (response.ok) {
+                const data = await response.json();
+                actualizarUIAUsuarioLogueado(data.usuario);
+            } else {
+                actualizarUIAVisitante();
+            }
+        } catch (error) {
+            console.error('No se pudo verificar el estado del login:', error);
+            actualizarUIAVisitante();
+        }
+    }
+
+    function actualizarUIAUsuarioLogueado(usuario) {
+        document.getElementById('menu-registro')?.remove(); // Oculta el botón de "Registro"
+
+        const menuUsuario = document.getElementById('menu-usuario');
+        const nombreUsuarioEl = document.getElementById('nombre-usuario');
+        if (menuUsuario && nombreUsuarioEl) {
+            nombreUsuarioEl.textContent = usuario.nombre; // Pone el nombre del usuario
+            menuUsuario.style.display = 'flex'; // Muestra el menú de usuario
+        }
+        
+        const btnLogout = document.getElementById('btn-logout');
+        if (btnLogout) {
+            btnLogout.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await fetch('/api/logout');
+                alert('Has cerrado sesión.');
+                window.location.reload(); // Recarga la página
+            });
+        }
+    }
+
+    function actualizarUIAVisitante() {
+        document.getElementById('menu-usuario')?.remove(); // Oculta el menú de usuario
+    }
+
+    // ¡Llamamos a la función al cargar la página!
+    verificarLogin();
+    // --- FIN DE LA LÓGICA DE LOGIN ---
+
   // Hover dinámico en el menú
   const menuItems = document.querySelectorAll('.letras_menu a');
   menuItems.forEach(item => {
