@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/menu.css" />
   <link rel="stylesheet" href="/css/servicios.css" />
-    <link rel="stylesheet" href="/css/carrito.css" />
+  <link rel="stylesheet" href="/css/carrito.css" />
   <title>Iyayku – Innova Editores</title>
 </head>
 <body class="bg-blue-800 text-white font-sans">
@@ -34,27 +34,6 @@
 
   <!-- MAIN -->
   <main>
-
-    <!-- NUEVA SECCIÓN TIPO MISIÓN CON SERVICIOS Y PRECIOS -->
-    <section class="mision-nosotros" style="background: #fff; color: #000;">
-      <div class="servicios-imagen">
-        <img src="/Images/servicios.jpg" alt="Servicios" style="max-width:320px;">
-      </div>
-      <div class="mision-texto">
-        <h2>Servicios y Precios</h2>
-        <ul style="list-style: disc; padding-left: 1.5em;">
-          <li>Asesoría en Investigación - <strong>$250</strong></li>
-          <li>Desarrollo de Artículos Científicos - <strong>$300</strong></li>
-          <li>Publicación de Artículos Científicos - <strong>$180</strong></li>
-          <li>Creación y Publicación de Libros - <strong>$400</strong></li>
-          <li>Creación de Revistas Científicas - <strong>$280</strong></li>
-          <li>Capacitación Personalizada - <strong>$150</strong></li>
-          <li>Marketing Político - <strong>$320</strong></li>
-          <li>Consultoría Tecnológica - <strong>$290</strong></li>
-        </ul>
-        <p style="margin-top:1em;">Nuestro equipo de especialistas en publicaciones científicas está dedicado a nutrir tu trabajo desde la idea inicial hasta su publicación en revistas de alto impacto.</p>
-      </div>
-    </section>
 
     <!-- SERVICIOS -->
     <section class="nuestros-servicios">
@@ -155,23 +134,6 @@
 
   <script src="/script.js"></script>
   <script src="/carrito.js"></script>
-  <script>
-    // FAB y panel del carrito
-    const fab = document.getElementById('carrito-fab');
-    const panel = document.getElementById('carrito-panel');
-    const cerrar = document.getElementById('cerrar-carrito');
-    fab.addEventListener('click', () => {
-      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-    });
-    cerrar.addEventListener('click', () => {
-      panel.style.display = 'none';
-    });
-    // Cierra el panel si se hace click fuera de él
-    document.addEventListener('mousedown', function(e) {
-      if (panel.style.display === 'block' && !panel.contains(e.target) && e.target !== fab) {
-        panel.style.display = 'none';
-      }
-    });
-  </script>
+
 </body>
 </html>

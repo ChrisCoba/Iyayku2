@@ -28,3 +28,167 @@
   font-weight: bold;
   color: #2c3e50;
 }
+
+.mision-servicios {
+  flex-wrap: wrap;
+  gap: 40px;
+  position: relative;
+}
+
+.mision-servicios .servicios-imagen {
+  flex: 1 1 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mision-servicios .mision-texto {
+  flex: 2 1 400px;
+  max-width: 700px;
+}
+
+.servicios-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.servicio {
+  background: #fff;
+  color: #222;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 1rem;
+  width: 260px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.servicio h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.servicio .precio {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #3498db;
+}
+
+.btn-agregar {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+  margin-top: auto;
+}
+
+.btn-agregar:hover {
+  background-color: #217dbb;
+}
+
+/* FAB Carrito */
+.carrito-fab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 1000;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Panel Carrito */
+.carrito-panel {
+  display: none;
+  position: fixed;
+  bottom: 100px;
+  right: 32px;
+  z-index: 1001;
+  background: #fff;
+  color: #222;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  width: 320px;
+  max-width: 90vw;
+  padding: 1.5em;
+}
+
+.carrito-panel h4 {
+  margin-top: 0;
+}
+
+.carrito-panel ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1em;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.carrito-panel li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.btn-comprar {
+  background: #22c55e;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7em 1em;
+  width: 100%;
+  margin-bottom: 0.5em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-comprar:hover {
+  background: #16a34a;
+}
+
+.cerrar-carrito {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 1.3em;
+  cursor: pointer;
+  color: #888;
+}
+
+.cerrar-carrito:hover {
+  color: #222;
+}
+
+@media (max-width: 900px) {
+  .mision-servicios {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .servicios-lista {
+    justify-content: center;
+  }
+  .carrito-panel {
+    right: 10px;
+    width: 95vw;
+    min-width: 220px;
+  }
+}
