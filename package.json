@@ -2,14 +2,16 @@
   "name": "iyayku",
   "version": "1.0.0",
   "main": "src/index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
+  "description": "",
   "author": "",
   "license": "ISC",
-  "description": "",
+
+  "scripts": {
+    "dev":     "nodemon src/index.js",          // desarrollo local con recarga
+    "start":   "node src/index.js",             // producción (Railway)
+    "migrate": "psql \"$DATABASE_URL\" -f migrations/001_init.sql"
+  },
+
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
@@ -17,5 +19,9 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.0"
+  },
+
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
