@@ -4,12 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css" />
-   <link rel="stylesheet" href="/css/menu.css" />
-   <link rel="stylesheet" href="/css/servicios.css" />
-  <title>Iyayku – Servicios</title>
+  <link rel="stylesheet" href="/css/menu.css" />
+  <link rel="stylesheet" href="/css/perfil.css" />
+  <title>Iyayku – Perfil</title>
 </head>
 <body class="bg-blue-800 text-white font-sans">
-<!-- HEADER -->
   <header class="bg-white text-black flex flex-wrap items-center justify-between px-6 py-4 shadow-md">
     <!-- LOGO -->
     <div class="logo flex-shrink-0">
@@ -53,45 +52,63 @@
         class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
     </div>
   </header>
-
-  <!-- MAIN -->
-  <main>
-
-    <section class="nuestros-servicios">
-            <div class="servicios-texto">
-                <h2>Nuestros Servicios</h2>
-                <p> Nuestro equipo de especialistas en publicaciones científicas está dedicado a nutrir tu trabajo desde la idea inicial hasta su publicación en revistas de alto impacto</p>
-                <ul>
-                <li>Desarrollo de proyectos y planes de investigación</li>
-                <li>Desarrollo de Tesis de Pregrado, Posgrado y Doctorado</li>
-                <li>Publicación de artículos en: SCOPUS (Q1-Q4), WoS, Scielo, Latindex Catálogo 2.0, otros</li>
-                <li>Publicación de libros digitales y físicos</li>
-                <li>Publicación de Tesis como libro o artículo científico</li>
-                <li>Creación de revistas científicas a nivel nacional e internacional</li>
-                <li>Asesorías para Indexación de revistas en Latindex 2.0, Scielo y Scopus</li>
-                <li>Capacitación personalizada en todas las áreas</li>
-                </ul>
-            </div>
-        <div class="servicios-imagen">
-            <img src="/Images/servicios.jpg" alt="Nuestros Servicios">
+  <main class="admin-dashboard-main">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-content">
+        <div class="admin-title">Admin</div>
+        <nav>
+          <ul>
+            <li>
+              <a href="#" class="active">
+                <span class="icon">👤</span> Editar Perfil
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="icon">🧾</span> Facturas
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="icon">🎓</span> Certificados
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="icon">📝</span> Editar página
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <!-- Main dashboard content -->
+    <section class="admin-dashboard-content">
+      <div class="admin-dashboard-blank"></div>
+      <div class="admin-dashboard-welcome">
+        ¡Bienvenido, Administrador!
+      </div>
+      <div class="admin-dashboard-cards">
+        <div class="admin-card card-perfil">
+          <div class="icon">👤</div>
+          <div>Editar Perfil</div>
         </div>
-    </section>
-    
-    <section class="estadisticas">
-        <div class="contenedor-estadisticas">
-            <div class="bloque-estadistica">
-                <h2 class="numero">100%</h2>
-                <p class="descripcion">Revistas Indexadas</p>
-            </div>
-            <div class="bloque-estadistica">
-                <h2 class="numero">250+</h2>
-                <p class="descripcion">Artículos Publicados</p>
-            </div>
+        <div class="admin-card card-facturas">
+          <div class="icon">🧾</div>
+          <div>Facturas</div>
         </div>
+        <div class="admin-card card-certificados">
+          <div class="icon">🎓</div>
+          <div>Certificados</div>
+        </div>
+        <div class="admin-card card-editar">
+          <div class="icon">📝</div>
+          <div>Editar página</div>
+        </div>
+      </div>
     </section>
-    
   </main>
-
   <footer class="footer">
     <div class="footer-col">
       <h3>Dirección</h3>
@@ -120,9 +137,4 @@
   <script src="/script.js"></script>
 </body>
 </html>
-  </footer>
-  <script src="/script.js"></script>
-</body>
-</html>
-</body>
 </html>
