@@ -145,6 +145,23 @@ app.get('/api/certificados-todos', async (req, res) => {
 });
 
 //------------------------------------------------------------
+// 5c. Eliminar certificado por ID
+//------------------------------------------------------------
+app.delete('/api/certificados/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { rowCount } = await pool.query('DELETE FROM certificados WHERE id = $1', [id]);
+    if (rowCount === 0) {
+      return res.status(404).json({ msg: 'Certificado no encontrado' });
+    }
+    res.json({ msg: 'Certificado eliminado' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Error al eliminar certificado' });
+  }
+});
+
+//------------------------------------------------------------
 // 6. Rutas de subida / descarga de PDF y certificado
 //------------------------------------------------------------
 app.use('/api', uploadRoutes);   // POST /upload, GET /certificado/:id

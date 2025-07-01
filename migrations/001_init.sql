@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS public.certificados (
   id SERIAL PRIMARY KEY,
   autor_nombre VARCHAR(100) NOT NULL,
   articulo_titulo VARCHAR(200) NOT NULL,
-  articulo_url TEXT,
+  articulo_url TEXT, -- Ruta al PDF
+  articulo_pagina TEXT, -- URL de la página del artículo
   fecha_emision TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   publicacion_id INT REFERENCES public.publicaciones(id) ON DELETE SET NULL
 );

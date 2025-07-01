@@ -34,10 +34,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const div = document.createElement('div');
       div.className = 'certificado-item';
       div.style = 'background: #fff; color: #222; margin-bottom: 1rem; padding: 1rem; border-radius: 8px;';
+      // Si tienes ambos: la URL del artículo y la del PDF, usa ambos campos
+      // Aquí asumimos que cert.articulo_url es la ruta del PDF y cert.articulo_pagina es la URL del artículo
       div.innerHTML = `
         <strong>Autor:</strong> ${cert.autor_nombre}<br>
         <strong>Artículo:</strong> ${cert.articulo_titulo}<br>
-        <strong>Enlace:</strong> <a href="${cert.articulo_url}" target="_blank">${cert.articulo_url}</a>
+        <strong>Enlace al artículo:</strong> ${cert.articulo_pagina ? `<a href="${cert.articulo_pagina}" target="_blank">${cert.articulo_pagina}</a>` : 'No disponible'}<br>
+        <strong>Enlace al PDF:</strong> ${cert.articulo_url ? `<a href="${cert.articulo_url}" target="_blank">${cert.articulo_url}</a>` : 'No disponible'}
+        <div class="visor-pdf" style="margin-top:1rem;">
+          ${cert.articulo_url && cert.articulo_url.endsWith('.pdf')
+            ? `<embed src="${cert.articulo_url}" type="application/pdf" width="100%" height="400px" style="border:1px solid #ccc;" />`
+            : '<em>No hay vista previa de PDF disponible</em>'}
+        </div>
       `;
       resultadosDiv.appendChild(div);
     });
