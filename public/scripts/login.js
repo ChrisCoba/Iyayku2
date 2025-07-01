@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (respLogin.ok) {
           alert('¡Login exitoso!');
           formLogin.reset();
-          window.location.href = '/Pages/pago.html';
+          window.location.href = '/index.html';
         } else {
           alert(data.msg || 'Error en el login');
         }
