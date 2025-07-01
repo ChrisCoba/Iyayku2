@@ -9,9 +9,24 @@ document.addEventListener('DOMContentLoaded', function () {
         item.addEventListener('mouseleave', () => item.style.color = 'black');
     });
 
-    // 2. Search toggle (con la nueva lógica de búsqueda)
+    // 2. Search toggle (con búsqueda flexible de certificados)
     const searchToggle = document.getElementById('searchToggle');
     const searchInput = document.getElementById('searchInput');
+    let certificados = [];
+    let certificadosCargados = false;
+
+    // Cargar todos los certificados una sola vez
+    async function cargarCertificados() {
+        if (certificadosCargados) return;
+        try {
+            const response = await fetch('https://iyayku2-production-c032.up.railway.app/api/certificados-todos');
+            certificados = await response.json();
+            certificadosCargados = true;
+        } catch (err) {
+            certificados = [];
+            certificadosCargados = true;
+        }
+    }
 
     if (searchToggle && searchInput) {
         searchToggle.addEventListener('click', () => {
@@ -25,54 +40,39 @@ document.addEventListener('DOMContentLoaded', function () {
             searchToggle.style.display = 'inline-block';
         });
 
-        searchInput.addEventListener('keydown', (e) => {
+        searchInput.addEventListener('keydown', async (e) => {
             if (e.key === 'Escape') {
                 searchInput.classList.remove('visible');
                 searchToggle.style.display = 'inline-block';
             }
             if (e.key === 'Enter') {
                 e.preventDefault();
-                const searchTerm = searchInput.value.trim();
+                const searchTerm = searchInput.value.trim().toLowerCase();
                 if (searchTerm) {
-                    buscarCertificados(searchTerm);
+                    await cargarCertificados();
+                    buscarCertificadosFlexible(searchTerm);
                 }
             }
         });
     }
 
     /**
-     * Llama a la API para buscar certificados por nombre de autor.
-     * @param {string} nombreAutor - El término de búsqueda.
+     * Busca certificados por coincidencia parcial en autor o título (no requiere login)
+     * @param {string} searchTerm
      */
-    async function buscarCertificados(nombreAutor) {
-        try {
-            const response = await fetch(`/api/certificados?nombre=${encodeURIComponent(nombreAutor)}`);
-
-            if (response.status === 401) {
-                alert('Debes iniciar sesión para poder buscar certificados.');
-                window.location.href = '/Pages/registro_login.html';
-                return;
-            }
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.msg || 'Error al buscar certificados.');
-            }
-
-            const resultados = await response.json();
-            mostrarResultados(resultados);
-
-        } catch (error) {
-            console.error('Error en la búsqueda:', error);
-            alert(error.message);
-        }
+    function buscarCertificadosFlexible(searchTerm) {
+        const resultados = certificados.filter(cert =>
+            (cert.autor_nombre && cert.autor_nombre.toLowerCase().includes(searchTerm)) ||
+            (cert.articulo_titulo && cert.articulo_titulo.toLowerCase().includes(searchTerm))
+        );
+        mostrarResultadosCertificados(resultados);
     }
 
     /**
      * Muestra los resultados de la búsqueda en la página.
      * @param {Array} resultados - Un array de objetos de certificado.
      */
-    function mostrarResultados(resultados) {
+    function mostrarResultadosCertificados(resultados) {
         const container = document.getElementById('resultados-busqueda');
         if (!container) {
             console.error('No se encontró el contenedor #resultados-busqueda en el HTML.');
@@ -85,24 +85,29 @@ document.addEventListener('DOMContentLoaded', function () {
         container.appendChild(titulo);
 
         if (resultados.length === 0) {
-            container.innerHTML += '<p>No se encontraron certificados para ese autor.</p>';
+            container.innerHTML += '<p>No se encontraron certificados.</p>';
             return;
         }
 
         resultados.forEach(cert => {
             const card = document.createElement('div');
             card.className = 'tarjeta-resultado';
-            
+            card.style = 'background: #fff; color: #222; margin-bottom: 1rem; padding: 1rem; border-radius: 8px;';
+
             const certTitulo = document.createElement('h3');
-            certTitulo.textContent = cert.titulo;
+            certTitulo.textContent = cert.articulo_titulo || cert.titulo || '';
 
             const certAutor = document.createElement('p');
-            certAutor.textContent = `Autor: ${cert.autor}`;
+            certAutor.textContent = `Autor: ${cert.autor_nombre || cert.autor || ''}`;
 
             const certLink = document.createElement('a');
-            certLink.href = cert.archivo_url;
+            certLink.href = cert.articulo_url || cert.archivo_url || '#';
             certLink.textContent = 'Ver Certificado';
-            certLink.target = '_blank';
+            certLink.style = 'cursor:pointer; color:blue; text-decoration:underline;';
+            certLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                mostrarVisorCertificado(cert.articulo_url || cert.archivo_url || '');
+            });
 
             card.appendChild(certTitulo);
             card.appendChild(certAutor);
@@ -110,6 +115,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
             container.appendChild(card);
         });
+
+        // Agrega el visor si no existe
+        let visor = document.getElementById('visor-certificado');
+        if (!visor) {
+            visor = document.createElement('div');
+            visor.id = 'visor-certificado';
+            visor.style = 'margin-top:2rem; text-align:center;';
+            container.parentNode.insertBefore(visor, container.nextSibling);
+        }
+        visor.innerHTML = '';
+    }
+
+    // Función para mostrar el PDF o página en un visor embebido
+    function mostrarVisorCertificado(url) {
+        const visor = document.getElementById('visor-certificado');
+        if (!visor) return;
+        if (!url) {
+            visor.innerHTML = '<p>No hay certificado para mostrar.</p>';
+            return;
+        }
+        // Si es PDF, usa <embed>, si es web, usa <iframe>
+        if (url.endsWith('.pdf')) {
+            visor.innerHTML = `<embed src="${url}" type="application/pdf" width="90%" height="600px" style="border:1px solid #ccc;" />`;
+        } else {
+            visor.innerHTML = `<iframe src="${url}" width="90%" height="600px" style="border:1px solid #ccc;"></iframe>`;
+        }
     }
 
     // 3. Slider
