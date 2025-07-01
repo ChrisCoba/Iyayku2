@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="/css/style.css" />
    <link rel="stylesheet" href="/css/menu.css" />
    <link rel="stylesheet" href="/css/servicios.css" />
+  <link rel="stylesheet" href="/css/carrito.css" />
   <title>Iyayku – Servicios</title>
 </head>
 <body class="bg-blue-800 text-white font-sans">
@@ -90,6 +91,65 @@
         </div>
     </section>
     
+    <!-- NUEVA SECCIÓN DE SERVICIOS CON PRECIOS -->
+    <section class="servicios-precios-section" style="background:transparent;padding:40px 0 60px 0;">
+      <div class="servicios-precios-container">
+        <h2 class="servicios-precios-title">Nuestros Servicios y Precios</h2>
+        <div class="servicios-precios-cards">
+          <div class="servicio-precio-card card-blue">
+            <div class="servicio-precio-header">Proyectos y Planes de Investigación</div>
+            <ul>
+              <li>Desarrollo personalizado</li>
+              <li>Asesoría profesional</li>
+              <li>Entrega digital</li>
+            </ul>
+            <div class="servicio-precio-precio">$250</div>
+            <button class="servicio-precio-btn">Comprar</button>
+          </div>
+          <div class="servicio-precio-card card-yellow">
+            <div class="servicio-precio-header">Tesis Pregrado, Posgrado y Doctorado</div>
+            <ul>
+              <li>Redacción y acompañamiento</li>
+              <li>Formato académico</li>
+              <li>Revisiones incluidas</li>
+            </ul>
+            <div class="servicio-precio-precio">$350</div>
+            <button class="servicio-precio-btn">Comprar</button>
+          </div>
+          <div class="servicio-precio-card card-purple">
+            <div class="servicio-precio-header">Publicación de Artículos</div>
+            <ul>
+              <li>En revistas indexadas</li>
+              <li>Corrección de estilo</li>
+              <li>Gestión de DOI</li>
+            </ul>
+            <div class="servicio-precio-precio">$180</div>
+            <button class="servicio-precio-btn">Comprar</button>
+          </div>
+          <div class="servicio-precio-card card-orange">
+            <div class="servicio-precio-header">Libros Digitales y Físicos</div>
+            <ul>
+              <li>ISBN y maquetación</li>
+              <li>Diseño de portada</li>
+              <li>Publicación internacional</li>
+            </ul>
+            <div class="servicio-precio-precio">$400</div>
+            <button class="servicio-precio-btn">Comprar</button>
+          </div>
+          <div class="servicio-precio-card card-green">
+            <div class="servicio-precio-header">Tesis como Libro o Artículo</div>
+            <ul>
+              <li>Conversión profesional</li>
+              <li>Publicación en línea</li>
+              <li>Difusión académica</li>
+            </ul>
+            <div class="servicio-precio-precio">$220</div>
+            <button class="servicio-precio-btn">Comprar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
   </main>
 
   <footer class="footer">
@@ -117,12 +177,25 @@
       <p>Teléfonos: 0995000484 · 0979369650 · 0997000496</p>
     </div>
   </footer>
+  <div id="carrito-flotante" class="carrito-flotante">
+    <button id="carrito-toggle" class="carrito-toggle-btn">
+      🛒 <span id="carrito-cantidad">0</span>
+    </button>
+    <div id="carrito-panel" class="carrito-panel">
+      <div class="carrito-header">
+        <span>Mi Carrito</span>
+        <button id="carrito-cerrar" class="carrito-cerrar-btn">&times;</button>
+      </div>
+      <div id="carrito-items" class="carrito-items">
+        <p class="carrito-vacio">El carrito está vacío.</p>
+      </div>
+      <div class="carrito-footer">
+        <span>Total: $<span id="carrito-total">0</span></span>
+        <button id="carrito-comprar" class="carrito-comprar-btn">Comprar</button>
+      </div>
+    </div>
+  </div>
   <script src="/script.js"></script>
-</body>
-</html>
-  </footer>
-  <script src="/script.js"></script>
-</body>
-</html>
+  <script src="/scripts/carrito.js"></script>
 </body>
 </html>
