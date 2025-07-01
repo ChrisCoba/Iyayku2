@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/menu.css" />
   <link rel="stylesheet" href="/css/servicios.css" />
-  <link rel="stylesheet" href="/css/carrito.css" />
+  <link rel="stylesheet" href="/css/inicio.css" />
   <title>Iyayku – Innova Editores</title>
 </head>
 <body class="bg-blue-800 text-white font-sans">
@@ -25,18 +25,18 @@
         <li><a href="/Pages/nosotros.html" class="hover-effect block py-2 px-4">Nosotros</a></li>
         <li><a href="/Pages/editorial.html" class="hover-effect block py-2 px-4">Editorial</a></li>
         <li><a href="/Pages/servicios.html" class="hover-effect block py-2 px-4">Servicios</a></li>
-        <li><a href="/Pages/registro_login.html" class="hover-effect block py-2 px-4">Registro</a></li>
         <li><a href="/Pages/contacto.html" class="hover-effect block py-2 px-4">Contáctanos</a></li>
-        <li>
-          <button id="toggle-dark" class="toggle-dark-btn" type="button" aria-label="Modo oscuro">
-            🌙
-          </button>
-        </li>
       </ul>
     </nav>
     
     
     <div class="social-icons">
+
+            <a href="/Pages/registro_login.html" title="Iniciar sesión o registrarse">
+              <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-500 transition">
+                <img src="/svgs/round-account-button-with-user-inside_icon-icons.com_72596.svg" alt="Usuario" class="w-6 h-6 text-white" />
+              </div>
+            </a>
             <!-- WhatsApp -->
             <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D"
                 target="_blank" rel="noopener noreferrer">
@@ -68,28 +68,22 @@
   <main>
  <div id="resultados-busqueda" class="contenedor-resultados">
         </div>
-    <!-- SERVICIOS -->
-    <section class="nuestros-servicios">
-      <div class="servicios-texto">
-        <h2>Nuestros Servicios</h2>
-        <p>
-          Nuestro equipo de especialistas en publicaciones científicas está dedicado a nutrir tu trabajo desde la idea inicial hasta su publicación en revistas de alto impacto
-        </p>
-        <ul>
-          <li>Desarrollo de proyectos y planes de investigación</li>
-          <li>Desarrollo de Tesis de Pregrado, Posgrado y Doctorado</li>
-          <li>Publicación de artículos en: SCOPUS (Q1-Q4), WoS, Scielo, Latindex Catálogo 2.0, otros</li>
-          <li>Publicación de libros digitales y físicos</li>
-          <li>Publicación de Tesis como libro o artículo científico</li>
-          <li>Creación de revistas científicas a nivel nacional e internacional</li>
-          <li>Asesorías para Indexación de revistas en Latindex 2.0, Scielo y Scopus</li>
-          <li>Capacitación personalizada en todas las áreas</li>
-        </ul>
-      </div>
-      <div class="servicios-imagen">
-        <img src="/Images/servicios.jpg" alt="Nuestros Servicios" />
-      </div>
-    </section>
+    <!-- INICIO -->
+<section class="inicio-empresa">
+  <div class="inicio-contenido">
+    <h1>Innovación que trasciende, ideas que perduran</h1>
+    <p>
+      En <strong>IYAYKU Innovación Tecnológica</strong> creemos que la tecnología, la ciencia y la educación pueden transformar el presente y proyectar un futuro más sostenible. Somos una empresa ecuatoriana con impacto latinoamericano, especializada en asesoría, capacitación, investigación y soluciones digitales a medida.
+    </p>
+    <p>
+      Nuestro equipo multidisciplinario de expertos trabaja con instituciones, universidades, gobiernos y empresas para brindar resultados reales, éticos y de alta calidad. Si estás buscando impulsar tu proyecto, fortalecer tu organización o publicar en las mejores bases científicas, estás en el lugar correcto.
+    </p>
+    <a href="#nuestros-servicios" class="btn-principal">Conoce nuestros servicios</a>
+  </div>
+  <div class="inicio-imagen">
+    <img src="/Images/Inovacion.jpg" alt="Innovación IYAYKU" />
+  </div>
+</section>
 
     <!-- ESTADÍSTICAS -->
     <section class="estadisticas">
@@ -104,73 +98,83 @@
         </div>
       </div>
     </section>
-  <!-- SERVICIOS CON PRECIO -->
-<<section class="seccion-servicios">
-    <section class="nuestros-servicios">
-      <div class="servicios-texto">
-        <h2>Nuestros Precios</h2>
-      </div>
-    </section>
-  <div class="contenedor-servicios">
-    <div class="tarjeta-servicio">
-      <h3>Asesoría en Investigación</h3>
-      <span class="precio">$250</span>
-      <button class="btn-agregar" onclick="agregar('Asesoría en Investigación', 250)">Agregar al carrito</button>
+
+  <section class="servicios-dos-columnas">
+    <div class="columna">
+      <h2>Tecnología y equipamiento informático</h2>
+      <ul>
+        <li>Computadores de escritorio y portátiles</li>
+        <li>Impresoras y escáneres</li>
+        <li>Cables de red y accesorios tecnológicos</li>
+        <li>Mantenimiento preventivo y correctivo</li>
+      </ul>
+
+      <h2>Consultoría y soluciones empresariales digitales</h2>
+      <ul>
+        <li>Diseño y desarrollo de sitios web funcionales y creativos</li>
+        <li>Creación de aplicaciones móviles para Android y iOS</li>
+        <li>Gestión documental y automatización de procesos internos</li>
+        <li>Marketing digital orientado a la captación y fidelización</li>
+        <li>Inteligencia de negocios y análisis de datos</li>
+      </ul>
+
+      <h2>Seguridad informática y ciberseguridad</h2>
+      <ul>
+        <li>Seguridad en la nube para minimizar riesgos</li>
+        <li>Protección integral de usuarios y dispositivos</li>
+        <li>Infraestructura de seguridad híbrida</li>
+        <li>Diagnóstico de vulnerabilidades y monitoreo</li>
+      </ul>
     </div>
-    <div class="tarjeta-servicio">
-      <h3>Desarrollo de Artículos Científicos</h3>
-      <span class="precio">$300</span>
-      <button class="btn-agregar" onclick="agregar('Desarrollo de Artículos Científicos', 300)">Agregar al carrito</button>
+
+    <div class="columna">
+      <h2>Capacitación y formación profesional continua</h2>
+      <ul>
+        <li>Ciberseguridad: hacking ético, seguridad forense</li>
+        <li>Investigación académica y publicación científica</li>
+        <li>Educación virtual e inteligencia artificial aplicada</li>
+        <li>Marketing político, atención al cliente y más</li>
+      </ul>
+
+      <h2>Asesoría académica, científica y editorial</h2>
+      <ul>
+        <li>Gestión de proyectos de investigación</li>
+        <li>Publicación de artículos en Scopus, Scielo, etc.</li>
+        <li>Creación y publicación de libros con ISBN</li>
+        <li>Asesoría para crear e indexar revistas científicas</li>
+      </ul>
     </div>
-    <div class="tarjeta-servicio">
-      <h3>Publicación de Artículos Científicos</h3>
-      <span class="precio">$180</span>
-      <button class="btn-agregar" onclick="agregar('Publicación de Artículos Científicos', 180)">Agregar al carrito</button>
-    </div>
-    <div class="tarjeta-servicio">
-      <h3>Creación y Publicación de Libros</h3>
-      <span class="precio">$400</span>
-      <button class="btn-agregar" onclick="agregar('Creación y Publicación de Libros', 400)">Agregar al carrito</button>
-    </div>
-    <div class="tarjeta-servicio">
-      <h3>Creación de Revistas Científicas</h3>
-      <span class="precio">$280</span>
-      <button class="btn-agregar" onclick="agregar('Creación de Revistas Científicas', 280)">Agregar al carrito</button>
-    </div>
-    <div class="tarjeta-servicio">
-      <h3>Capacitación Personalizada</h3>
-      <span class="precio">$150</span>
-      <button class="btn-agregar" onclick="agregar('Capacitación Personalizada', 150)">Agregar al carrito</button>
-    </div>
-    <div class="tarjeta-servicio">
-      <h3>Marketing Político</h3>
-      <span class="precio">$320</span>
-      <button class="btn-agregar" onclick="agregar('Marketing Político', 320)">Agregar al carrito</button>
-    </div>
-    <div class="tarjeta-servicio">
-      <h3>Consultoría Tecnológica</h3>
-      <span class="precio">$290</span>
-      <button class="btn-agregar" onclick="agregar('Consultoría Tecnológica', 290)">Agregar al carrito</button>
-    </div>
-  </div>
-</section>
+  </section>
 
 
-
-  <button id="btn-ver-carrito" class="btn-carrito">🛒 Ver Carrito (<span id="cantidad-carrito">0</span>)</button>
-
-  <div id="overlay-carrito" class="overlay">
-    <div class="contenido-carrito">
-      <button id="cerrar-overlay" class="btn-cerrar">×</button>
-      <h3>Tu Carrito</h3>
-      <ul id="items"></ul>
-      <p>Total: $<span id="total">0.00</span></p>
-      <button id="btn-comprar">Comprar</button>
-    </div>
-  </div>
-</section>
   </main>
+ <footer class="footer">
+      <div class="footer-col">
+        <h3>Dirección</h3>
+        <p>Dirección: Av. Amazonas y Colón, Quito – Ecuador</p>
+      </div>
 
+      <div class="footer-col">
+        <h3>Síguenos</h3>
+        <div class="footer-socials">
+          <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D" target="_blank" rel="noopener noreferrer">
+            <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" />
+          </a>
+          <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
+            <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" />
+          </a>
+          <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
+            <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" />
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3>Información</h3>
+        <p>Email: iyayku@gmail.com</p>
+        <p>Teléfonos: 0995000484 · 0979369650 · 0997000496</p>
+      </div>
+    </footer>
   <script src="/script.js"></script>
    <script src="/scripts/carrito.js"></script>
 </body>

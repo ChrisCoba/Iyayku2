@@ -6,61 +6,52 @@
    <link rel="stylesheet" href="/css/style.css" />
    <link rel="stylesheet" href="/css/menu.css" />
    <link rel="stylesheet" href="/css/servicios.css" />
-   <link rel="stylesheet" href="/css/video.css" />
-  <title>Iyayku – Innova Editores</title>
+  <title>Iyayku – Nosotros</title>
 </head>
 <body class="bg-blue-800 text-white font-sans">
 
    <header class="bg-white text-black flex flex-wrap items-center justify-between px-6 py-4 shadow-md">
-   <!-- LOGO -->
-    <div class="logo">
+    <!-- LOGO -->
+    <div class="logo flex-shrink-0">
       <img src="/Images/logo.png" alt="Logo" class="h-12 object-contain" />
     </div>
-
     <!-- MENÚ -->
-    <nav>
-        <ul class="flex gap-4 letras_menu">
-            <li><a href="/index.html" class="hover-effect">Inicio</a></li>
-            <li><a href="/Pages/nosotros.html" class="hover-effect">Nosotros</a></li>
-            <li><a href="/Pages/editorial.html" class="hover-effect">Editorial</a></li>
-            <li><a href="/Pages/servicios.html" class="hover-effect">Servicios</a></li>
-            <li><a href="/Pages/registro_login.html" class="hover-effect">Registro</a></li>
-            <li><a href="/Pages/contacto.html" class="hover-effect">Contáctanos</a></li>
-             <li>
-          <button id="toggle-dark" class="toggle-dark-btn" type="button" aria-label="Modo oscuro">
-            🌙
-          </button>
-        </li>
-        </ul>
+    <nav id="main-menu" class="w-full md:w-auto md:flex md:items-center mt-4 md:mt-0 hidden md:block">
+      <ul class="flex flex-col md:flex-row gap-4 letras_menu w-full md:w-auto">
+        <li><a href="/index.html" class="hover-effect block py-2 px-4">Inicio</a></li>
+        <li><a href="/Pages/nosotros.html" class="hover-effect block py-2 px-4">Nosotros</a></li>
+        <li><a href="/Pages/editorial.html" class="hover-effect block py-2 px-4">Editorial</a></li>
+        <li><a href="/Pages/servicios.html" class="hover-effect block py-2 px-4">Servicios</a></li>
+        <li><a href="/Pages/contacto.html" class="hover-effect block py-2 px-4">Contáctanos</a></li>
+      </ul>
     </nav>
-
     <div class="social-icons">
-            <!-- WhatsApp -->
-            <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D"
-                target="_blank" rel="noopener noreferrer">
-                <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" class="h-5 w-5 hover:scale-110 transition" />
-            </a>
-
-            <!-- Facebook -->
-            <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
-                <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" class="h-5 w-5 hover:scale-110 transition" />
-            </a>
-
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
-                <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" class="h-5 w-5 hover:scale-110 transition" />
-            </a>
-
-            <!-- Buscar -->
-            <a id="searchToggle" class="cursor-pointer">
-                <img src="/svgs/searchmagnifierinterfacesymbol1_79893.svg" alt="Buscar" class="h-5 w-5 hover:scale-110 transition" />
-            </a>
-
-            <!-- Campo de búsqueda oculto -->
-            <input id="searchInput" type="text" placeholder="Buscar..."
-                class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
-</div>
-
+      <a href="/Pages/registro_login.html" title="Iniciar sesión o registrarse">
+        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-500 transition">
+          <img src="/svgs/round-account-button-with-user-inside_icon-icons.com_72596.svg" alt="Usuario" class="w-6 h-6 text-white" />
+        </div>
+      </a>
+      <!-- WhatsApp -->
+      <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D"
+        target="_blank" rel="noopener noreferrer">
+        <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" class="h-5 w-5 hover:scale-110 transition" />
+      </a>
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
+        <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" class="h-5 w-5 hover:scale-110 transition" />
+      </a>
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
+        <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" class="h-5 w-5 hover:scale-110 transition" />
+      </a>
+      <!-- Buscar -->
+      <a id="searchToggle" class="cursor-pointer">
+        <img src="/svgs/searchmagnifierinterfacesymbol1_79893.svg" alt="Buscar" class="h-5 w-5 hover:scale-110 transition" />
+      </a>
+      <!-- Campo de búsqueda oculto -->
+      <input id="searchInput" type="text" placeholder="Buscar..."
+        class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
+    </div>
   </header>
 
   <!-- MAIN -->
@@ -100,41 +91,48 @@
      <section class="nuestros-servicios">
             <div class="servicios-texto">
                 <h2>Visión</h2>
-                <p> IYAYKU INNOVACIÓN TECNOLÓGICA tiene la misión de ofrecer servicios empresariales de calidad con 
-                    calidez, ser especialistas en la comercialización de equipos de cómputo, capacitación y asesoría 
-                    a empresas públicas y privadas, solucionando las diversas necesidades de los clientes, con ética 
-                    profesional y responsabilidad. La empresa se enfoca en capacitar constantemente a sus colaboradores, 
-                    promoviendo la lealtad y el trabajo en equipo para asegurar la rentabilidad de la empresa y la 
-                    sostenibilidad ambiental..</p>
+                <p> Ser una empresa líder en innovación tecnológica, 
+                  consultoría especializada y producción académica, 
+                  reconocida por su excelencia, compromiso social y capacidad de adaptación, 
+                  contribuyendo al fortalecimiento del ecosistema empresarial y educativo a nivel 
+                  nacional e internacional.</p>
             </div>
         <div class="servicios-imagen">
             <img src="/Images/vision.png" alt="Acerca de Nosotoros">
         </div>
-    </section>
-
-           <section id="video-presentacion">
-  <h2>Mira nuestro video</h2>
-
-  <div class="video-container">
-    <video id="miVideo">
-      <source src="/Images/video.mp4" type="video/mp4">
-      Tu navegador no soporta la etiqueta de video.
-    </video>
-
-    <div class="controles">
-      <button id="playPause" class="btn">▶️</button>
-      <input type="range" id="progreso" value="0">
-      <span id="tiempoActual">0:00</span> / <span id="duracion">0:00</span>
-      <button id="mute" class="btn">🔈</button>
-      <input type="range" id="volumen" min="0" max="1" step="0.1" value="1">
-      <button id="pantallaCompleta" class="btn">⛶</button>
-    </div>
-  </div>
-</section>
-
-    
+      </section>    
   </main>
+   <footer class="footer">
+    <div class="footer-col">
+      <h3>Dirección</h3>
+      <p>Dirección: Av. Amazonas y Colón, Quito – Ecuador</p>
+    </div>
+    <div class="footer-col">
+      <h3>Síguenos</h3>
+      <div class="footer-socials">
+        <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D" target="_blank" rel="noopener noreferrer">
+          <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" />
+        </a>
+        <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
+          <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" />
+        </a>
+        <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
+          <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" />
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Información</h3>
+      <p>Email: iyayku@gmail.com</p>
+      <p>Teléfonos: 0995000484 · 0979369650 · 0997000496</p>
+    </div>
+  </footer>
   <script src="/script.js"></script>
   <script src="/scripts/video.js"></script>
+</body>
+</html>
+  <script src="/scripts/video.js"></script>
+</body>
+</html>
 </body>
 </html>

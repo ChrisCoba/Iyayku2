@@ -8,63 +8,55 @@
   <link rel="stylesheet" href="/css/registro.css" />
   <title>Iyayku – Innova Editores</title>
 </head>
-<body class="text-white font-sans">
+<body class="text-white font-sans min-h-screen flex flex-col" style="overflow-x:hidden;">
 
 <!-- HEADER -->
   <header class="bg-white text-black flex flex-wrap items-center justify-between px-6 py-4 shadow-md">
-    
     <!-- LOGO -->
-    <div class="logo">
+    <div class="logo flex-shrink-0">
       <img src="/Images/logo.png" alt="Logo" class="h-12 object-contain" />
     </div>
 
     <!-- MENÚ -->
-    <nav>
-        <ul class="flex gap-4 letras_menu">
-            <li><a href="/index.html" class="hover-effect">Inicio</a></li>
-            <li><a href="/Pages/nosotros.html" class="hover-effect">Nosotros</a></li>
-            <li><a href="/Pages/editorial.html" class="hover-effect">Editorial</a></li>
-            <li><a href="/Pages/servicios.html" class="hover-effect">Servicios</a></li>
-            <li><a href="/Pages/registro_login.html" class="hover-effect">Registro</a></li>
-            <li><a href="/Pages/contacto.html" class="hover-effect">Contáctanos</a></li>
-             <li>
-          <button id="toggle-dark" class="toggle-dark-btn" type="button" aria-label="Modo oscuro">
-            🌙
-          </button>
-        </li>
-        </ul>
+    <nav id="main-menu" class="w-full md:w-auto md:flex md:items-center mt-4 md:mt-0 hidden md:block">
+      <ul class="flex flex-col md:flex-row gap-4 letras_menu w-full md:w-auto">
+        <li><a href="/index.html" class="hover-effect block py-2 px-4">Inicio</a></li>
+        <li><a href="/Pages/nosotros.html" class="hover-effect block py-2 px-4">Nosotros</a></li>
+        <li><a href="/Pages/editorial.html" class="hover-effect block py-2 px-4">Editorial</a></li>
+        <li><a href="/Pages/servicios.html" class="hover-effect block py-2 px-4">Servicios</a></li>
+        <li><a href="/Pages/contacto.html" class="hover-effect block py-2 px-4">Contáctanos</a></li>
+      </ul>
     </nav>
-
     <div class="social-icons">
-            <!-- WhatsApp -->
-            <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D"
-                target="_blank" rel="noopener noreferrer">
-                <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" class="h-5 w-5 hover:scale-110 transition" />
-            </a>
-
-            <!-- Facebook -->
-            <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
-                <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" class="h-5 w-5 hover:scale-110 transition" />
-            </a>
-
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
-                <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" class="h-5 w-5 hover:scale-110 transition" />
-            </a>
-
-            <!-- Buscar -->
-            <a id="searchToggle" class="cursor-pointer">
-                <img src="/svgs/searchmagnifierinterfacesymbol1_79893.svg" alt="Buscar" class="h-5 w-5 hover:scale-110 transition" />
-            </a>
-
-            <!-- Campo de búsqueda oculto -->
-            <input id="searchInput" type="text" placeholder="Buscar..."
-                class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
-</div>
-
+      <a href="/Pages/registro_login.html" title="Iniciar sesión o registrarse">
+        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-500 transition">
+          <img src="/svgs/round-account-button-with-user-inside_icon-icons.com_72596.svg" alt="Usuario" class="w-6 h-6 text-white" />
+        </div>
+      </a>
+      <!-- WhatsApp -->
+      <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D"
+        target="_blank" rel="noopener noreferrer">
+        <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" class="h-5 w-5 hover:scale-110 transition" />
+      </a>
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
+        <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" class="h-5 w-5 hover:scale-110 transition" />
+      </a>
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
+        <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" class="h-5 w-5 hover:scale-110 transition" />
+      </a>
+      <!-- Buscar -->
+      <a id="searchToggle" class="cursor-pointer">
+        <img src="/svgs/searchmagnifierinterfacesymbol1_79893.svg" alt="Buscar" class="h-5 w-5 hover:scale-110 transition" />
+      </a>
+      <!-- Campo de búsqueda oculto -->
+      <input id="searchInput" type="text" placeholder="Buscar..."
+        class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
+    </div>
   </header>
   <!-- MAIN -->
-  <main>
+  <main class="flex-grow">
      <div class="container" id="container">
       <div class="form-container sign-up">
         <form>
@@ -104,8 +96,9 @@
       </div>
     </div>
   </main>
-  <script src="/scripts/login.js"></script>
+    <script src="/scripts/login.js"></script>
     <script src="/script.js"></script>
-
+</body>
+</html>
 </body>
 </html>

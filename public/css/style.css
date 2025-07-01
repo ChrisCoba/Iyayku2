@@ -16,6 +16,16 @@ header {
   padding: 30px 400px;
 }
 
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
 nav {
   flex: 0.95;
   display: flex;
@@ -31,6 +41,25 @@ nav ul {
 }
 
 
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.user-icon:hover {
+  background-color: #007BFF;
+}
+
+.user-icon img {
+  width: 24px;
+  height: 24px;
+}
 
 .estadisticas {
   background-color: #ffffff;
@@ -67,8 +96,8 @@ nav ul {
 
 /* Dispositivos medianos (tablets, 768px y superiores) */
 @media (max-width: 1024px) {
-  header {
-    padding: 30px 60px;
+  .header-content {
+    padding: 20px 20px;
   }
 
   .slider-container {
@@ -91,10 +120,10 @@ nav ul {
 
 /* Dispositivos pequeños (teléfonos, 767px y inferiores) */
 @media (max-width: 768px) {
-  header {
+  .header-content {
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px;
+    padding: 16px 8px;
   }
 
   nav {
@@ -149,7 +178,7 @@ nav ul {
 
 .mision-nosotros {
   display: flex;
-  width: 100vw; 
+  width: 100%; /* Cambia de 100vw a 100% */
   background-color: white;
   justify-content: center;
   align-items: center;
@@ -158,7 +187,7 @@ nav ul {
   gap: 180px;
   flex-wrap: wrap;
   box-sizing: border-box;
-  margin: 0; 
+  margin: 0;
 }
 
 .mision-texto {
@@ -315,6 +344,51 @@ button:hover {
 
 .btn:hover {
   color: #60a5fa;
+}
+
+
+.footer {
+  width: 100%;
+  flex-shrink: 0;
+  background-color: #f9fafb;
+  padding: 2rem;
+  color: #1f2937;
+  border-top: 2px solid #e5e7eb;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0;
+}
+
+.footer-col {
+  flex: 1 1 0;
+  min-width: 250px;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  padding: 0 1.5rem;
+  border-right: 1px solid #e5e7eb;
+}
+
+.footer-col:last-child {
+  border-right: none;
+}
+
+@media (max-width: 900px) {
+  .footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .footer-col {
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+  .footer-col:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
 }
 
 /* Modo oscuro global */

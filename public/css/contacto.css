@@ -1,27 +1,66 @@
+.contacto-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  gap: 0;
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 0 16px;
+}
+
+.contacto-info {
+  background: transparent;
+  color: #fff;
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.5rem 2rem 2.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.contacto-info h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: #fff;
+}
+
 .contacto {
-  max-width: 600px; /* antes 800px */
-  min-width: 340px;
-  margin: 50px auto;
-  padding: 40px 24px; /* más padding horizontal */
-  background-color: #ffffff;
-  color: #000399;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  max-width: 420px;
+  width: 100%;
+  margin: 0;
+  padding: 2.5rem 2rem 2rem 2rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #000000;
+  border-radius: 28px;
   box-sizing: border-box;
+  position: static;
+  right: 0;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .contacto h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  display: none;
+}
+
+.contacto form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .campo {
-  margin-bottom: 18px;
+  margin-bottom: 0;
 }
 
 .campo label {
-  display: block;
-  margin-bottom: 5px;
+  display: none;
 }
 
 .campo input,
@@ -31,13 +70,22 @@
   min-width: 0;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 10px;
-  border: none;
+  padding: 13px 16px;
+  border: 1.5px solid #444;
   border-radius: 8px;
-  background-color: #b4b4b4;
-  color: #000000;
+  background-color: rgba(255,255,255,0.08);
+  color: #030303;
   font-size: 1rem;
-  display: block;
+  margin-bottom: 0;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: rgba(255,255,255,0.13);
 }
 
 .campo textarea {
@@ -51,82 +99,142 @@
 }
 
 .telefono-input span {
-  padding: 10px;
-  background-color: #858484;
+  padding: 13px 12px;
+  background-color: rgba(255,255,255,0.08);
   border-radius: 8px 0 0 8px;
-  color: #000000;
+  color: #fff;
   font-size: 1rem;
+  border: 1.5px solid #444;
+  border-right: none;
 }
 
 .telefono-input input {
   flex: 1;
   border-radius: 0 8px 8px 0;
-  background-color: #b4b4b4;
-  color: #000000;
-  border: none;
-  padding: 10px;
+  background-color: rgba(255,255,255,0.08);
+  color: #fff;
+  border: 1.5px solid #444;
+  border-left: none;
+  padding: 13px 16px;
   font-size: 1rem;
   min-width: 0;
   max-width: 100%;
 }
 
-button {
-  width: 40%;
-  padding: 12px;
-  background-color: #0a74da;
+#mensaje-ayuda {
+  color: #b0b4ba;
+  font-size: 0.95rem;
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background: #007BFF;
   color: #fff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  margin: 0 auto;
-  display: block;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
 }
 
-button:hover {
-  background-color: #095aba;
+button[type="submit"]:hover {
+  background: #1d4ed8;
 }
 
+.contacto input[type="checkbox"] {
+  width: 1.1em;
+  height: 1.1em;
+  accent-color: #007bff;
+  margin-right: 0.5em;
+}
+
+.contacto small,
+.contacto .campo small {
+  color: #b0b4ba;
+}
+
+.contacto .campo:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .contacto-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    margin: 40px auto;
+    padding: 0 8px;
+  }
+  .contacto-info {
+    padding: 1.5rem 0 1.5rem 0;
+    text-align: center;
+  }
+  .contacto {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .contacto-wrapper {
+    margin: 24px auto;
+    padding: 0 2px;
+  }
+  .contacto {
+    max-width: 98vw;
+    padding: 1.5rem 0.5rem;
+    border-radius: 18px;
+  }
+}
+
+/* Modo oscuro */
 body.modo-oscuro .contacto {
-  background: #23272f !important;
-  color: #e5e7eb !important;
+  background: rgba(30, 32, 40, 0.98) !important;
+  color: #fff !important;
   box-shadow: 0 0 10px rgba(0,0,0,0.7);
 }
 
-body.modo-oscuro .contacto h2,
-body.modo-oscuro .campo label {
+body.modo-oscuro .contacto-info h1,
+body.modo-oscuro .contacto-info,
+body.modo-oscuro .contacto h2 {
   color: #60a5fa !important;
 }
 
 body.modo-oscuro .campo input,
 body.modo-oscuro .campo select,
 body.modo-oscuro .campo textarea {
-  background-color: #23272f !important;
+  background-color: rgba(255,255,255,0.06) !important;
   color: #e5e7eb !important;
-  border: 1px solid #444 !important;
+  border: 1.5px solid #2563eb !important;
 }
 
-body.modo-oscuro .campo textarea,
-body.modo-oscuro .campo input,
-body.modo-oscuro .campo select {
-  background: #23272f !important;
-  color: #e5e7eb !important;
+body.modo-oscuro .campo input:focus,
+body.modo-oscuro .campo select:focus,
+body.modo-oscuro .campo textarea:focus {
+  border-color: #60a5fa !important;
+  background-color: rgba(96,165,250,0.08) !important;
 }
 
 body.modo-oscuro .telefono-input span {
-  background-color: #181c23 !important;
+  background-color: rgba(255,255,255,0.06) !important;
   color: #60a5fa !important;
+  border: 1.5px solid #2563eb !important;
 }
 
 body.modo-oscuro button[type="submit"] {
-  background: linear-gradient(90deg, #0a74da 60%, #22c55e 100%) !important;
+  background: #2563eb !important;
   color: #fff !important;
 }
 
 body.modo-oscuro button[type="submit"]:hover {
-  background: linear-gradient(90deg, #095aba 60%, #16a34a 100%) !important;
+  background: #007bff !important;
 }
 
 body.modo-oscuro #mensaje-ayuda {
-  color: #b0b4ba !important;
+  color: #60a5fa !important;
 }
+
