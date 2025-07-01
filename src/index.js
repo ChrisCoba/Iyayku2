@@ -118,6 +118,33 @@ app.get('/api/certificados', auth, async (req, res) => {
 });
 
 //------------------------------------------------------------
+// 5b. Certificados: agregar y buscar
+//------------------------------------------------------------
+app.post('/api/certificados', async (req, res) => {
+  const { autor_nombre, articulo_titulo, articulo_url, publicacion_id } = req.body;
+  try {
+    const { rows } = await pool.query(
+      'INSERT INTO certificados (autor_nombre, articulo_titulo, articulo_url, publicacion_id) VALUES ($1, $2, $3, $4) RETURNING *',
+      [autor_nombre, articulo_titulo, articulo_url, publicacion_id || null]
+    );
+    res.json({ msg: 'Certificado creado', certificado: rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Error al crear certificado' });
+  }
+});
+
+app.get('/api/certificados-todos', async (req, res) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM certificados ORDER BY fecha_emision DESC');
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Error al buscar certificados' });
+  }
+});
+
+//------------------------------------------------------------
 // 6. Rutas de subida / descarga de PDF y certificado
 //------------------------------------------------------------
 app.use('/api', uploadRoutes);   // POST /upload, GET /certificado/:id

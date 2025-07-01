@@ -234,6 +234,23 @@ ALTER TABLE ONLY public.publicaciones
     ADD CONSTRAINT publicaciones_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuarios(id) ON DELETE CASCADE;
 
 
+--
+-- TOC entry 4763 (class 1259 OID 16439)
+-- Name: certificados; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.certificados (
+    id SERIAL PRIMARY KEY,
+    autor_nombre VARCHAR(100) NOT NULL,
+    articulo_titulo VARCHAR(200) NOT NULL,
+    articulo_url TEXT,
+    fecha_emision TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    publicacion_id INTEGER REFERENCES public.publicaciones(id) ON DELETE SET NULL
+);
+
+
+ALTER TABLE public.certificados OWNER TO postgres;
+
 -- Completed on 2025-06-03 22:03:50
 
 --
