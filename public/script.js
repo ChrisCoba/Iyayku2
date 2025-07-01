@@ -103,7 +103,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const certLink = document.createElement('a');
             certLink.href = cert.articulo_url || cert.archivo_url || '#';
             certLink.textContent = 'Ver Certificado';
-            certLink.target = '_blank';
+            certLink.style = 'cursor:pointer; color:blue; text-decoration:underline;';
+            certLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                mostrarVisorCertificado(cert.articulo_url || cert.archivo_url || '');
+            });
 
             card.appendChild(certTitulo);
             card.appendChild(certAutor);
@@ -111,6 +115,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
             container.appendChild(card);
         });
+
+        // Agrega el visor si no existe
+        let visor = document.getElementById('visor-certificado');
+        if (!visor) {
+            visor = document.createElement('div');
+            visor.id = 'visor-certificado';
+            visor.style = 'margin-top:2rem; text-align:center;';
+            container.parentNode.insertBefore(visor, container.nextSibling);
+        }
+        visor.innerHTML = '';
+    }
+
+    // Función para mostrar el PDF o página en un visor embebido
+    function mostrarVisorCertificado(url) {
+        const visor = document.getElementById('visor-certificado');
+        if (!visor) return;
+        if (!url) {
+            visor.innerHTML = '<p>No hay certificado para mostrar.</p>';
+            return;
+        }
+        // Si es PDF, usa <embed>, si es web, usa <iframe>
+        if (url.endsWith('.pdf')) {
+            visor.innerHTML = `<embed src="${url}" type="application/pdf" width="90%" height="600px" style="border:1px solid #ccc;" />`;
+        } else {
+            visor.innerHTML = `<iframe src="${url}" width="90%" height="600px" style="border:1px solid #ccc;"></iframe>`;
+        }
     }
 
     // 3. Slider
