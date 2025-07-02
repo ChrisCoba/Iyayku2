@@ -107,6 +107,13 @@
         </div>
         <div id="admin-facturas-panel" class="admin-panel" style="display:none">
           <h3>Facturas</h3>
+          <form id="form-factura" style="margin-bottom:16px;">
+            <input type="number" name="usuario_id" placeholder="ID Usuario" required style="width:80px;">
+            <input type="number" name="total" placeholder="Total" required step="0.01" style="width:80px;">
+            <input type="text" name="items" placeholder='Items (JSON)' required style="width:200px;">
+            <button type="submit">Agregar</button>
+            <small>Ejemplo items: [{"nombre":"Servicio","cantidad":1,"precio":10}]</small>
+          </form>
           <table id="admin-facturas-table">
             <thead><tr><th>ID</th><th>Usuario</th><th>Correo</th><th>Fecha</th><th>Total</th></tr></thead>
             <tbody></tbody>
@@ -118,6 +125,13 @@
         </div>
         <div id="admin-certificados-panel" class="admin-panel" style="display:none">
           <h3>Certificados</h3>
+          <form id="form-certificado" style="margin-bottom:16px;">
+            <input type="text" name="autor_nombre" placeholder="Autor" required style="width:120px;">
+            <input type="text" name="articulo_titulo" placeholder="Título" required style="width:120px;">
+            <input type="url" name="articulo_url" placeholder="URL PDF" style="width:120px;">
+            <input type="text" name="publicacion_id" placeholder="ID Publicación (opcional)" style="width:80px;">
+            <button type="submit">Agregar</button>
+          </form>
           <table id="admin-certificados-table">
             <thead><tr><th>ID</th><th>Autor</th><th>Título</th><th>PDF</th><th>Página</th><th>Fecha</th></tr></thead>
             <tbody></tbody>
@@ -297,6 +311,59 @@
           tbody.innerHTML = '<tr><td colspan="6">Error al cargar certificados</td></tr>';
         }
       }
+
+      // --- Agregar certificado ---
+      document.getElementById('form-certificado').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const fd = new FormData(this);
+        const body = Object.fromEntries(fd.entries());
+        if (body.publicacion_id === "") delete body.publicacion_id;
+        const resp = await fetch('/api/admin/certificados', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(body)
+        });
+        if (resp.ok) {
+          alert('Certificado agregado');
+          cargarCertificados();
+          this.reset();
+        } else {
+          alert('Error al agregar certificado');
+        }
+      });
+
+      // --- Agregar factura ---
+      document.getElementById('form-factura').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const fd = new FormData(this);
+        let items;
+        try {
+          items = JSON.parse(fd.get('items'));
+          if (!Array.isArray(items)) throw new Error();
+        } catch {
+          alert('Items debe ser un JSON válido de array');
+          return;
+        }
+        const body = {
+          usuario_id: Number(fd.get('usuario_id')),
+          total: Number(fd.get('total')),
+          items
+        };
+        const resp = await fetch('/api/admin/facturas', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(body)
+        });
+        if (resp.ok) {
+          alert('Factura agregada');
+          cargarFacturas();
+          this.reset();
+        } else {
+          alert('Error al agregar factura');
+        }
+      });
     });
   </script>
   <script src="/script.js"></script>
