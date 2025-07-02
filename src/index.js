@@ -271,74 +271,8 @@ app.post('/api/admin/pagina', auth, (req, res) => {
   res.json({ ok: true });
 });
 
-// --- ADMIN: Páginas HTML personalizadas (multi-sección) ---
-const paginasHtml = {
-  principal: '',
-  contacto: '',
-  editorial: '',
-  nosotros: '',
-  registro_login: '',
-  servicios: ''
-};
-
-app.get('/api/admin/pagina/:seccion', auth, (req, res) => {
-  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo admin' });
-  const seccion = req.params.seccion;
-  res.json({ html: paginasHtml[seccion] || '' });
-});
-
-app.post('/api/admin/pagina/:seccion', auth, (req, res) => {
-  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo admin' });
-  const seccion = req.params.seccion;
-  paginasHtml[seccion] = req.body.html || '';
-  res.json({ ok: true });
-});
-
 //------------------------------------------------------------
 // 7. Arranque
 //------------------------------------------------------------
 app.listen(PORT, () => console.log(`🚀  Servidor corriendo en http://localhost:${PORT}`));
-
-let quill;
-let seccionActual = 'principal';
-const titulos = {
-  principal: 'Editar Página Principal',
-  contacto: 'Editar Contacto',
-  editorial: 'Editar Editorial',
-  nosotros: 'Editar Nosotros',
-  registro_login: 'Editar Registro/Login',
-  servicios: 'Editar Servicios'
-};
-
-document.querySelectorAll('.card-editar').forEach(card => {
-  card.addEventListener('click', () => {
-    seccionActual = card.getAttribute('data-seccion');
-    document.getElementById('editar-titulo').textContent = titulos[seccionActual] || 'Editar Sección';
-    hideAllPanels();
-    document.getElementById('admin-editar-panel').style.display = 'block';
-    if (!quill) {
-      quill = new Quill('#editor-container', { theme: 'snow' });
-    }
-    fetch(`/api/admin/pagina/${seccionActual}`, { credentials: 'include' })
-      .then(res => res.json())
-      .then(data => {
-        quill.root.innerHTML = data.html || '';
-      });
-  });
-});
-
-document.getElementById('btn-guardar-pagina').addEventListener('click', async function() {
-  const html = quill.root.innerHTML;
-  const resp = await fetch(`/api/admin/pagina/${seccionActual}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ html })
-  });
-  if (resp.ok) {
-    alert('Sección actualizada');
-  } else {
-    alert('Error al guardar');
-  }
-});
 
