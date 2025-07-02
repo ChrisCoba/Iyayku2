@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/menu.css" />
   <link rel="stylesheet" href="/css/perfil.css" />
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
   <title>Iyayku – Perfil</title>
 </head>
 <body class="bg-blue-800 text-white font-sans">
@@ -141,6 +142,11 @@
           <div class="icon">📝</div>
           <div>Editar página</div>
         </div>
+        <div id="admin-editar-panel" class="admin-panel" style="display:none;max-width:700px;">
+          <h3>Editar Página Principal</h3>
+          <div id="editor-container" style="height:300px;background:white;color:black;"></div>
+          <button id="btn-guardar-pagina" style="margin-top:10px;">Guardar Cambios</button>
+        </div>
       </div>
     </section>
   </main>
@@ -169,6 +175,7 @@
       <p>Teléfonos: 0995000484 · 0979369650 · 0997000496</p>
     </div>
   </footer>
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
   <script>
     // Permitir acceso solo si el usuario es administrador (correo admin@iyayku.com)
     document.addEventListener('DOMContentLoaded', function() {
@@ -195,6 +202,9 @@
         facturas: document.querySelector('.card-facturas'),
         certificados: document.querySelector('.card-certificados')
       };
+      panels.editar = document.getElementById('admin-editar-panel');
+      cards.editar = document.querySelector('.card-editar');
+      let quill;
       function hideAllPanels() {
         Object.values(panels).forEach(p => p.style.display = 'none');
       }
@@ -213,6 +223,33 @@
         hideAllPanels();
         panels.certificados.style.display = 'block';
         cargarCertificados();
+      });
+      cards.editar.addEventListener('click', () => {
+        hideAllPanels();
+        panels.editar.style.display = 'block';
+        if (!quill) {
+          quill = new Quill('#editor-container', { theme: 'snow' });
+        }
+        fetch('/api/admin/pagina', { credentials: 'include' })
+          .then(res => res.json())
+          .then(data => {
+            quill.root.innerHTML = data.html || '';
+          });
+      });
+
+      document.getElementById('btn-guardar-pagina').addEventListener('click', async function() {
+        const html = quill.root.innerHTML;
+        const resp = await fetch('/api/admin/pagina', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ html })
+        });
+        if (resp.ok) {
+          alert('Página actualizada');
+        } else {
+          alert('Error al guardar');
+        }
       });
 
       // --- Cargar usuarios ---

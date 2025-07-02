@@ -257,6 +257,20 @@ app.get('/api/admin/facturas', auth, async (req, res) => {
   }
 });
 
+// --- ADMIN: Página HTML personalizada ---
+let paginaHtml = ''; // Puedes guardar esto en la base de datos si prefieres
+
+app.get('/api/admin/pagina', auth, (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo admin' });
+  res.json({ html: paginaHtml });
+});
+
+app.post('/api/admin/pagina', auth, (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo admin' });
+  paginaHtml = req.body.html || '';
+  res.json({ ok: true });
+});
+
 //------------------------------------------------------------
 // 7. Arranque
 //------------------------------------------------------------
