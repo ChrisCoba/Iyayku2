@@ -121,6 +121,61 @@
   filter: invert(1);
 }
 
+/* ======== SERVICIOS ======== */
+.servicios-dos-columnas {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+  padding: 60px 20px 40px 20px;
+  background: transparent;
+  max-width: 1200px;
+  margin: 0 auto 0 auto;
+  flex-wrap: wrap;
+}
+
+.columna {
+  flex: 1 1 400px;
+  max-width: 500px;
+  background: white;
+  border-radius: 18px;
+  padding: 32px 28px;
+  box-sizing: border-box;
+  color: black;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+.columna h2 {
+  color: #60a5fa;
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.columna ul {
+  margin: 0 0 20px 0;
+  padding-left: 18px;
+  color: black;
+  font-size: 1.08rem;
+}
+
+.columna ul li {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 900px) {
+  .servicios-dos-columnas {
+    flex-direction: column;
+    gap: 28px;
+    padding: 32px 8px 24px 8px;
+  }
+  .columna {
+    max-width: 100%;
+    padding: 24px 10px;
+  }
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .certificado-container {
