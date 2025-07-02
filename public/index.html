@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="/css/menu.css" />
   <link rel="stylesheet" href="/css/servicios.css" />
   <link rel="stylesheet" href="/css/inicio.css" />
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
   <title>Iyayku – Innova Editores</title>
 </head>
 <body class="bg-blue-800 text-white font-sans">
@@ -141,6 +143,10 @@
     </div>
   </section>
 
+  <!-- En el <body> de index.html, donde va el contenido editable -->
+  <div id="editable-content"></div>
+  <button id="btn-save-content" style="display:none;margin-top:10px;">Guardar Cambios</button>
+
   </main>
  <footer class="footer">
       <div class="footer-col">
@@ -171,5 +177,46 @@
     </footer>
   <script src="/script.js"></script>
    <script src="/scripts/carrito.js"></script>
+   <script>
+async function isAdmin() {
+  const res = await fetch('/api/status', { credentials: 'include' });
+  const data = await res.json();
+  return data.usuario && data.usuario.correo === 'admin@iyayku.com';
+}
+
+document.addEventListener('DOMContentLoaded', async function() {
+  const params = new URLSearchParams(window.location.search);
+  const editMode = params.get('edit') === '1';
+  const editableDiv = document.getElementById('editable-content');
+  const btnSave = document.getElementById('btn-save-content');
+
+  // Cargar contenido desde el backend
+  const resp = await fetch('/api/admin/pagina', { credentials: 'include' });
+  const data = await resp.json();
+  editableDiv.innerHTML = data.html || '';
+
+  if (editMode && await isAdmin()) {
+    // Mostrar editor visual
+    btnSave.style.display = 'inline-block';
+    const quill = new Quill('#editable-content', { theme: 'snow' });
+
+    btnSave.onclick = async function() {
+      const html = quill.root.innerHTML;
+      const resp = await fetch('/api/admin/pagina', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ html })
+      });
+      if (resp.ok) {
+        alert('Página actualizada');
+        location.href = '/';
+      } else {
+        alert('Error al guardar');
+      }
+    };
+  }
+});
+</script>
 </body>
 </html>

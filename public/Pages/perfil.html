@@ -225,16 +225,7 @@
         cargarCertificados();
       });
       cards.editar.addEventListener('click', () => {
-        hideAllPanels();
-        panels.editar.style.display = 'block';
-        if (!quill) {
-          quill = new Quill('#editor-container', { theme: 'snow' });
-        }
-        fetch('/api/admin/pagina', { credentials: 'include' })
-          .then(res => res.json())
-          .then(data => {
-            quill.root.innerHTML = data.html || '';
-          });
+        window.location.href = '/?edit=1';
       });
 
       document.getElementById('btn-guardar-pagina').addEventListener('click', async function() {
