@@ -169,6 +169,134 @@
         .catch(() => {
           window.location.href = '/Pages/registro_login.html';
         });
+
+      // --- Paneles admin ---
+      const panels = {
+        usuarios: document.getElementById('admin-usuarios-panel'),
+        facturas: document.getElementById('admin-facturas-panel'),
+        certificados: document.getElementById('admin-certificados-panel')
+      };
+      const cards = {
+        usuarios: document.querySelector('.card-perfil'),
+        facturas: document.querySelector('.card-facturas'),
+        certificados: document.querySelector('.card-certificados')
+      };
+      function hideAllPanels() {
+        Object.values(panels).forEach(p => p.style.display = 'none');
+      }
+      // Mostrar panel al hacer clic en la tarjeta
+      cards.usuarios.addEventListener('click', () => {
+        hideAllPanels();
+        panels.usuarios.style.display = 'block';
+        cargarUsuarios();
+      });
+      cards.facturas.addEventListener('click', () => {
+        hideAllPanels();
+        panels.facturas.style.display = 'block';
+        cargarFacturas();
+      });
+      cards.certificados.addEventListener('click', () => {
+        hideAllPanels();
+        panels.certificados.style.display = 'block';
+        cargarCertificados();
+      });
+
+      // --- Cargar usuarios ---
+      async function cargarUsuarios() {
+        const tbody = document.querySelector('#admin-usuarios-table tbody');
+        tbody.innerHTML = '<tr><td colspan="3">Cargando...</td></tr>';
+        try {
+          const res = await fetch('/api/admin/usuarios', { credentials: 'include' });
+          const usuarios = await res.json();
+          tbody.innerHTML = '';
+          usuarios.forEach(u => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td><input type="text" value="${u.nombre}" data-id="${u.id}" class="edit-nombre" style="width:120px"></td>
+              <td><input type="email" value="${u.correo}" data-id="${u.id}" class="edit-correo" style="width:180px"></td>
+              <td>
+                <input type="password" placeholder="Nueva contraseña" data-id="${u.id}" class="edit-pass" style="width:120px">
+                <button class="btn-guardar" data-id="${u.id}">Guardar</button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+          // Guardar cambios
+          tbody.querySelectorAll('.btn-guardar').forEach(btn => {
+            btn.addEventListener('click', async function() {
+              const id = this.getAttribute('data-id');
+              const nombre = tbody.querySelector(`.edit-nombre[data-id='${id}']`).value;
+              const correo = tbody.querySelector(`.edit-correo[data-id='${id}']`).value;
+              const contrasena = tbody.querySelector(`.edit-pass[data-id='${id}']`).value;
+              const body = { nombre, correo };
+              if (contrasena) body.contrasena = contrasena;
+              const resp = await fetch(`/api/admin/usuarios/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(body)
+              });
+              if (resp.ok) {
+                alert('Usuario actualizado');
+                cargarUsuarios();
+              } else {
+                alert('Error al actualizar usuario');
+              }
+            });
+          });
+        } catch {
+          tbody.innerHTML = '<tr><td colspan="3">Error al cargar usuarios</td></tr>';
+        }
+      }
+
+      // --- Cargar facturas ---
+      async function cargarFacturas() {
+        const tbody = document.querySelector('#admin-facturas-table tbody');
+        tbody.innerHTML = '<tr><td colspan="5">Cargando...</td></tr>';
+        try {
+          const res = await fetch('/api/admin/facturas', { credentials: 'include' });
+          const facturas = await res.json();
+          tbody.innerHTML = '';
+          facturas.forEach(f => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${f.id}</td>
+              <td>${f.usuario_nombre || ''}</td>
+              <td>${f.usuario_correo || ''}</td>
+              <td>${f.fecha ? new Date(f.fecha).toLocaleString() : ''}</td>
+              <td>$${Number(f.total).toFixed(2)}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } catch {
+          tbody.innerHTML = '<tr><td colspan="5">Error al cargar facturas</td></tr>';
+        }
+      }
+
+      // --- Cargar certificados ---
+      async function cargarCertificados() {
+        const tbody = document.querySelector('#admin-certificados-table tbody');
+        tbody.innerHTML = '<tr><td colspan="6">Cargando...</td></tr>';
+        try {
+          const res = await fetch('/api/admin/certificados', { credentials: 'include' });
+          const certs = await res.json();
+          tbody.innerHTML = '';
+          certs.forEach(c => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${c.id}</td>
+              <td>${c.autor_nombre}</td>
+              <td>${c.articulo_titulo}</td>
+              <td>${c.articulo_url ? `<a href="${c.articulo_url}" target="_blank">PDF</a>` : ''}</td>
+              <td>${c.articulo_pagina ? `<a href="${c.articulo_pagina}" target="_blank">Ver</a>` : ''}</td>
+              <td>${c.fecha_emision ? new Date(c.fecha_emision).toLocaleString() : ''}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } catch {
+          tbody.innerHTML = '<tr><td colspan="6">Error al cargar certificados</td></tr>';
+        }
+      }
     });
   </script>
   <script src="/script.js"></script>
