@@ -44,3 +44,18 @@ CREATE TABLE IF NOT EXISTS public.certificados (
   fecha_emision TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   publicacion_id INT REFERENCES public.publicaciones(id) ON DELETE SET NULL
 );
+
+CREATE TABLE IF NOT EXISTS public.facturas (
+  id SERIAL PRIMARY KEY,
+  usuario_id INT REFERENCES public.usuarios(id) ON DELETE SET NULL,
+  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  total NUMERIC(10,2) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.factura_items (
+  id SERIAL PRIMARY KEY,
+  factura_id INT REFERENCES public.facturas(id) ON DELETE CASCADE,
+  servicio_nombre VARCHAR(200) NOT NULL,
+  cantidad INT NOT NULL,
+  precio_unitario NUMERIC(10,2) NOT NULL
+);

@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt  = require('bcryptjs');
 const jwt     = require('jsonwebtoken');
 require('dotenv').config();
+const { generarFacturaPDF } = require('./pdfFactura');
 
 const pool = require('./db');
 const auth = require('./middlewares/auth');       // único middleware
@@ -165,6 +166,40 @@ app.delete('/api/certificados/:id', async (req, res) => {
 // 6. Rutas de subida / descarga de PDF y certificado
 //------------------------------------------------------------
 app.use('/api', uploadRoutes);   // POST /upload, GET /certificado/:id
+
+//------------------------------------------------------------
+// 5d. Facturas: crear nueva factura
+//------------------------------------------------------------
+app.post('/api/facturas', auth, async (req, res) => {
+  const { items, total } = req.body;
+  const usuario_id = req.user.id;
+  if (!Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({ msg: 'No hay items en la factura.' });
+  }
+  try {
+    const { rows } = await pool.query(
+      'INSERT INTO facturas (usuario_id, total) VALUES ($1, $2) RETURNING id, fecha',
+      [usuario_id, total]
+    );
+    const facturaId = rows[0].id;
+    const fecha = rows[0].fecha;
+    for (const item of items) {
+      await pool.query(
+        'INSERT INTO factura_items (factura_id, servicio_nombre, cantidad, precio_unitario) VALUES ($1, $2, $3, $4)',
+        [facturaId, item.nombre, item.cantidad, item.precio]
+      );
+    }
+    // Obtener datos del usuario
+    const { rows: userRows } = await pool.query('SELECT nombre, correo FROM usuarios WHERE id = $1', [usuario_id]);
+    const usuario = userRows[0];
+    // Generar PDF
+    const pdfUrl = generarFacturaPDF({ facturaId, usuario, items, total, fecha });
+    res.json({ msg: 'Factura generada', facturaId, pdfUrl });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Error al generar factura' });
+  }
+});
 
 //------------------------------------------------------------
 // 7. Arranque

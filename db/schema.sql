@@ -252,6 +252,37 @@ CREATE TABLE public.certificados (
 
 ALTER TABLE public.certificados OWNER TO postgres;
 
+--
+-- TOC entry 4764 (class 1259 OID 16440)
+-- Name: facturas; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.facturas (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER REFERENCES public.usuarios(id) ON DELETE SET NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total NUMERIC(10,2) NOT NULL
+);
+
+
+ALTER TABLE public.facturas OWNER TO postgres;
+
+--
+-- TOC entry 4765 (class 1259 OID 16441)
+-- Name: factura_items; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.factura_items (
+    id SERIAL PRIMARY KEY,
+    factura_id INTEGER REFERENCES public.facturas(id) ON DELETE CASCADE,
+    servicio_nombre VARCHAR(200) NOT NULL,
+    cantidad INT NOT NULL,
+    precio_unitario NUMERIC(10,2) NOT NULL
+);
+
+
+ALTER TABLE public.factura_items OWNER TO postgres;
+
 -- Completed on 2025-06-03 22:03:50
 
 --

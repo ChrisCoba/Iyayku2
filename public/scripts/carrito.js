@@ -103,16 +103,36 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Comprar
-  carritoComprar.addEventListener('click', () => {
+  carritoComprar.addEventListener('click', async () => {
     if (carrito.length === 0) {
       alert('El carrito está vacío.');
       return;
     }
-    alert('¡Gracias por tu compra!');
-    carrito = [];
-    actualizarCarrito();
-    guardarCarrito();
-    carritoPanel.classList.remove('abierto');
+    const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+    try {
+      const resp = await fetch('/api/facturas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ items: carrito, total })
+      });
+      const data = await resp.json();
+      if (resp.ok) {
+        alert('¡Factura generada! ID: ' + data.facturaId);
+        // Mostrar el PDF de la factura al usuario
+        if (data.pdfUrl) {
+          window.open(data.pdfUrl, '_blank');
+        }
+        carrito = [];
+        actualizarCarrito();
+        guardarCarrito();
+        carritoPanel.classList.remove('abierto');
+      } else {
+        alert(data.msg || 'Error al generar factura');
+      }
+    } catch (err) {
+      alert('Error de red o servidor');
+    }
   });
 
   // Inicializar vista del carrito al cargar
