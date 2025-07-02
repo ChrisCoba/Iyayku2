@@ -84,7 +84,7 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ msg: 'Credenciales inválidas' });
 
     delete user.contraseña;
-    const token = jwt.sign({ id: user.id, nombre: user.nombre }, JWT_SECRET, { expiresIn: '2h' });
+    const token = jwt.sign({ id: user.id, nombre: user.nombre, correo: user.correo }, JWT_SECRET, { expiresIn: '2h' });
     res.cookie('token', token, { httpOnly: true }).json({ msg: 'Login exitoso', usuario: user });
   } catch (err) {
     console.error(err);
@@ -198,6 +198,62 @@ app.post('/api/facturas', auth, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Error al generar factura' });
+  }
+});
+
+// --- ADMIN: Listar todos los usuarios ---
+app.get('/api/admin/usuarios', auth, async (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo el administrador puede ver los usuarios.' });
+  try {
+    const { rows } = await pool.query('SELECT id, nombre, correo FROM usuarios ORDER BY id');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al obtener usuarios' });
+  }
+});
+
+// --- ADMIN: Actualizar usuario (nombre, correo, contraseña) ---
+app.put('/api/admin/usuarios/:id', auth, async (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo el administrador puede editar usuarios.' });
+  const { id } = req.params;
+  const { nombre, correo, contrasena } = req.body;
+  try {
+    let query = 'UPDATE usuarios SET nombre = $1, correo = $2';
+    let params = [nombre, correo, id];
+    if (contrasena) {
+      const bcrypt = require('bcryptjs');
+      const hash = bcrypt.hashSync(contrasena, 10);
+      query = 'UPDATE usuarios SET nombre = $1, correo = $2, "contraseña" = $3 WHERE id = $4';
+      params = [nombre, correo, hash, id];
+    } else {
+      query += ' WHERE id = $3';
+    }
+    await pool.query(query, params);
+    res.json({ msg: 'Usuario actualizado' });
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al actualizar usuario' });
+  }
+});
+
+// --- ADMIN: Listar todos los certificados ---
+app.get('/api/admin/certificados', auth, async (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo el administrador puede ver certificados.' });
+  try {
+    const { rows } = await pool.query('SELECT * FROM certificados ORDER BY fecha_emision DESC');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al obtener certificados' });
+  }
+});
+
+// --- ADMIN: Listar todas las facturas ---
+app.get('/api/admin/facturas', auth, async (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo el administrador puede ver facturas.' });
+  try {
+    const { rows } = await pool.query('SELECT f.*, u.nombre AS usuario_nombre, u.correo AS usuario_correo FROM facturas f LEFT JOIN usuarios u ON f.usuario_id = u.id ORDER BY f.fecha DESC');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al obtener facturas' });
   }
 });
 

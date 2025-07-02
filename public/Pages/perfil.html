@@ -94,13 +94,34 @@
           <div class="icon">👤</div>
           <div>Editar Perfil</div>
         </div>
+        <div id="admin-usuarios-panel" class="admin-panel" style="display:none">
+          <h3>Usuarios registrados</h3>
+          <table id="admin-usuarios-table">
+            <thead><tr><th>Nombre</th><th>Correo</th><th>Acciones</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
         <div class="admin-card card-facturas">
           <div class="icon">🧾</div>
           <div>Facturas</div>
         </div>
+        <div id="admin-facturas-panel" class="admin-panel" style="display:none">
+          <h3>Facturas</h3>
+          <table id="admin-facturas-table">
+            <thead><tr><th>ID</th><th>Usuario</th><th>Correo</th><th>Fecha</th><th>Total</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
         <div class="admin-card card-certificados">
           <div class="icon">🎓</div>
           <div>Certificados</div>
+        </div>
+        <div id="admin-certificados-panel" class="admin-panel" style="display:none">
+          <h3>Certificados</h3>
+          <table id="admin-certificados-table">
+            <thead><tr><th>ID</th><th>Autor</th><th>Título</th><th>PDF</th><th>Página</th><th>Fecha</th></tr></thead>
+            <tbody></tbody>
+          </table>
         </div>
         <div class="admin-card card-editar">
           <div class="icon">📝</div>
@@ -135,13 +156,13 @@
     </div>
   </footer>
   <script>
-    // Solo permitir acceso si el usuario es admin (correo admin@iyayku.com)
+    // Permitir acceso solo si el usuario es administrador (correo admin@iyayku.com)
     document.addEventListener('DOMContentLoaded', function() {
       fetch('/api/status', { credentials: 'include' })
         .then(res => res.json())
         .then(data => {
           if (!data.usuario || data.usuario.correo !== 'admin@iyayku.com') {
-            alert('Acceso restringido. Debes iniciar sesión como administrador.');
+            alert('Acceso restringido. Solo el administrador puede ingresar a esta página.');
             window.location.href = '/Pages/registro_login.html';
           }
         })
