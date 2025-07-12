@@ -103,22 +103,23 @@
     document.addEventListener('DOMContentLoaded', async () => {
       const cont = document.getElementById('contenido-dinamico');
       try {
-        const res = await fetch('/api/paginas_contenido/inicio');
+        const res = await fetch('/api/paginas_contenido?pagina=inicio');
         if (!res.ok) throw new Error('No se pudo cargar el contenido');
         const data = await res.json();
-        cont.innerHTML = data.html || data.contenido || '<p>Contenido no disponible.</p>';
+        const item = Array.isArray(data) ? data[0] : data;
+        cont.innerHTML = (item && (item.html || item.contenido)) || '<p>Contenido no disponible.</p>';
         // Si el usuario es admin, mostrar botón de edición
-        if (data.isAdmin) {
+        if (item && item.isAdmin) {
           const btn = document.createElement('button');
           btn.textContent = 'Editar contenido';
           btn.className = 'btn-editar-admin';
           btn.onclick = () => {
-            const nuevo = prompt('Editar contenido HTML:', data.html || data.contenido || '');
+            const nuevo = prompt('Editar contenido HTML:', item.html || item.contenido || '');
             if (nuevo !== null) {
-              fetch('/api/paginas_contenido/inicio', {
-                method: 'PUT',
+              fetch('/api/paginas_contenido', {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ html: nuevo })
+                body: JSON.stringify({ pagina: 'inicio', seccion: 'principal', titulo: item.titulo || '', contenido: nuevo, orden: item.orden || 1 })
               }).then(r => {
                 if (r.ok) location.reload();
                 else alert('Error al guardar');
