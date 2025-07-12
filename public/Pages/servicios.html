@@ -112,7 +112,8 @@
         const res = await fetch('/api/paginas_contenido?pagina=servicios');
         if (!res.ok) throw new Error('No se pudo cargar el contenido');
         const data = await res.json();
-        const item = Array.isArray(data) ? data[0] : data;
+        // Solo mostrar la primera sección principal (evita duplicados)
+        const item = Array.isArray(data) ? data.find(x => x.seccion === 'principal') : data;
         cont.innerHTML = (item && (item.html || item.contenido)) || '<p>Contenido no disponible.</p>';
         // Si el usuario es admin, mostrar botón de edición
         if (item && item.isAdmin) {

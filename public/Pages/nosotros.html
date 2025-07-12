@@ -56,23 +56,26 @@
 
   <!-- MAIN -->
   <main id="main-content"></main>
-  <div id="footer-content"></div>
   <script>
   document.addEventListener('DOMContentLoaded', async function() {
-    // Cargar todas las secciones de la página "nosotros"
+    // Cargar todas las secciones de la página "nosotros" y evitar duplicados
     const main = document.getElementById('main-content');
-    const footerDiv = document.getElementById('footer-content');
     const res = await fetch('/api/paginas_contenido?pagina=nosotros');
     const secciones = await res.json();
-    // Renderizar secciones en orden
+    // Agrupar por seccion para evitar duplicados
+    const seccionesUnicas = [];
+    const seccionesVistas = new Set();
+    for (const sec of secciones) {
+      if (!seccionesVistas.has(sec.seccion) && sec.seccion !== 'footer') {
+        seccionesUnicas.push(sec);
+        seccionesVistas.add(sec.seccion);
+      }
+    }
     main.innerHTML = '';
-    secciones.filter(s => s.seccion !== 'footer').forEach(sec => {
+    seccionesUnicas.forEach(sec => {
       if (sec.titulo) main.innerHTML += `<h2>${sec.titulo}</h2>`;
       main.innerHTML += sec.contenido;
     });
-    // Footer
-    const footerSec = secciones.find(s => s.seccion === 'footer');
-    if (footerSec) footerDiv.innerHTML = footerSec.contenido;
   });
   </script>
    <footer class="footer">
