@@ -143,7 +143,19 @@
           <div>Editar página</div>
         </div>
         <div id="admin-editar-panel" class="admin-panel" style="display:none;max-width:700px;">
-          <h3>Editar Página Principal</h3>
+          <h3>Editar cualquier sección de la web</h3>
+          <form id="form-editar-seccion" style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <label>Página:
+              <select id="select-pagina" required style="min-width:120px;"></select>
+            </label>
+            <label>Sección:
+              <select id="select-seccion" required style="min-width:120px;"></select>
+            </label>
+            <label>Título:
+              <input id="input-titulo" type="text" style="min-width:120px;" />
+            </label>
+            <button type="button" id="btn-cargar-seccion">Cargar</button>
+          </form>
           <div id="editor-container" style="height:300px;background:white;color:black;"></div>
           <button id="btn-guardar-pagina" style="margin-top:10px;">Guardar Cambios</button>
         </div>
@@ -205,6 +217,7 @@
       panels.editar = document.getElementById('admin-editar-panel');
       cards.editar = document.querySelector('.card-editar');
       let quill;
+      let paginasSecciones = [];
       function hideAllPanels() {
         Object.values(panels).forEach(p => p.style.display = 'none');
       }
@@ -224,20 +237,74 @@
         panels.certificados.style.display = 'block';
         cargarCertificados();
       });
+
+      // --- Panel de edición avanzada ---
       cards.editar.addEventListener('click', () => {
-        window.location.href = '/?edit=1';
+        hideAllPanels();
+        panels.editar.style.display = 'block';
+        inicializarEditorAvanzado();
+      });
+
+      async function inicializarEditorAvanzado() {
+        // Cargar páginas y secciones disponibles
+        if (!paginasSecciones.length) {
+          const res = await fetch('/api/paginas_contenido/all', { credentials: 'include' });
+          paginasSecciones = await res.json();
+        }
+        const paginas = [...new Set(paginasSecciones.map(x => x.pagina))];
+        const selectPagina = document.getElementById('select-pagina');
+        selectPagina.innerHTML = paginas.map(p => `<option value="${p}">${p}</option>`).join('');
+        actualizarSecciones();
+      }
+
+      function actualizarSecciones() {
+        const pagina = document.getElementById('select-pagina').value;
+        const secciones = paginasSecciones.filter(x => x.pagina === pagina);
+        const selectSeccion = document.getElementById('select-seccion');
+        selectSeccion.innerHTML = secciones.map(s => `<option value="${s.seccion}">${s.seccion}</option>`).join('');
+        if (secciones.length) {
+          document.getElementById('input-titulo').value = secciones[0].titulo || '';
+        }
+      }
+
+      document.getElementById('select-pagina').addEventListener('change', actualizarSecciones);
+      document.getElementById('select-seccion').addEventListener('change', function() {
+        const pagina = document.getElementById('select-pagina').value;
+        const seccion = this.value;
+        const obj = paginasSecciones.find(x => x.pagina === pagina && x.seccion === seccion);
+        document.getElementById('input-titulo').value = obj ? (obj.titulo || '') : '';
+      });
+
+      document.getElementById('btn-cargar-seccion').addEventListener('click', function() {
+        const pagina = document.getElementById('select-pagina').value;
+        const seccion = document.getElementById('select-seccion').value;
+        const obj = paginasSecciones.find(x => x.pagina === pagina && x.seccion === seccion);
+        if (!quill) {
+          quill = new Quill('#editor-container', { theme: 'snow' });
+        }
+        quill.root.innerHTML = obj ? (obj.contenido || '') : '';
+        document.getElementById('input-titulo').value = obj ? (obj.titulo || '') : '';
       });
 
       document.getElementById('btn-guardar-pagina').addEventListener('click', async function() {
+        const pagina = document.getElementById('select-pagina').value;
+        const seccion = document.getElementById('select-seccion').value;
+        const titulo = document.getElementById('input-titulo').value;
         const html = quill.root.innerHTML;
-        const resp = await fetch('/api/admin/pagina', {
+        const resp = await fetch('/api/paginas_contenido', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
-          body: JSON.stringify({ html })
+          body: JSON.stringify({ pagina, seccion, titulo, contenido: html })
         });
         if (resp.ok) {
-          alert('Página actualizada');
+          alert('Sección actualizada');
+          // Actualizar cache local
+          const idx = paginasSecciones.findIndex(x => x.pagina === pagina && x.seccion === seccion);
+          if (idx !== -1) {
+            paginasSecciones[idx].contenido = html;
+            paginasSecciones[idx].titulo = titulo;
+          }
         } else {
           alert('Error al guardar');
         }
