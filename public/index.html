@@ -68,85 +68,7 @@
 
   <!-- MAIN -->
   <main>
- <div id="resultados-busqueda" class="contenedor-resultados">
-        </div>
-    <!-- INICIO -->
-<section class="inicio-empresa">
-  <div class="inicio-contenido">
-    <h1>Innovación que trasciende, ideas que perduran</h1>
-    <p>
-      En <strong>IYAYKU Innovación Tecnológica</strong> creemos que la tecnología, la ciencia y la educación pueden transformar el presente y proyectar un futuro más sostenible. Somos una empresa ecuatoriana con impacto latinoamericano, especializada en asesoría, capacitación, investigación y soluciones digitales a medida.
-    </p>
-    <p>
-      Nuestro equipo multidisciplinario de expertos trabaja con instituciones, universidades, gobiernos y empresas para brindar resultados reales, éticos y de alta calidad. Si estás buscando impulsar tu proyecto, fortalecer tu organización o publicar en las mejores bases científicas, estás en el lugar correcto.
-    </p>
-    <a href="#nuestros-servicios" class="btn-principal">Conoce nuestros servicios</a>
-  </div>
-  <div class="inicio-imagen">
-    <img src="/Images/Inovacion.jpg" alt="Innovación IYAYKU" />
-  </div>
-</section>
-
-    <!-- ESTADÍSTICAS -->
-    <section class="estadisticas">
-      <div class="contenedor-estadisticas">
-        <div class="bloque-estadistica">
-          <h2 class="numero">100%</h2>
-          <p class="descripcion">Revistas Indexadas</p>
-        </div>
-        <div class="bloque-estadistica">
-          <h2 class="numero">250+</h2>
-          <p class="descripcion">Artículos Publicados</p>
-        </div>
-      </div>
-    </section>
-    <section style="width:100%; background-color: transparent;padding:32px 0 24px 0;margin-bottom:0;">
-      <h1 class="inicio-contenido" style="text-align:center;color:#fff;margin:0 auto;font-size:2.4rem;font-weight:700;max-width:900px;">Sobre Nuestro Trabajo</h1>
-    </section>
-    <section class="servicios-dos-columnas">
-
-    <div class="columna">
-      <h2>Consultoría y soluciones empresariales digitales</h2>
-      <ul>
-        <li>Diseño y desarrollo de sitios web funcionales y creativos</li>
-        <li>Creación de aplicaciones móviles para Android y iOS</li>
-        <li>Gestión documental y automatización de procesos internos</li>
-        <li>Marketing digital orientado a la captación y fidelización</li>
-        <li>Inteligencia de negocios y análisis de datos</li>
-      </ul>
-
-      <h2>Seguridad informática y ciberseguridad</h2>
-      <ul>
-        <li>Seguridad en la nube para minimizar riesgos</li>
-        <li>Protección integral de usuarios y dispositivos</li>
-        <li>Infraestructura de seguridad híbrida</li>
-        <li>Diagnóstico de vulnerabilidades y monitoreo</li>
-      </ul>
-    </div>
-
-    <div class="columna">
-      <h2>Capacitación y formación profesional continua</h2>
-      <ul>
-        <li>Ciberseguridad: hacking ético, seguridad forense</li>
-        <li>Investigación académica y publicación científica</li>
-        <li>Educación virtual e inteligencia artificial aplicada</li>
-        <li>Marketing político, atención al cliente y más</li>
-      </ul>
-
-      <h2>Asesoría académica, científica y editorial</h2>
-      <ul>
-        <li>Gestión de proyectos de investigación</li>
-        <li>Publicación de artículos en Scopus, Scielo, etc.</li>
-        <li>Creación y publicación de libros con ISBN</li>
-        <li>Asesoría para crear e indexar revistas científicas</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- En el <body> de index.html, donde va el contenido editable -->
-  <div id="editable-content"></div>
-  <button id="btn-save-content" style="display:none;margin-top:10px;">Guardar Cambios</button>
-
+    <div id="contenido-dinamico"></div>
   </main>
  <footer class="footer">
       <div class="footer-col">
@@ -176,47 +98,39 @@
       </div>
     </footer>
   <script src="/script.js"></script>
-   <script src="/scripts/carrito.js"></script>
-   <script>
-async function isAdmin() {
-  const res = await fetch('/api/status', { credentials: 'include' });
-  const data = await res.json();
-  return data.usuario && data.usuario.correo === 'admin@iyayku.com';
-}
-
-document.addEventListener('DOMContentLoaded', async function() {
-  const params = new URLSearchParams(window.location.search);
-  const editMode = params.get('edit') === '1';
-  const editableDiv = document.getElementById('editable-content');
-  const btnSave = document.getElementById('btn-save-content');
-
-  // Cargar contenido desde el backend
-  const resp = await fetch('/api/admin/pagina', { credentials: 'include' });
-  const data = await resp.json();
-  editableDiv.innerHTML = data.html || '';
-
-  if (editMode && await isAdmin()) {
-    // Mostrar editor visual
-    btnSave.style.display = 'inline-block';
-    const quill = new Quill('#editable-content', { theme: 'snow' });
-
-    btnSave.onclick = async function() {
-      const html = quill.root.innerHTML;
-      const resp = await fetch('/api/admin/pagina', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ html })
-      });
-      if (resp.ok) {
-        alert('Página actualizada');
-        location.href = '/';
-      } else {
-        alert('Error al guardar');
+  <script>
+    // Carga dinámica del contenido de la página principal desde la base de datos
+    document.addEventListener('DOMContentLoaded', async () => {
+      const cont = document.getElementById('contenido-dinamico');
+      try {
+        const res = await fetch('/api/paginas_contenido/inicio');
+        if (!res.ok) throw new Error('No se pudo cargar el contenido');
+        const data = await res.json();
+        cont.innerHTML = data.html || data.contenido || '<p>Contenido no disponible.</p>';
+        // Si el usuario es admin, mostrar botón de edición
+        if (data.isAdmin) {
+          const btn = document.createElement('button');
+          btn.textContent = 'Editar contenido';
+          btn.className = 'btn-editar-admin';
+          btn.onclick = () => {
+            const nuevo = prompt('Editar contenido HTML:', data.html || data.contenido || '');
+            if (nuevo !== null) {
+              fetch('/api/paginas_contenido/inicio', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ html: nuevo })
+              }).then(r => {
+                if (r.ok) location.reload();
+                else alert('Error al guardar');
+              });
+            }
+          };
+          cont.appendChild(btn);
+        }
+      } catch (e) {
+        cont.innerHTML = '<p>Error cargando contenido.</p>';
       }
-    };
-  }
-});
-</script>
+    });
+  </script>
 </body>
 </html>

@@ -55,53 +55,26 @@
   </header>
 
   <!-- MAIN -->
-  <main>
-    <section class="nuestros-servicios">
-            <div class="servicios-texto">
-                <h2>¿Quiénes Somos?</h2>
-                <p> Somos una empresa dedicada a brindar soluciones tecnológicas de alta calidad, 
-                    especializada en la comercialización de equipos de cómputo, capacitación y 
-                    asesoramiento para empresas tanto del sector público como privado. 
-                    Con un enfoque centrado en la ética profesional, la responsabilidad y el trato humano, 
-                    IYAYKU busca atender las diversas necesidades de sus clientes de manera eficiente. 
-                    Además, la empresa apuesta por el desarrollo continuo de sus colaboradores, 
-                    fomentando la lealtad, el trabajo en equipo y el compromiso con la sostenibilidad ambiental, 
-                    asegurando así su rentabilidad y permanencia en el mercado.</p>
-                
-            </div>
-        <div class="servicios-imagen">
-            <img src="/Images/AcercaNosotros.png" alt="Acerca de Nosotoros">
-        </div>
-    </section>
-    <section class="mision-nosotros">
-        <div class="servicios-imagen">
-            <img src="/Images/mision.png" alt="Mision">
-        </div>
-        <div class="mision-texto">
-            <h2>Misión</h2>
-                <p> IYAYKU INNOVACIÓN TECNOLÓGICA tiene la misión de ofrecer servicios 
-                    empresariales de calidad con calidez, ser especialistas en la comercialización 
-                    de equipos de cómputo, capacitación y asesoría a empresas públicas y privadas, 
-                    solucionando las diversas necesidades de los clientes, con ética profesional y responsabilidad. 
-                    La empresa se enfoca en capacitar constantemente a sus colaboradores, promoviendo la lealtad y el 
-                    trabajo en equipo para asegurar la rentabilidad de la empresa y la sostenibilidad ambiental.</p>
-        </div>
-
-    </section>
-     <section class="nuestros-servicios">
-            <div class="servicios-texto">
-                <h2>Visión</h2>
-                <p> Ser una empresa líder en innovación tecnológica, 
-                  consultoría especializada y producción académica, 
-                  reconocida por su excelencia, compromiso social y capacidad de adaptación, 
-                  contribuyendo al fortalecimiento del ecosistema empresarial y educativo a nivel 
-                  nacional e internacional.</p>
-            </div>
-        <div class="servicios-imagen">
-            <img src="/Images/vision.png" alt="Acerca de Nosotoros">
-        </div>
-      </section>    
-  </main>
+  <main id="main-content"></main>
+  <div id="footer-content"></div>
+  <script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    // Cargar todas las secciones de la página "nosotros"
+    const main = document.getElementById('main-content');
+    const footerDiv = document.getElementById('footer-content');
+    const res = await fetch('/api/paginas_contenido?pagina=nosotros');
+    const secciones = await res.json();
+    // Renderizar secciones en orden
+    main.innerHTML = '';
+    secciones.filter(s => s.seccion !== 'footer').forEach(sec => {
+      if (sec.titulo) main.innerHTML += `<h2>${sec.titulo}</h2>`;
+      main.innerHTML += sec.contenido;
+    });
+    // Footer
+    const footerSec = secciones.find(s => s.seccion === 'footer');
+    if (footerSec) footerDiv.innerHTML = footerSec.contenido;
+  });
+  </script>
    <footer class="footer">
     <div class="footer-col">
       <h3>Dirección</h3>
@@ -129,10 +102,5 @@
   </footer>
   <script src="/script.js"></script>
   <script src="/scripts/video.js"></script>
-</body>
-</html>
-  <script src="/scripts/video.js"></script>
-</body>
-</html>
 </body>
 </html>

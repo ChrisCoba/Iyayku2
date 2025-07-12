@@ -57,99 +57,7 @@
 
   <!-- MAIN -->
   <main>
-
-    <section class="nuestros-servicios">
-            <div class="servicios-texto">
-                <h2>Nuestros Servicios</h2>
-                <p> Nuestro equipo de especialistas en publicaciones científicas está dedicado a nutrir tu trabajo desde la idea inicial hasta su publicación en revistas de alto impacto</p>
-                <ul>
-                <li>Desarrollo de proyectos y planes de investigación</li>
-                <li>Desarrollo de Tesis de Pregrado, Posgrado y Doctorado</li>
-                <li>Publicación de artículos en: SCOPUS (Q1-Q4), WoS, Scielo, Latindex Catálogo 2.0, otros</li>
-                <li>Publicación de libros digitales y físicos</li>
-                <li>Publicación de Tesis como libro o artículo científico</li>
-                <li>Creación de revistas científicas a nivel nacional e internacional</li>
-                <li>Asesorías para Indexación de revistas en Latindex 2.0, Scielo y Scopus</li>
-                <li>Capacitación personalizada en todas las áreas</li>
-                </ul>
-            </div>
-        <div class="servicios-imagen">
-            <img src="/Images/servicios.jpg" alt="Nuestros Servicios">
-        </div>
-    </section>
-    
-    <section class="estadisticas">
-        <div class="contenedor-estadisticas">
-            <div class="bloque-estadistica">
-                <h2 class="numero">100%</h2>
-                <p class="descripcion">Revistas Indexadas</p>
-            </div>
-            <div class="bloque-estadistica">
-                <h2 class="numero">250+</h2>
-                <p class="descripcion">Artículos Publicados</p>
-            </div>
-        </div>
-    </section>
-    
-    <!-- NUEVA SECCIÓN DE SERVICIOS CON PRECIOS -->
-    <section class="servicios-precios-section" style="background:transparent;padding:40px 0 60px 0;">
-      <div class="servicios-precios-container">
-        <h2 class="servicios-precios-title">Nuestros Servicios y Precios</h2>
-        <div class="servicios-precios-cards">
-          <div class="servicio-precio-card card-blue">
-            <div class="servicio-precio-header">Proyectos y Planes de Investigación</div>
-            <ul>
-              <li>Desarrollo personalizado</li>
-              <li>Asesoría profesional</li>
-              <li>Entrega digital</li>
-            </ul>
-            <div class="servicio-precio-precio">$250</div>
-            <button class="servicio-precio-btn">Comprar</button>
-          </div>
-          <div class="servicio-precio-card card-yellow">
-            <div class="servicio-precio-header">Tesis Pregrado, Posgrado y Doctorado</div>
-            <ul>
-              <li>Redacción y acompañamiento</li>
-              <li>Formato académico</li>
-              <li>Revisiones incluidas</li>
-            </ul>
-            <div class="servicio-precio-precio">$350</div>
-            <button class="servicio-precio-btn">Comprar</button>
-          </div>
-          <div class="servicio-precio-card card-purple">
-            <div class="servicio-precio-header">Publicación de Artículos</div>
-            <ul>
-              <li>En revistas indexadas</li>
-              <li>Corrección de estilo</li>
-              <li>Gestión de DOI</li>
-            </ul>
-            <div class="servicio-precio-precio">$180</div>
-            <button class="servicio-precio-btn">Comprar</button>
-          </div>
-          <div class="servicio-precio-card card-orange">
-            <div class="servicio-precio-header">Libros Digitales y Físicos</div>
-            <ul>
-              <li>ISBN y maquetación</li>
-              <li>Diseño de portada</li>
-              <li>Publicación internacional</li>
-            </ul>
-            <div class="servicio-precio-precio">$400</div>
-            <button class="servicio-precio-btn">Comprar</button>
-          </div>
-          <div class="servicio-precio-card card-green">
-            <div class="servicio-precio-header">Tesis como Libro o Artículo</div>
-            <ul>
-              <li>Conversión profesional</li>
-              <li>Publicación en línea</li>
-              <li>Difusión académica</li>
-            </ul>
-            <div class="servicio-precio-precio">$220</div>
-            <button class="servicio-precio-btn">Comprar</button>
-          </div>
-        </div>
-      </div>
-    </section>
-    
+    <div id="contenido-dinamico"></div>
   </main>
 
   <footer class="footer">
@@ -196,6 +104,40 @@
     </div>
   </div>
   <script src="/script.js"></script>
+  <script>
+    // Carga dinámica del contenido de la página 'servicios' desde la base de datos
+    document.addEventListener('DOMContentLoaded', async () => {
+      const cont = document.getElementById('contenido-dinamico');
+      try {
+        const res = await fetch('/api/paginas_contenido/servicios');
+        if (!res.ok) throw new Error('No se pudo cargar el contenido');
+        const data = await res.json();
+        cont.innerHTML = data.html || data.contenido || '<p>Contenido no disponible.</p>';
+        // Si el usuario es admin, mostrar botón de edición
+        if (data.isAdmin) {
+          const btn = document.createElement('button');
+          btn.textContent = 'Editar contenido';
+          btn.className = 'btn-editar-admin';
+          btn.onclick = () => {
+            const nuevo = prompt('Editar contenido HTML:', data.html || data.contenido || '');
+            if (nuevo !== null) {
+              fetch('/api/paginas_contenido/servicios', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ html: nuevo })
+              }).then(r => {
+                if (r.ok) location.reload();
+                else alert('Error al guardar');
+              });
+            }
+          };
+          cont.appendChild(btn);
+        }
+      } catch (e) {
+        cont.innerHTML = '<p>Error cargando contenido.</p>';
+      }
+    });
+  </script>
   <script src="/scripts/carrito.js"></script>
 </body>
 </html>

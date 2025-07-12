@@ -265,7 +265,7 @@ CREATE TABLE public.facturas (
 );
 
 
-ALTER TABLE public.facturas OWNER TO postgres;
+ALTER TABLE public.facturas OWNER to postgres;
 
 --
 -- TOC entry 4765 (class 1259 OID 16441)
@@ -275,6 +275,7 @@ ALTER TABLE public.facturas OWNER TO postgres;
 CREATE TABLE public.factura_items (
     id SERIAL PRIMARY KEY,
     factura_id INTEGER REFERENCES public.facturas(id) ON DELETE CASCADE,
+    servicio_id INTEGER REFERENCES public.servicios(id) ON DELETE SET NULL,
     servicio_nombre VARCHAR(200) NOT NULL,
     cantidad INT NOT NULL,
     precio_unitario NUMERIC(10,2) NOT NULL
@@ -282,6 +283,40 @@ CREATE TABLE public.factura_items (
 
 
 ALTER TABLE public.factura_items OWNER TO postgres;
+
+--
+-- TOC entry 4766 (class 1259 OID 16442)
+-- Name: paginas_contenido; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.paginas_contenido (
+    id SERIAL PRIMARY KEY,
+    pagina VARCHAR(50) NOT NULL,         -- Ej: 'contacto', 'editorial', 'nosotros', 'servicios'
+    seccion VARCHAR(50) NOT NULL,        -- Ej: 'main', 'footer', 'intro', etc
+    titulo VARCHAR(200),                 -- Título de la sección (opcional)
+    contenido TEXT NOT NULL,             -- HTML o texto de la sección
+    orden INT DEFAULT 0                  -- Para ordenar las secciones si es necesario
+);
+
+
+ALTER TABLE public.paginas_contenido OWNER TO postgres;
+
+--
+-- TOC entry 4767 (class 1259 OID 16443)
+-- Name: servicios; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.servicios (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(200) NOT NULL,
+    descripcion TEXT,
+    precio NUMERIC(10,2) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
+    orden INT DEFAULT 0
+);
+
+
+ALTER TABLE public.servicios OWNER to postgres;
 
 -- Completed on 2025-06-03 22:03:50
 

@@ -59,3 +59,21 @@ CREATE TABLE IF NOT EXISTS public.factura_items (
   cantidad INT NOT NULL,
   precio_unitario NUMERIC(10,2) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS public.paginas_contenido (
+  id SERIAL PRIMARY KEY,
+  pagina VARCHAR(50) NOT NULL,         -- Ej: 'contacto', 'editorial', 'nosotros', 'servicios'
+  seccion VARCHAR(50) NOT NULL,        -- Ej: 'main', 'footer', 'intro', etc
+  titulo VARCHAR(200),                 -- Título de la sección (opcional)
+  contenido TEXT NOT NULL,             -- HTML o texto de la sección
+  orden INT DEFAULT 0                  -- Para ordenar las secciones si es necesario
+);
+
+CREATE TABLE IF NOT EXISTS public.servicios (
+  id SERIAL PRIMARY KEY,
+  nombre VARCHAR(200) NOT NULL,
+  descripcion TEXT,
+  precio NUMERIC(10,2) NOT NULL,
+  activo BOOLEAN DEFAULT TRUE,
+  orden INT DEFAULT 0
+);

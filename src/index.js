@@ -271,6 +271,86 @@ app.post('/api/admin/pagina', auth, (req, res) => {
   res.json({ ok: true });
 });
 
+// --- Obtener contenido de una página o sección ---
+app.get('/api/paginas_contenido', async (req, res) => {
+  const { pagina, seccion } = req.query;
+  let query = 'SELECT * FROM paginas_contenido WHERE 1=1';
+  const params = [];
+  if (pagina) { query += ' AND pagina = $' + (params.length+1); params.push(pagina); }
+  if (seccion) { query += ' AND seccion = $' + (params.length+1); params.push(seccion); }
+  query += ' ORDER BY orden, id';
+  try {
+    const { rows } = await pool.query(query, params);
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al obtener contenido' });
+  }
+});
+
+// --- Actualizar o crear contenido de una página/sección (solo admin) ---
+app.post('/api/paginas_contenido', auth, async (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo el administrador puede editar el contenido.' });
+  const { id, pagina, seccion, titulo, contenido, orden } = req.body;
+  try {
+    if (id) {
+      // Update
+      await pool.query('UPDATE paginas_contenido SET pagina=$1, seccion=$2, titulo=$3, contenido=$4, orden=$5 WHERE id=$6', [pagina, seccion, titulo, contenido, orden||0, id]);
+      res.json({ msg: 'Contenido actualizado' });
+    } else {
+      // Insert
+      await pool.query('INSERT INTO paginas_contenido (pagina, seccion, titulo, contenido, orden) VALUES ($1,$2,$3,$4,$5)', [pagina, seccion, titulo, contenido, orden||0]);
+      res.json({ msg: 'Contenido creado' });
+    }
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al guardar contenido' });
+  }
+});
+
+// --- Listar servicios (público) ---
+app.get('/api/servicios', async (req, res) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM servicios WHERE activo = TRUE ORDER BY orden, id');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al obtener servicios' });
+  }
+});
+
+// --- CRUD servicios (solo admin) ---
+app.post('/api/admin/servicios', auth, async (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo el administrador puede agregar servicios.' });
+  const { nombre, descripcion, precio, orden } = req.body;
+  try {
+    await pool.query('INSERT INTO servicios (nombre, descripcion, precio, orden) VALUES ($1,$2,$3,$4)', [nombre, descripcion, precio, orden||0]);
+    res.json({ msg: 'Servicio creado' });
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al crear servicio' });
+  }
+});
+
+app.put('/api/admin/servicios/:id', auth, async (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo el administrador puede editar servicios.' });
+  const { id } = req.params;
+  const { nombre, descripcion, precio, activo, orden } = req.body;
+  try {
+    await pool.query('UPDATE servicios SET nombre=$1, descripcion=$2, precio=$3, activo=$4, orden=$5 WHERE id=$6', [nombre, descripcion, precio, activo, orden||0, id]);
+    res.json({ msg: 'Servicio actualizado' });
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al actualizar servicio' });
+  }
+});
+
+app.delete('/api/admin/servicios/:id', auth, async (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo el administrador puede eliminar servicios.' });
+  const { id } = req.params;
+  try {
+    await pool.query('DELETE FROM servicios WHERE id=$1', [id]);
+    res.json({ msg: 'Servicio eliminado' });
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al eliminar servicio' });
+  }
+});
+
 //------------------------------------------------------------
 // 7. Arranque
 //------------------------------------------------------------
