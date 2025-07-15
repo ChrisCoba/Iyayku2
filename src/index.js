@@ -6,13 +6,22 @@ const cookieParser = require('cookie-parser');
 const bcrypt  = require('bcryptjs');
 const jwt     = require('jsonwebtoken');
 require('dotenv').config();
-const { generarFacturaPDF } = require('./pdfFactura');
 
+const { generarFacturaPDF } = require('./pdfFactura');
 const pool = require('./db');
 const auth = require('./middlewares/auth');       // único middleware
 const uploadRoutes = require('./routes/upload');  // ⇠ NUEVO
-const imgController = require('../backend/controllers/imagenesControlador');
 
+// Ruta absoluta para cargar el controlador (ajusta según tu estructura de carpetas)
+const imgControllerPath = path.resolve(__dirname, '../backend/controllers/imagenesControlador.js');
+
+let imgController;
+try {
+  imgController = require(imgControllerPath);
+  console.log('[DEBUG] Controlador imágenes cargado:', Object.keys(imgController));
+} catch (err) {
+  console.error('[ERROR] No se pudo cargar el controlador de imágenes:', err);
+}
 
 const app  = express();
 
@@ -26,11 +35,23 @@ const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret';
 app.use(express.json());
 app.use(cookieParser());
 
+// Servir imágenes y SVG directamente desde la carpeta public
+app.use('/img', express.static(path.join(__dirname, '..', 'public', 'img')));
+app.use('/svg', express.static(path.join(__dirname, '..', 'public', 'svg')));
 
-app.get('/img/:nombre', imgController.obtenerImagen);
-app.get('/svg/:nombre', imgController.obtenerSVG);
+// Opcional: Si quieres usar tu controlador personalizado para imágenes y SVG, descomenta estas líneas
+// app.get('/img/:nombre', imgController.obtenerImagen);
+// app.get('/svg/:nombre', imgController.obtenerSVG);
 
-console.log('[DEBUG] imgController:', imgController);
+// Tus otras rutas y middlewares
+app.use('/upload', uploadRoutes);
+app.use(auth);
+
+// Ruta de prueba o principal
+app.get('/', (req, res) => {
+  res.send('Servidor funcionando. ¡Vamos con todo!');
+});
+
 
 
 //------------------------------------------------------------
