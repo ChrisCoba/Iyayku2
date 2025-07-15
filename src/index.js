@@ -14,6 +14,7 @@ const uploadRoutes = require('./routes/upload');  // ⇠ NUEVO
 const imgController = require('../backend/controllers/imagenesControlador');
 
 
+const app  = express();
 
 app.get('/img/:nombre', imgController.obtenerImagen);
 app.get('/svg/:nombre', imgController.obtenerSVG);
@@ -22,7 +23,7 @@ app.get('/svg/:nombre', imgController.obtenerSVG);
 //------------------------------------------------------------
 // Config básica
 //------------------------------------------------------------
-const app  = express();
+
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret';
 
