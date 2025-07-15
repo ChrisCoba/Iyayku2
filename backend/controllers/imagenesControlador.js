@@ -55,8 +55,8 @@ async function descargarArchivo(nombre, tipo = 'svg') {
   });
 }
 
-// Controlador SVG
-exports.obtenerSVG = async (req, res) => {
+
+async function obtenerSVG(req, res) {
   try {
     const nombre = req.params.nombre;
     const filePath = await descargarArchivo(nombre, 'svg');
@@ -65,10 +65,9 @@ exports.obtenerSVG = async (req, res) => {
   } catch (err) {
     res.status(404).json({ error: 'SVG no encontrado' });
   }
-};
+}
 
-// Controlador Imagen
-exports.obtenerImagen = async (req, res) => {
+async function obtenerImagen(req, res) {
   try {
     const nombre = req.params.nombre;
     const filePath = await descargarArchivo(nombre, 'img');
@@ -78,9 +77,7 @@ exports.obtenerImagen = async (req, res) => {
   } catch (err) {
     res.status(404).json({ error: 'Imagen no encontrada' });
   }
-};
-
-
+}
 
 module.exports = {
   obtenerSVG,
