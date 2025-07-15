@@ -159,5 +159,10 @@
   .carrito-panel {
     width: 98vw;
     min-width: 0;
+    max-width: 98vw;
+  }
+  .carrito-toggle-btn {
+    padding: 10px 14px;
+    font-size: 1rem;
   }
 }

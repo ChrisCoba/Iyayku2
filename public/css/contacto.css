@@ -189,6 +189,10 @@ button[type="submit"]:hover {
     padding: 1.5rem 0.5rem;
     border-radius: 18px;
   }
+  .contacto-info {
+    font-size: 1em;
+    padding: 1rem 0;
+  }
 }
 
 /* Modo oscuro */

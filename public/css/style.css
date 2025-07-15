@@ -14,6 +14,8 @@ header {
   align-items: center;
   background-color: #ffffff;
   padding: 30px 400px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .header-content {
@@ -351,11 +353,12 @@ button:hover {
   width: 100%;
   flex-shrink: 0;
   background-color: #f9fafb;
-  padding: 2rem;
+  padding: 2rem 4vw;
   color: #1f2937;
   border-top: 2px solid #e5e7eb;
   box-sizing: border-box;
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0;
@@ -378,16 +381,21 @@ button:hover {
   .footer {
     flex-direction: column;
     align-items: stretch;
+    padding: 1.2rem 2vw;
   }
   .footer-col {
-    border-right: none;
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
+    min-width: 0;
+    padding: 0 0.5rem;
   }
-  .footer-col:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 0.8rem 1vw;
+  }
+  .footer-col {
+    padding: 0 0.2rem;
+    font-size: 0.98em;
   }
 }
 
