@@ -11,14 +11,10 @@ const { generarFacturaPDF } = require('./pdfFactura');
 const pool = require('./db');
 const auth = require('./middlewares/auth');       // único middleware
 const uploadRoutes = require('./routes/upload');  // ⇠ NUEVO
-const imgController = require('../backend/controllers/imagenesControlador');
+const imgController = require('./backend/controllers/imagenesControlador');
 
 
 const app  = express();
-
-app.get('/img/:nombre', imgController.obtenerImagen);
-app.get('/svg/:nombre', imgController.obtenerSVG);
-
 
 //------------------------------------------------------------
 // Config básica
@@ -29,6 +25,10 @@ const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret';
 
 app.use(express.json());
 app.use(cookieParser());
+
+
+app.get('/img/:nombre', imgController.obtenerImagen);
+app.get('/svg/:nombre', imgController.obtenerSVG);
 
 //------------------------------------------------------------
 // 1. Asegurar carpetas de almacenamiento local
