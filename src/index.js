@@ -30,6 +30,9 @@ app.use(cookieParser());
 app.get('/img/:nombre', imgController.obtenerImagen);
 app.get('/svg/:nombre', imgController.obtenerSVG);
 
+console.log('[DEBUG] imgController:', imgController);
+
+
 //------------------------------------------------------------
 // 1. Asegurar carpetas de almacenamiento local
 //------------------------------------------------------------

@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
+const mime = require('mime-types'); // npm i mime-types
 
+// SVGs
 const svgUrls = {
   facebook: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//facebook_icon.svg',
   instagram: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//instagram_icon.svg',
@@ -9,16 +11,42 @@ const svgUrls = {
   whatsapp: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//whatsapp_icon.svg'
 };
 
-const svgDir = path.join(__dirname, '..', 'public', 'svg');
+// Otras imágenes
+const imageUrls = {
+  acerca: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/AcercaNosotros.png',
+  alpha: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/Alpha_page-0001.jpg',
+  fondo: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/fondo.jpg',
+  horizon: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/Horizon_page-0001.jpg',
+  impact: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/Impact_page-0001.jpg',
+  inovacion: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/Inovacion.jpg',
+  mision: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/mision.png',
+  servicios: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/servicios.jpg',
+  vision: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/vision.png',
+  bastcorp: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/inovaimagenes/Bastcorp_page-0001.jpg',
+  ingenio: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/inovaimagenes/Ingenio_page-0001.jpg',
+  kosmos: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/inovaimagenes/Kosmos_page-0001.jpg',
+  nexus: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/inovaimagenes/Nexus_page-0001.jpg'
+};
 
-async function descargarSVG(nombre) {
-  if (!svgUrls[nombre]) throw new Error('SVG no encontrado');
-  const filePath = path.join(svgDir, `${nombre}.svg`);
-  if (fs.existsSync(filePath)) {
-    return filePath;
-  }
-  const response = await axios.get(svgUrls[nombre], { responseType: 'stream' });
-  await fs.promises.mkdir(svgDir, { recursive: true });
+// Carpetas
+const svgDir = path.join(__dirname, '..', 'public', 'svg');
+const imgDir = path.join(__dirname, '..', 'public', 'img');
+
+// Descarga imagen o svg
+async function descargarArchivo(nombre, tipo = 'svg') {
+  const urls = tipo === 'svg' ? svgUrls : imageUrls;
+  const url = urls[nombre];
+  if (!url) throw new Error('Imagen no encontrada');
+
+  const ext = path.extname(url).split('?')[0]; // por si tiene params
+  const fileName = `${nombre}${ext}`;
+  const dir = tipo === 'svg' ? svgDir : imgDir;
+  const filePath = path.join(dir, fileName);
+
+  if (fs.existsSync(filePath)) return filePath;
+
+  const response = await axios.get(url, { responseType: 'stream' });
+  await fs.promises.mkdir(dir, { recursive: true });
   const writer = fs.createWriteStream(filePath);
   response.data.pipe(writer);
   return new Promise((resolve, reject) => {
@@ -27,11 +55,11 @@ async function descargarSVG(nombre) {
   });
 }
 
-// Controlador para servir el SVG
+// Controlador SVG
 exports.obtenerSVG = async (req, res) => {
   try {
     const nombre = req.params.nombre;
-    const filePath = await descargarSVG(nombre);
+    const filePath = await descargarArchivo(nombre, 'svg');
     res.setHeader('Content-Type', 'image/svg+xml');
     fs.createReadStream(filePath).pipe(res);
   } catch (err) {
@@ -39,4 +67,22 @@ exports.obtenerSVG = async (req, res) => {
   }
 };
 
-// ...puedes agregar más funciones si lo necesitas...
+// Controlador Imagen
+exports.obtenerImagen = async (req, res) => {
+  try {
+    const nombre = req.params.nombre;
+    const filePath = await descargarArchivo(nombre, 'img');
+    const mimeType = mime.lookup(filePath) || 'application/octet-stream';
+    res.setHeader('Content-Type', mimeType);
+    fs.createReadStream(filePath).pipe(res);
+  } catch (err) {
+    res.status(404).json({ error: 'Imagen no encontrada' });
+  }
+};
+
+
+
+module.exports = {
+  obtenerSVG,
+  obtenerImagen
+};
