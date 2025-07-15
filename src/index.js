@@ -16,6 +16,7 @@ const imgController = require('./controllers/imagenesControlador');
 app.get('/img/:nombre', imgController.obtenerImagen);
 app.get('/svg/:nombre', imgController.obtenerSVG);
 
+
 //------------------------------------------------------------
 // Config básica
 //------------------------------------------------------------
