@@ -41,7 +41,6 @@ app.get('/svg/:nombre', imgController.obtenerSVG);
 
 // Tus otras rutas y middlewares
 app.use('/upload', uploadRoutes);
-app.use(auth);
 
 // Ruta de prueba o principal
 app.get('/', (req, res) => {
