@@ -48,8 +48,6 @@ app.get('/', (req, res) => {
   res.send('Servidor funcionando. ¡Vamos con todo!');
 });
 
-
-
 //------------------------------------------------------------
 // 1. Asegurar carpetas de almacenamiento local
 //------------------------------------------------------------
@@ -382,9 +380,3 @@ app.delete('/api/admin/servicios/:id', auth, async (req, res) => {
 // 7. Arranque
 //------------------------------------------------------------
 app.listen(PORT, () => console.log(`🚀  Servidor corriendo en http://localhost:${PORT}`));
-
-//------------------------------------------------------------
-// 7. Arranque
-//------------------------------------------------------------
-app.listen(PORT, () => console.log(`🚀  Servidor corriendo en http://localhost:${PORT}`));
-
