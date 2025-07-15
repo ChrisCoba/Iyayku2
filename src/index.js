@@ -35,13 +35,9 @@ const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret';
 app.use(express.json());
 app.use(cookieParser());
 
-// Servir imágenes y SVG directamente desde la carpeta public
-app.use('/img', express.static(path.join(__dirname, '..', 'public', 'img')));
-app.use('/svg', express.static(path.join(__dirname, '..', 'public', 'svg')));
-
-// Opcional: Si quieres usar tu controlador personalizado para imágenes y SVG, descomenta estas líneas
-// app.get('/img/:nombre', imgController.obtenerImagen);
-// app.get('/svg/:nombre', imgController.obtenerSVG);
+// Servir imágenes y SVG usando el controlador personalizado
+app.get('/img/:nombre', imgController.obtenerImagen);
+app.get('/svg/:nombre', imgController.obtenerSVG);
 
 // Tus otras rutas y middlewares
 app.use('/upload', uploadRoutes);
@@ -68,7 +64,6 @@ dirs.forEach(d => { if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
 //------------------------------------------------------------
 const publicPath = path.join(__dirname, '..', 'public');
 app.use(express.static(publicPath));
-app.get('/', (_q, res) => res.sendFile(path.join(publicPath, 'index.html')));
 
 //------------------------------------------------------------
 // 3. Test DB
@@ -382,6 +377,11 @@ app.delete('/api/admin/servicios/:id', auth, async (req, res) => {
     res.status(500).json({ msg: 'Error al eliminar servicio' });
   }
 });
+
+//------------------------------------------------------------
+// 7. Arranque
+//------------------------------------------------------------
+app.listen(PORT, () => console.log(`🚀  Servidor corriendo en http://localhost:${PORT}`));
 
 //------------------------------------------------------------
 // 7. Arranque
