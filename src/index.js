@@ -42,11 +42,6 @@ app.get('/svg/:nombre', imgController.obtenerSVG);
 // Tus otras rutas y middlewares
 app.use('/upload', uploadRoutes);
 
-// Ruta de prueba o principal
-app.get('/', (req, res) => {
-  res.send('Servidor funcionando. ¡Vamos con todo!');
-});
-
 //------------------------------------------------------------
 // 1. Asegurar carpetas de almacenamiento local
 //------------------------------------------------------------
