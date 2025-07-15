@@ -17,7 +17,7 @@
 
 .slider-convenios {
   background-color: white;
-  padding: 100px 20px;
+  padding: 40px 20px; /* antes: 100px 20px */
   position: relative;
   overflow: hidden;
   display: flex;
@@ -33,7 +33,7 @@
 }
 
 .slider-container img {
-  max-height: 180px;
+  max-height: 100px; /* antes: 180px */
   height: auto;
   width: auto;
   object-fit: contain;
@@ -76,10 +76,10 @@
     gap: 80px;
   }
   .slider-convenios {
-    padding: 40px 4vw;
+    padding: 24px 4vw; /* antes: 40px 4vw */
   }
   .slider-container img {
-    max-height: 100px;
+    max-height: 70px; /* antes: 100px */
   }
 }
 
@@ -88,9 +88,9 @@
     gap: 24px;
   }
   .slider-container img {
-    max-height: 60px;
+    max-height: 40px; /* antes: 60px */
   }
   .slider-convenios {
-    padding: 20px 2vw;
+    padding: 12px 2vw; /* antes: 20px 2vw */
   }
 }
