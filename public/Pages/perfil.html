@@ -11,11 +11,9 @@
 </head>
 <body class="bg-blue-800 text-white font-sans">
   <header class="bg-white text-black flex flex-wrap items-center justify-between px-6 py-4 shadow-md">
-    <!-- LOGO -->
     <div class="logo flex-shrink-0">
-      <img src="/img/acerca" alt="Logo" class="h-12 object-contain" />
+      <img src="/img/logo" alt="Logo" class="h-12 object-contain" />
     </div>
-    <!-- MENÚ -->
     <nav id="main-menu" class="w-full md:w-auto md:flex md:items-center mt-4 md:mt-0 hidden md:block">
       <ul class="flex flex-col md:flex-row gap-4 letras_menu w-full md:w-auto">
         <li><a href="/index.html" class="hover-effect block py-2 px-4">Inicio</a></li>
@@ -53,13 +51,11 @@
         class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
     </div>
   </header>
-
   <!-- LOGIN STATUS BANNER -->
   <div id="login-status-banner" style="display:none;position:fixed;top:0;right:0;z-index:9999;background:#3498db;color:#fff;padding:8px 18px;border-radius:0 0 0 12px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.10);">
     <span id="login-status-text"></span>
     <a id="perfil-link" href="/Pages/perfil.html" style="color:#fff;text-decoration:underline;margin-left:10px;display:none;">Ir a perfil</a>
   </div>
-
   <main class="admin-dashboard-main admin-dashboard-main-blanco">
     <!-- Sidebar -->
     <aside class="admin-sidebar">
@@ -220,7 +216,6 @@
             const text = document.getElementById('login-status-text');
             const perfilLink = document.getElementById('perfil-link');
             text.textContent = `Sesión iniciada: ${data.usuario.nombre || data.usuario.correo}`;
-            // Solo mostrar el link a perfil si es admin
             if (data.usuario.correo === 'admin@iyayku.com') {
               perfilLink.style.display = '';
             } else {
@@ -228,6 +223,11 @@
             }
             banner.style.display = '';
           }
+        });
+    });
+  </script>
+</body>
+</html>
         });
     });
   </script>

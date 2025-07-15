@@ -13,11 +13,9 @@
 <body class="bg-blue-800 text-white font-sans">
 
     <header class="bg-white text-black flex flex-wrap items-center justify-between px-6 py-4 shadow-md">
-    <!-- LOGO -->
     <div class="logo flex-shrink-0">
-      <img src="/img/acerca" alt="Logo" class="h-12 object-contain" />
+      <img src="/img/logo" alt="Logo" class="h-12 object-contain" />
     </div>
-    <!-- MENÚ -->
     <nav id="main-menu" class="w-full md:w-auto md:flex md:items-center mt-4 md:mt-0 hidden md:block">
       <ul class="flex flex-col md:flex-row gap-4 letras_menu w-full md:w-auto">
         <li><a href="/index.html" class="hover-effect block py-2 px-4">Inicio</a></li>
@@ -105,7 +103,6 @@
             const text = document.getElementById('login-status-text');
             const perfilLink = document.getElementById('perfil-link');
             text.textContent = `Sesión iniciada: ${data.usuario.nombre || data.usuario.correo}`;
-            // Solo mostrar el link a perfil si es admin
             if (data.usuario.correo === 'admin@iyayku.com') {
               perfilLink.style.display = '';
             } else {
@@ -115,6 +112,9 @@
           }
         });
     });
+  </script>
+</body>
+</html>
   </script>
 </body>
 </html>
