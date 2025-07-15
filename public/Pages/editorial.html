@@ -55,6 +55,13 @@
         class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
     </div>
   </header>
+
+  <!-- LOGIN STATUS BANNER -->
+  <div id="login-status-banner" style="display:none;position:fixed;top:0;right:0;z-index:9999;background:#3498db;color:#fff;padding:8px 18px;border-radius:0 0 0 12px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.10);">
+    <span id="login-status-text"></span>
+    <a id="perfil-link" href="/Pages/perfil.html" style="color:#fff;text-decoration:underline;margin-left:10px;display:none;">Ir a perfil</a>
+  </div>
+
   <!-- MAIN -->
   <main>
     <div id="contenido-dinamico"></div>
@@ -87,7 +94,27 @@
   </footer>
   <script src="/scripts/cargaImagenes.js"></script>
   <script src="/script.js"></script>
-</body>
-</html>
+  <script>
+    // Mostrar banner de login si está logueado
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('/api/status', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+          if (data.usuario && data.usuario.correo) {
+            const banner = document.getElementById('login-status-banner');
+            const text = document.getElementById('login-status-text');
+            const perfilLink = document.getElementById('perfil-link');
+            text.textContent = `Sesión iniciada: ${data.usuario.nombre || data.usuario.correo}`;
+            // Solo mostrar el link a perfil si es admin
+            if (data.usuario.correo === 'admin@iyayku.com') {
+              perfilLink.style.display = '';
+            } else {
+              perfilLink.style.display = 'none';
+            }
+            banner.style.display = '';
+          }
+        });
+    });
+  </script>
 </body>
 </html>
