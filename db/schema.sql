@@ -1,4 +1,22 @@
 --
+-- Tabla para gestión de artículos científicos enviados por usuarios
+--
+CREATE TABLE public.articulos (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER REFERENCES public.usuarios(id) ON DELETE CASCADE,
+    revista_id INTEGER REFERENCES public.revistas(id) ON DELETE SET NULL,
+    titulo VARCHAR(200) NOT NULL,
+    pdf_url TEXT, -- URL en Supabase del PDF original
+    pdf_corregido_url TEXT, -- PDF corregido por el admin
+    estado VARCHAR(30) DEFAULT 'pendiente', -- pendiente, en_revision, devuelto, publicado
+    comentarios TEXT, -- comentarios/correcciones del admin
+    fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_revision TIMESTAMP,
+    fecha_publicacion TIMESTAMP
+);
+
+ALTER TABLE public.articulos OWNER TO postgres;
+--
 -- PostgreSQL database dump
 --
 
