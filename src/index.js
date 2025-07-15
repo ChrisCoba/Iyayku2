@@ -170,56 +170,19 @@ app.use('/api', uploadRoutes);   // POST /upload, GET /certificado/:id
 //------------------------------------------------------------
 // 5d. Facturas: crear nueva factura
 //------------------------------------------------------------
-
-// --- Endpoint para subir PDF de artículo tras "pago" (simulado) ---
-const multer = require('multer');
-const upload = multer({ dest: path.join(__dirname, '..', 'public', 'articulos') });
-const { subirYRegistrarCertificado } = require('./utils/certificados');
-
-app.post('/api/articulos/subir', auth, upload.single('pdf'), async (req, res) => {
-  // Simula verificación de pago (en el futuro aquí va la pasarela real)
-  const pagoVerificado = true; // Simulación
-  if (!pagoVerificado) return res.status(402).json({ msg: 'Pago no verificado' });
-
+app.post('/api/facturas', auth, async (req, res) => {
+  const { items, total } = req.body;
   const usuario_id = req.user.id;
-  const { titulo, revista_id } = req.body;
-  if (!req.file || !titulo) return res.status(400).json({ msg: 'Falta el PDF o el título' });
-
+  if (!Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({ msg: 'No hay items en la factura.' });
+  }
   try {
-    // 1. Subir PDF a Supabase Storage
-    const nombreArchivo = `articulo-u${usuario_id}-${Date.now()}.pdf`;
-    const rutaLocalPDF = req.file.path;
-    const { createClient } = require('@supabase/supabase-js');
-    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
-    const fileBuffer = fs.readFileSync(rutaLocalPDF);
-    const { error: uploadError } = await supabase.storage
-      .from('iyayku')
-      .upload(`articulos/${nombreArchivo}`, fileBuffer, {
-        contentType: 'application/pdf',
-        upsert: true
-      });
-    if (uploadError) throw uploadError;
-    const { data: publicUrlData } = supabase
-      .storage
-      .from('iyayku')
-      .getPublicUrl(`articulos/${nombreArchivo}`);
-    const pdf_url = publicUrlData.publicUrl;
-
-    // 2. Registrar en la tabla articulos
     const { rows } = await pool.query(
-      'INSERT INTO articulos (usuario_id, revista_id, titulo, pdf_url, estado) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [usuario_id, revista_id || null, titulo, pdf_url, 'pendiente']
-    );
-
-    // 3. Generar factura como antes
-    const items = [{ nombre: 'Publicación de artículo', cantidad: 1, precio: 100 }]; // Simulado
-    const total = 100;
-    const { rows: facturaRows } = await pool.query(
       'INSERT INTO facturas (usuario_id, total) VALUES ($1, $2) RETURNING id, fecha',
       [usuario_id, total]
     );
-    const facturaId = facturaRows[0].id;
-    const fecha = facturaRows[0].fecha;
+    const facturaId = rows[0].id;
+    const fecha = rows[0].fecha;
     for (const item of items) {
       await pool.query(
         'INSERT INTO factura_items (factura_id, servicio_nombre, cantidad, precio_unitario) VALUES ($1, $2, $3, $4)',
@@ -229,13 +192,12 @@ app.post('/api/articulos/subir', auth, upload.single('pdf'), async (req, res) =>
     // Obtener datos del usuario
     const { rows: userRows } = await pool.query('SELECT nombre, correo FROM usuarios WHERE id = $1', [usuario_id]);
     const usuario = userRows[0];
-    // Generar PDF de factura
+    // Generar PDF
     const pdfUrl = generarFacturaPDF({ facturaId, usuario, items, total, fecha });
-
-    res.json({ msg: 'Artículo enviado y factura generada', articulo: rows[0], facturaId, factura_pdf: pdfUrl });
+    res.json({ msg: 'Factura generada', facturaId, pdfUrl });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ msg: 'Error al subir artículo o generar factura' });
+    res.status(500).json({ msg: 'Error al generar factura' });
   }
 });
 
