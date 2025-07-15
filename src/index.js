@@ -11,7 +11,7 @@ const { generarFacturaPDF } = require('./pdfFactura');
 const pool = require('./db');
 const auth = require('./middlewares/auth');       // único middleware
 const uploadRoutes = require('./routes/upload');  // ⇠ NUEVO
-const imgController = require('./backend/controllers/imagenesControlador');
+const imgController = require('../backend/controllers/imagenesControlador');
 
 
 const app  = express();
