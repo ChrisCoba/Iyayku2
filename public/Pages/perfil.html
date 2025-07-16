@@ -258,7 +258,7 @@
         if (!table) return;
         table.innerHTML = '<tr><td colspan="3">Cargando...</td></tr>';
         try {
-          const res = await fetch('/api/usuarios', { credentials: 'include' });
+          const res = await fetch('/api/admin/usuarios', { credentials: 'include' });
           if (!res.ok) {
             const text = await res.text();
             table.innerHTML = `<tr><td colspan='3'>Error HTTP: ${res.status} - ${text}</td></tr>`;
@@ -287,7 +287,7 @@
         if (!table) return;
         table.innerHTML = '<tr><td colspan="5">Cargando...</td></tr>';
         try {
-          const res = await fetch('/api/facturas', { credentials: 'include' });
+          const res = await fetch('/api/admin/facturas', { credentials: 'include' });
           if (!res.ok) {
             const text = await res.text();
             table.innerHTML = `<tr><td colspan='5'>Error HTTP: ${res.status} - ${text}</td></tr>`;
