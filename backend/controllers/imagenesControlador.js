@@ -27,7 +27,7 @@ const imageUrls = {
   kosmos: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/inovaimagenes/Kosmos_page-0001.jpg',
   nexus: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/inovaimagenes/Nexus_page-0001.jpg',
 
-  issn_logo: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//ISSN_logo.svg.pn',
+  issn_logo: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//ISSN_logo.png',
   latindex: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//latindex-catalogo2.png',
   miar: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//MIAR.png',
   scilit: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//scilit.png',
