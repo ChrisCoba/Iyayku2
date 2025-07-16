@@ -77,10 +77,10 @@ nav ul {
   z-index: 110;
 }
 
-/* Solo mostrar hamburguesa en tablet y móvil */
+/* Asegura que el botón hamburguesa SIEMPRE se muestre en tablet/móvil */
 @media (max-width: 900px) {
   #menu-toggle {
-    display: block;
+    display: block !important;
   }
   #main-menu {
     display: none;
