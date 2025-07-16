@@ -110,30 +110,4 @@
   </script>
 </body>
 </html>
-  <script src="/scripts/carrito.js"></script>
-  <script src="/script.js"></script>
-  <script>
-    // Mostrar banner de login si está logueado
-    document.addEventListener('DOMContentLoaded', function() {
-      fetch('/api/status', { credentials: 'include' })
-        .then(res => res.json())
-        .then(data => {
-          if (data.usuario && data.usuario.correo) {
-            const banner = document.getElementById('login-status-banner');
-            const text = document.getElementById('login-status-text');
-            const perfilLink = document.getElementById('perfil-link');
-            text.textContent = `Sesión iniciada: ${data.usuario.nombre || data.usuario.correo}`;
-            // Solo mostrar el link a perfil si es admin
-            if (data.usuario.correo === 'admin@iyayku.com') {
-              perfilLink.style.display = '';
-            } else {
-              perfilLink.style.display = 'none';
-            }
-            banner.style.display = '';
-          }
-        });
-    });
-  </script>
-</body>
-</html>
-
+ 
