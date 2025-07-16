@@ -825,10 +825,10 @@
         loader.style.display = '';
         msg.style.display = 'none';
         try {
-          const res = await fetch(`/api/paginas_contenido?pagina=${encodeURIComponent(pagina)}&seccion=${encodeURIComponent(seccion)}`, { credentials: 'include' });
-          let dataArr;
+          const res = await fetch(`/api/contenido?pagina=${encodeURIComponent(pagina)}&seccion=${encodeURIComponent(seccion)}`, { credentials: 'include' });
+          let data;
           try {
-            dataArr = await res.json();
+            data = await res.json();
           } catch (err) {
             const text = await res.text();
             msg.textContent = 'Error: la respuesta de contenido no es JSON. Puede que la API esté devolviendo HTML por error.\n' + text;
@@ -836,12 +836,10 @@
             loader.style.display = 'none';
             return;
           }
-          // dataArr es un array, tomar el primero si existe
-          const data = Array.isArray(dataArr) && dataArr.length > 0 ? dataArr[0] : { titulo: '', contenido: '' };
           inputTitulo.value = data.titulo || '';
           editorHtml.value = data.contenido || '';
           previewHtml.innerHTML = data.contenido || '';
-          if (window.quill) {
+          if (window.quill && document.getElementById('editor-html').style.display === 'none') {
             window.quill.root.innerHTML = data.contenido || '';
           }
           loader.style.display = 'none';
@@ -855,16 +853,10 @@
       function modoVisualHtml() {
         document.getElementById('editor-container').style.display = '';
         document.getElementById('editor-html').style.display = 'none';
-        // Sincronizar el contenido del editor visual con el HTML actual
-        if (window.quill) {
-          window.quill.root.innerHTML = document.getElementById('editor-html').value;
-        }
       }
       function modoSoloHtml() {
         document.getElementById('editor-container').style.display = 'none';
         document.getElementById('editor-html').style.display = '';
-        // Sincronizar el contenido del textarea con el editor visual
-        document.getElementById('editor-html').value = window.quill ? window.quill.root.innerHTML : document.getElementById('editor-html').value;
       }
 
       // ...el resto del código...
