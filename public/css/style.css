@@ -8,23 +8,29 @@ body {
   background-repeat: repeat-x;
 }
 
+/* HEADER CENTRADO Y RESPONSIVE */
 header {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   background-color: #ffffff;
-  padding: 30px 400px;
+  padding: 24px 0 0 0;
   box-sizing: border-box;
   width: 100%;
-  gap: 32px;
+  position: relative;
+  gap: 0;
+  min-height: 120px;
+  /* Elimina padding lateral excesivo */
+  /* Elimina gap grande */
 }
 
 .logo {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-shrink: 0;
   width: 100%;
+  margin-bottom: 0.5em;
 }
 
 .logo img {
@@ -37,38 +43,108 @@ header {
 }
 
 nav {
-  flex: 0.95;
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  position: static;
+  margin: 0;
+  padding: 0;
 }
 
 nav ul {
   list-style: none;
   display: flex;
   gap: 20px;
-  padding: 20;
-  margin: 0 20px 0 0;
-}
-
-
-.user-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #ccc;
-  display: flex;
-  align-items: center;
+  padding: 0;
+  margin: 0;
   justify-content: center;
-  transition: background-color 0.3s ease;
+  align-items: center;
+  width: 100%;
 }
 
-.user-icon:hover {
-  background-color: #007BFF;
+/* Menú hamburguesa para tablet y móvil */
+#menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2em;
+  cursor: pointer;
+  margin-left: 12px;
+  color: #000;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 110;
 }
 
-.user-icon img {
-  width: 24px;
-  height: 24px;
+@media (max-width: 1200px) {
+  .logo img {
+    width: 8em;
+    max-height: 8em;
+  }
+}
+
+@media (max-width: 900px) {
+  header {
+    padding: 12px 0 0 0;
+    min-height: 90px;
+  }
+  .logo img {
+    width: 7em;
+    max-height: 7em;
+  }
+  nav {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  #main-menu {
+    display: none;
+    flex-direction: column;
+    width: 100vw;
+    background: #fff;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin: 0;
+    padding: 0;
+  }
+  #main-menu.open {
+    display: flex;
+  }
+  #menu-toggle {
+    display: block;
+  }
+  .letras_menu {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+  .letras_menu a {
+    padding: 12px 24px;
+    border-bottom: 1px solid #eee;
+    width: 100%;
+    display: block;
+    color: #222;
+    background: #fff;
+    text-align: left;
+  }
+  .letras_menu a:last-child {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .logo img {
+    width: 5em;
+    max-height: 5em;
+  }
+  header {
+    min-height: 70px;
+  }
 }
 
 .estadisticas {
@@ -385,6 +461,18 @@ button:hover {
   border-right: none;
 }
 
+.footer-socials img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  margin: 0 4px;
+  transition: transform 0.18s;
+}
+
+.footer-socials img:hover {
+  transform: scale(1.12);
+}
+
 @media (max-width: 1440px) {
   header {
     padding: 24px 40px;
@@ -418,6 +506,10 @@ button:hover {
     border-right: none;
     font-size: 1em;
   }
+  .footer-socials img {
+    width: 22px;
+    height: 22px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -441,52 +533,9 @@ button:hover {
     font-size: 0.98em;
     border-right: none;
   }
-}
-
-/* Menú hamburguesa para tablet y móvil */
-#menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 2em;
-  cursor: pointer;
-  margin-left: 12px;
-  color: #000; /* negro */
-}
-
-@media (max-width: 900px) {
-  #main-menu {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background: #fff;
-    position: absolute;
-    top: 70px;
-    left: 0;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-  #main-menu.open {
-    display: flex;
-  }
-  #menu-toggle {
-    display: block;
-  }
-  .letras_menu {
-    flex-direction: column;
-    gap: 0;
-    width: 100%;
-  }
-  .letras_menu a {
-    padding: 12px 24px;
-    border-bottom: 1px solid #eee;
-    width: 100%;
-    display: block;
-    color: #222;
-    background: #fff;
-  }
-  .letras_menu a:last-child {
-    border-bottom: none;
+  .footer-socials img {
+    width: 18px;
+    height: 18px;
   }
 }
 
