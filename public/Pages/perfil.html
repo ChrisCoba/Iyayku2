@@ -245,9 +245,73 @@
           const panelId = cardPanelMap[card.classList[1]];
           if (panelId) {
             document.getElementById(panelId).style.display = '';
+            // Cargar datos automáticamente al mostrar panel
+            if (panelId === 'admin-usuarios-panel') cargarUsuariosAdmin();
+            if (panelId === 'admin-facturas-panel') cargarFacturasAdmin();
+            if (panelId === 'admin-certificados-panel') cargarCertificadosAdmin();
           }
         });
       });
+      // --- Funciones para cargar datos admin ---
+      async function cargarUsuariosAdmin() {
+        const table = document.querySelector('#admin-usuarios-table tbody');
+        if (!table) return;
+        table.innerHTML = '<tr><td colspan="3">Cargando...</td></tr>';
+        try {
+          const res = await fetch('/api/usuarios', { credentials: 'include' });
+          const data = await res.json();
+          if (!Array.isArray(data) || data.length === 0) {
+            table.innerHTML = '<tr><td colspan="3">No hay usuarios.</td></tr>';
+            return;
+          }
+          table.innerHTML = '';
+          data.forEach(u => {
+            table.innerHTML += `<tr><td>${u.nombre || ''}</td><td>${u.correo || ''}</td><td></td></tr>`;
+          });
+        } catch (e) {
+          table.innerHTML = '<tr><td colspan="3">Error al cargar usuarios.</td></tr>';
+        }
+      }
+
+      async function cargarFacturasAdmin() {
+        const table = document.querySelector('#admin-facturas-table tbody');
+        if (!table) return;
+        table.innerHTML = '<tr><td colspan="5">Cargando...</td></tr>';
+        try {
+          const res = await fetch('/api/facturas', { credentials: 'include' });
+          const data = await res.json();
+          if (!Array.isArray(data) || data.length === 0) {
+            table.innerHTML = '<tr><td colspan="5">No hay facturas.</td></tr>';
+            return;
+          }
+          table.innerHTML = '';
+          data.forEach(f => {
+            table.innerHTML += `<tr><td>${f.id}</td><td>${f.usuario_id || ''}</td><td>${f.correo || ''}</td><td>${f.fecha || ''}</td><td>${f.total || ''}</td></tr>`;
+          });
+        } catch (e) {
+          table.innerHTML = '<tr><td colspan="5">Error al cargar facturas.</td></tr>';
+        }
+      }
+
+      async function cargarCertificadosAdmin() {
+        const table = document.querySelector('#admin-certificados-table tbody');
+        if (!table) return;
+        table.innerHTML = '<tr><td colspan="6">Cargando...</td></tr>';
+        try {
+          const res = await fetch('/api/certificados-todos', { credentials: 'include' });
+          const data = await res.json();
+          if (!Array.isArray(data) || data.length === 0) {
+            table.innerHTML = '<tr><td colspan="6">No hay certificados.</td></tr>';
+            return;
+          }
+          table.innerHTML = '';
+          data.forEach(c => {
+            table.innerHTML += `<tr><td>${c.id}</td><td>${c.autor_nombre || ''}</td><td>${c.articulo_titulo || ''}</td><td>${c.articulo_url ? `<a href='${c.articulo_url}' target='_blank'>PDF</a>` : ''}</td><td>${c.pagina || ''}</td><td>${c.fecha || ''}</td></tr>`;
+          });
+        } catch (e) {
+          table.innerHTML = '<tr><td colspan="6">Error al cargar certificados.</td></tr>';
+        }
+      }
     });
   </script>
     <script src="/script.js"></script>

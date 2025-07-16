@@ -61,10 +61,13 @@
       </a>
 
       <!-- Campo de búsqueda oculto -->
-      <input id="searchInput" type="text" placeholder="Buscar..."
+      <input id="searchInput" type="text" placeholder="Buscar certificados por autor o título..."
           class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
   </div>
+
   </header>
+  <!-- Resultados de búsqueda de certificados -->
+  <div id="resultados-busqueda" style="max-width:700px;margin:30px auto 0 auto;"></div>
 
   <!-- LOGIN STATUS BANNER -->
   <div id="login-status-banner" style="display:none;position:fixed;top:0;right:0;z-index:9999;background:#3498db;color:#fff;padding:8px 18px;border-radius:0 0 0 12px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.10);">
@@ -147,6 +150,92 @@
     </footer>
   <script src="/scripts/cargaImagenes.js"></script>
   <script src="/script.js"></script>
+  <script>
+  // Búsqueda flexible de certificados desde la lupa
+  (function() {
+    let certificados = [];
+    let certificadosCargados = false;
+    const searchToggle = document.getElementById('searchToggle');
+    const searchInput = document.getElementById('searchInput');
+    const resultadosDiv = document.getElementById('resultados-busqueda');
+
+    async function cargarCertificados() {
+      if (certificadosCargados) return;
+      try {
+        const response = await fetch('/api/certificados-todos');
+        certificados = await response.json();
+        certificadosCargados = true;
+      } catch (err) {
+        certificados = [];
+        certificadosCargados = true;
+      }
+    }
+
+    function buscarCertificadosFlexible(searchTerm) {
+      const term = searchTerm.trim().toLowerCase();
+      if (!term) {
+        resultadosDiv.innerHTML = '';
+        return;
+      }
+      const resultados = certificados.filter(cert =>
+        (cert.autor_nombre && cert.autor_nombre.toLowerCase().includes(term)) ||
+        (cert.articulo_titulo && cert.articulo_titulo.toLowerCase().includes(term))
+      );
+      mostrarResultadosCertificados(resultados);
+    }
+
+    function mostrarResultadosCertificados(resultados) {
+      resultadosDiv.innerHTML = '';
+      if (resultados.length === 0) {
+        resultadosDiv.innerHTML = '<p style="background:#fff;color:#222;padding:1em;border-radius:8px;">No se encontraron certificados.</p>';
+        return;
+      }
+      resultados.forEach(cert => {
+        const card = document.createElement('div');
+        card.className = 'tarjeta-resultado';
+        card.style = 'background: #fff; color: #222; margin-bottom: 1rem; padding: 1rem; border-radius: 8px;';
+        const certTitulo = document.createElement('h3');
+        certTitulo.textContent = cert.articulo_titulo || cert.titulo || '';
+        const certAutor = document.createElement('p');
+        certAutor.textContent = `Autor: ${cert.autor_nombre || cert.autor || ''}`;
+        const certLink = document.createElement('a');
+        certLink.href = cert.articulo_url || cert.archivo_url || '#';
+        certLink.textContent = 'Ver Certificado';
+        certLink.style = 'cursor:pointer; color:blue; text-decoration:underline;';
+        certLink.target = '_blank';
+        card.appendChild(certTitulo);
+        card.appendChild(certAutor);
+        card.appendChild(certLink);
+        resultadosDiv.appendChild(card);
+      });
+    }
+
+    if (searchToggle && searchInput) {
+      searchToggle.addEventListener('click', () => {
+        searchToggle.style.display = 'none';
+        searchInput.classList.remove('hidden');
+        searchInput.focus();
+      });
+      searchInput.addEventListener('blur', () => {
+        searchInput.classList.add('hidden');
+        searchToggle.style.display = 'inline-block';
+        setTimeout(() => { resultadosDiv.innerHTML = ''; }, 200);
+      });
+      searchInput.addEventListener('keydown', async (e) => {
+        if (e.key === 'Escape') {
+          searchInput.classList.add('hidden');
+          searchToggle.style.display = 'inline-block';
+          resultadosDiv.innerHTML = '';
+        }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          await cargarCertificados();
+          buscarCertificadosFlexible(searchInput.value);
+        }
+      });
+    }
+  })();
+  </script>
   <script>
     // Menú hamburguesa responsive
     document.addEventListener('DOMContentLoaded', function() {
