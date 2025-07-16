@@ -95,16 +95,7 @@ app.post('/api/pedidos/:pedidoId/correccion', auth, uploadPedidos.single('pdf_co
 
 // Descargar PDFs (servidos como estáticos)
 app.use('/pedidos', express.static(pedidosDir));
-// index.js  (CommonJS)
-const cookieParser = require('cookie-parser');
-const bcrypt  = require('bcryptjs');
-const jwt     = require('jsonwebtoken');
-require('dotenv').config();
-
-const { generarFacturaPDF } = require('./pdfFactura');
-const pool = require('./db');
-const auth = require('./middlewares/auth');       // único middleware
-const uploadRoutes = require('./routes/upload');  // ⇠ NUEVO
+// ...existing code...
 
 // Ruta absoluta para cargar el controlador (ajusta según tu estructura de carpetas)
 const imgControllerPath = path.resolve(__dirname, '../backend/controllers/imagenesControlador.js');
