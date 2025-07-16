@@ -56,7 +56,12 @@
 
   <!-- MAIN -->
   <main>
-    <div id="contenido-dinamico"></div>
+    <section class="servicios-precios-section">
+      <div class="servicios-precios-container">
+        <h2 class="servicios-precios-title">Nuestros Servicios y Precios</h2>
+        <div id="servicios-dinamicos" class="servicios-precios-cards"></div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -104,6 +109,39 @@
     </div>
   </div>
   <script src="/script.js"></script>
+  <script>
+    // Cargar servicios dinámicamente desde la base de datos
+    document.addEventListener('DOMContentLoaded', async function() {
+      const cont = document.getElementById('servicios-dinamicos');
+      if (!cont) return;
+      cont.innerHTML = '<p style="color:#222;background:#fff;padding:1em;border-radius:8px;">Cargando servicios...</p>';
+      try {
+        const res = await fetch('/api/servicios');
+        const servicios = await res.json();
+        if (!Array.isArray(servicios) || servicios.length === 0) {
+          cont.innerHTML = '<p style="color:#222;background:#fff;padding:1em;border-radius:8px;">No hay servicios disponibles.</p>';
+          return;
+        }
+        cont.innerHTML = '';
+        servicios.forEach((s, idx) => {
+          // Alternar color de tarjeta
+          const colores = ['card-blue','card-yellow','card-purple','card-orange','card-green'];
+          const color = colores[idx % colores.length];
+          const items = s.descripcion.split(',').map(i => `<li>${i.trim()}</li>`).join('');
+          cont.innerHTML += `
+            <div class="servicio-precio-card ${color}">
+              <div class="servicio-precio-header">${s.nombre}</div>
+              <ul>${items}</ul>
+              <div class="servicio-precio-precio">$${s.precio}</div>
+              <button class="servicio-precio-btn">Comprar</button>
+            </div>
+          `;
+        });
+      } catch (e) {
+        cont.innerHTML = '<p style="color:#222;background:#fff;padding:1em;border-radius:8px;">Error al cargar servicios.</p>';
+      }
+    });
+  </script>
   <script src="/scripts/carrito.js"></script>
   <script src="/scripts/carrito.js"></script>
   <script src="/script.js"></script>

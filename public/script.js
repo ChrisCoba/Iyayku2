@@ -1,3 +1,92 @@
+// --- Búsqueda flexible de certificados con la lupa (global para toda la web) ---
+(function() {
+  let certificados = [];
+  let certificadosCargados = false;
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchToggle = document.getElementById('searchToggle');
+    const searchInput = document.getElementById('searchInput');
+    // Crear contenedor de resultados si no existe
+    let resultadosDiv = document.getElementById('resultados-busqueda');
+    if (!resultadosDiv) {
+      resultadosDiv = document.createElement('div');
+      resultadosDiv.id = 'resultados-busqueda';
+      resultadosDiv.style = 'max-width:700px;margin:30px auto 0 auto;';
+      document.body.insertBefore(resultadosDiv, document.body.firstChild.nextSibling);
+    }
+    async function cargarCertificados() {
+      if (certificadosCargados) return;
+      try {
+        const response = await fetch('/api/certificados-todos');
+        certificados = await response.json();
+        certificadosCargados = true;
+      } catch (err) {
+        certificados = [];
+        certificadosCargados = true;
+      }
+    }
+    function buscarCertificadosFlexible(searchTerm) {
+      const term = searchTerm.trim().toLowerCase();
+      if (!term) {
+        resultadosDiv.innerHTML = '';
+        return;
+      }
+      const resultados = certificados.filter(cert =>
+        (cert.autor_nombre && cert.autor_nombre.toLowerCase().includes(term)) ||
+        (cert.articulo_titulo && cert.articulo_titulo.toLowerCase().includes(term))
+      );
+      mostrarResultadosCertificados(resultados);
+    }
+    function mostrarResultadosCertificados(resultados) {
+      resultadosDiv.innerHTML = '';
+      if (resultados.length === 0) {
+        resultadosDiv.innerHTML = '<p style="background:#fff;color:#222;padding:1em;border-radius:8px;">No se encontraron certificados.</p>';
+        return;
+      }
+      resultados.forEach(cert => {
+        const card = document.createElement('div');
+        card.className = 'tarjeta-resultado';
+        card.style = 'background: #fff; color: #222; margin-bottom: 1rem; padding: 1rem; border-radius: 8px;';
+        const certTitulo = document.createElement('h3');
+        certTitulo.textContent = cert.articulo_titulo || cert.titulo || '';
+        const certAutor = document.createElement('p');
+        certAutor.textContent = `Autor: ${cert.autor_nombre || cert.autor || ''}`;
+        const certLink = document.createElement('a');
+        certLink.href = cert.articulo_url || cert.archivo_url || '#';
+        certLink.textContent = 'Ver Certificado';
+        certLink.style = 'cursor:pointer; color:blue; text-decoration:underline;';
+        certLink.target = '_blank';
+        card.appendChild(certTitulo);
+        card.appendChild(certAutor);
+        card.appendChild(certLink);
+        resultadosDiv.appendChild(card);
+      });
+    }
+    if (searchToggle && searchInput) {
+      searchToggle.addEventListener('click', () => {
+        searchToggle.style.display = 'none';
+        searchInput.classList.remove('hidden');
+        searchInput.focus();
+      });
+      searchInput.addEventListener('blur', () => {
+        searchInput.classList.add('hidden');
+        searchToggle.style.display = 'inline-block';
+        setTimeout(() => { resultadosDiv.innerHTML = ''; }, 200);
+      });
+      searchInput.addEventListener('keydown', async (e) => {
+        if (e.key === 'Escape') {
+          searchInput.classList.add('hidden');
+          searchToggle.style.display = 'inline-block';
+          resultadosDiv.innerHTML = '';
+        }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          await cargarCertificados();
+          buscarCertificadosFlexible(searchInput.value);
+        }
+      });
+    }
+  });
+})();
 // public/scripts/script.js
 
 document.addEventListener('DOMContentLoaded', function () {

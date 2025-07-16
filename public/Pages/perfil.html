@@ -260,7 +260,11 @@
         try {
           const res = await fetch('/api/usuarios', { credentials: 'include' });
           const data = await res.json();
-          if (!Array.isArray(data) || data.length === 0) {
+          if (!Array.isArray(data)) {
+            table.innerHTML = `<tr><td colspan='3'>Respuesta inesperada: ${JSON.stringify(data)}</td></tr>`;
+            return;
+          }
+          if (data.length === 0) {
             table.innerHTML = '<tr><td colspan="3">No hay usuarios.</td></tr>';
             return;
           }
@@ -280,7 +284,11 @@
         try {
           const res = await fetch('/api/facturas', { credentials: 'include' });
           const data = await res.json();
-          if (!Array.isArray(data) || data.length === 0) {
+          if (!Array.isArray(data)) {
+            table.innerHTML = `<tr><td colspan='5'>Respuesta inesperada: ${JSON.stringify(data)}</td></tr>`;
+            return;
+          }
+          if (data.length === 0) {
             table.innerHTML = '<tr><td colspan="5">No hay facturas.</td></tr>';
             return;
           }
