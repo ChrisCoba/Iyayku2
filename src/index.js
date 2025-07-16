@@ -1,11 +1,21 @@
 const express = require('express');
+const path    = require('path');
+const fs      = require('fs');
+const multer = require('multer');
+const cookieParser = require('cookie-parser');
+const bcrypt  = require('bcryptjs');
+const jwt     = require('jsonwebtoken');
+require('dotenv').config();
+
+const { generarFacturaPDF } = require('./pdfFactura');
+const pool = require('./db');
+const auth = require('./middlewares/auth');       // único middleware
+const uploadRoutes = require('./routes/upload');  // ⇠ NUEVO
+
 const app  = express();
 //------------------------------------------------------------
 // 8. Pedidos: subida de PDFs y revisión
 //------------------------------------------------------------
-const path    = require('path');
-const fs      = require('fs');
-const multer = require('multer');
 const pedidosDir = path.join(__dirname, '..', 'public', 'pedidos');
 if (!fs.existsSync(pedidosDir)) fs.mkdirSync(pedidosDir, { recursive: true });
 const storagePedidos = multer.diskStorage({
