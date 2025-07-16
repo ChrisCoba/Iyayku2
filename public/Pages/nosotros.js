@@ -1,5 +1,5 @@
 export function renderNosotros() {
-  const html = `
+  document.getElementById('contenido-dinamico').innerHTML = `
     <header class="bg-white text-black flex flex-wrap items-center justify-between px-6 py-4 shadow-md">
       <div class="logo flex-shrink-0">
         <img src="/img/logo" alt="Logo" class="h-8 object-contain" />
@@ -40,7 +40,15 @@ export function renderNosotros() {
       <span id="login-status-text"></span>
       <a id="perfil-link" href="#perfil" style="color:#fff;text-decoration:underline;margin-left:10px;display:none;">Ir a perfil</a>
     </div>
-    <main id="main-content"></main>
+    <main id="main-content">
+      <div id="contenido-nosotros">
+        <h2>Nosotros</h2>
+        <p>Somos Iyayku Innova Editores, comprometidos con la publicación y asesoría científica.</p>
+        <p>Misión: Impulsar la investigación y la divulgación científica en Latinoamérica.</p>
+        <p>Visión: Ser líderes en innovación editorial y formación académica.</p>
+        <!-- Agrega aquí más contenido sobre tu equipo, historia, valores, etc. -->
+      </div>
+    </main>
     <footer class="footer">
       <div class="footer-col">
         <h3>Dirección</h3>
