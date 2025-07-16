@@ -173,25 +173,29 @@
         <div id="admin-editar-panel" class="admin-panel" style="display:none;max-width:900px;">
           <h3>Editar cualquier sección de la web</h3>
           <form id="form-editar-seccion" style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-            <label>Página:
+            <label title="Selecciona la página que quieres editar">Página:
               <select id="select-pagina" required style="min-width:120px;"></select>
             </label>
-            <label>Sección:
+            <label title="Selecciona la sección de la página">Sección:
               <select id="select-seccion" required style="min-width:120px;"></select>
             </label>
-            <label>Título:
+            <label title="Título de la sección">Título:
               <input id="input-titulo" type="text" style="min-width:120px;" />
             </label>
-            <button type="button" id="btn-cargar-seccion">Cargar</button>
+            <button type="button" id="btn-cargar-seccion" title="Recargar el contenido de la sección">Cargar</button>
           </form>
+          <div id="loader-editar" style="display:none;text-align:center;margin-bottom:10px;">
+            <span style="color:#2563eb;font-weight:bold;">Cargando...</span>
+          </div>
+          <div id="msg-editar" style="display:none;text-align:center;margin-bottom:10px;"></div>
           <div style="display:flex;gap:16px;align-items:flex-start;">
             <div style="flex:1;min-width:350px;">
               <div style="margin-bottom:4px;display:flex;align-items:center;gap:8px;">
-                <button type="button" id="btn-modo-visual" class="btn-modo" style="padding:2px 8px;">Editor Visual</button>
-                <button type="button" id="btn-modo-html" class="btn-modo" style="padding:2px 8px;">HTML</button>
+                <button type="button" id="btn-modo-visual" class="btn-modo" style="padding:2px 8px;" title="Editar visualmente el contenido">Editor Visual</button>
+                <button type="button" id="btn-modo-html" class="btn-modo" style="padding:2px 8px;" title="Editar el HTML directamente">HTML</button>
               </div>
               <div id="editor-container" style="height:300px;background:white;color:black;"></div>
-              <textarea id="editor-html" style="display:none;width:100%;height:300px;font-family:monospace;font-size:1em;"></textarea>
+              <textarea id="editor-html" style="display:none;width:100%;height:300px;font-family:monospace;font-size:1em;" title="Edita el HTML aquí"></textarea>
             </div>
             <div style="flex:1;min-width:350px;">
               <label style="font-weight:bold;">Vista previa:</label>
@@ -550,34 +554,58 @@
       async function cargarPaginasYSecciones() {
         const selectPagina = document.getElementById('select-pagina');
         const selectSeccion = document.getElementById('select-seccion');
+        const loader = document.getElementById('loader-editar');
+        const msg = document.getElementById('msg-editar');
+        loader.style.display = '';
+        msg.style.display = 'none';
         selectPagina.innerHTML = '';
         selectSeccion.innerHTML = '';
         try {
           const res = await fetch('/api/paginas', { credentials: 'include' });
           const paginas = await res.json();
-          if (!Array.isArray(paginas)) return;
+          if (!Array.isArray(paginas)) throw new Error('No se pudo cargar páginas');
           paginas.forEach(p => {
             const opt = document.createElement('option');
             opt.value = p.nombre;
             opt.textContent = p.nombre;
             selectPagina.appendChild(opt);
           });
-          selectPagina.addEventListener('change', async function() {
+          selectPagina.onchange = async function() {
+            loader.style.display = '';
+            msg.style.display = 'none';
             selectSeccion.innerHTML = '';
             const pagina = selectPagina.value;
-            const resSec = await fetch(`/api/secciones?pagina=${encodeURIComponent(pagina)}`, { credentials: 'include' });
-            const secciones = await resSec.json();
-            if (Array.isArray(secciones)) {
+            try {
+              const resSec = await fetch(`/api/secciones?pagina=${encodeURIComponent(pagina)}`, { credentials: 'include' });
+              const secciones = await resSec.json();
+              if (!Array.isArray(secciones)) throw new Error('No se pudo cargar secciones');
               secciones.forEach(s => {
                 const opt = document.createElement('option');
                 opt.value = s.seccion;
                 opt.textContent = s.seccion;
                 selectSeccion.appendChild(opt);
               });
+              if (secciones.length > 0) {
+                selectSeccion.value = secciones[0].seccion;
+                await cargarContenidoSeccion();
+              }
+              loader.style.display = 'none';
+            } catch (e) {
+              loader.style.display = 'none';
+              msg.textContent = e.message;
+              msg.style.display = '';
             }
-          });
-          selectPagina.dispatchEvent(new Event('change'));
-        } catch {}
+          };
+          if (paginas.length > 0) {
+            selectPagina.value = paginas[0].nombre;
+            await selectPagina.onchange();
+          }
+          loader.style.display = 'none';
+        } catch (e) {
+          loader.style.display = 'none';
+          msg.textContent = e.message;
+          msg.style.display = '';
+        }
       }
 
       async function cargarContenidoSeccion() {
@@ -586,13 +614,25 @@
         const inputTitulo = document.getElementById('input-titulo');
         const editorHtml = document.getElementById('editor-html');
         const previewHtml = document.getElementById('preview-html');
+        const loader = document.getElementById('loader-editar');
+        const msg = document.getElementById('msg-editar');
+        loader.style.display = '';
+        msg.style.display = 'none';
         try {
           const res = await fetch(`/api/contenido?pagina=${encodeURIComponent(pagina)}&seccion=${encodeURIComponent(seccion)}`, { credentials: 'include' });
           const data = await res.json();
           inputTitulo.value = data.titulo || '';
           editorHtml.value = data.contenido || '';
           previewHtml.innerHTML = data.contenido || '';
-        } catch {}
+          if (window.quill && document.getElementById('editor-html').style.display === 'none') {
+            window.quill.root.innerHTML = data.contenido || '';
+          }
+          loader.style.display = 'none';
+        } catch (e) {
+          loader.style.display = 'none';
+          msg.textContent = 'Error al cargar contenido: ' + (e.message || e);
+          msg.style.display = '';
+        }
       }
 
       function modoVisualHtml() {
@@ -604,27 +644,43 @@
         document.getElementById('editor-html').style.display = '';
       }
 
-      // Inicializar Quill editor visual
+      // Inicializar Quill editor visual y mejorar UX
       let quill;
       document.addEventListener('DOMContentLoaded', function() {
         if (document.getElementById('admin-editar-panel')) {
           cargarPaginasYSecciones();
-          quill = new Quill('#editor-container', { theme: 'snow' });
+          window.quill = new Quill('#editor-container', { theme: 'snow' });
           document.getElementById('btn-modo-visual').onclick = modoVisualHtml;
           document.getElementById('btn-modo-html').onclick = modoSoloHtml;
           document.getElementById('btn-cargar-seccion').onclick = cargarContenidoSeccion;
-          quill.on('text-change', function() {
-            document.getElementById('editor-html').value = quill.root.innerHTML;
-            document.getElementById('preview-html').innerHTML = quill.root.innerHTML;
+          document.getElementById('select-seccion').onchange = cargarContenidoSeccion;
+          window.quill.on('text-change', function() {
+            document.getElementById('editor-html').value = window.quill.root.innerHTML;
+            document.getElementById('preview-html').innerHTML = window.quill.root.innerHTML;
           });
           document.getElementById('editor-html').addEventListener('input', function() {
             document.getElementById('preview-html').innerHTML = this.value;
           });
-          document.getElementById('btn-guardar-pagina').onclick = async function() {
+          const btnGuardar = document.getElementById('btn-guardar-pagina');
+          btnGuardar.onclick = async function() {
             const pagina = document.getElementById('select-pagina').value;
             const seccion = document.getElementById('select-seccion').value;
-            const titulo = document.getElementById('input-titulo').value;
-            const contenido = document.getElementById('editor-html').style.display === 'none' ? quill.root.innerHTML : document.getElementById('editor-html').value;
+            const titulo = document.getElementById('input-titulo').value.trim();
+            const contenido = document.getElementById('editor-html').style.display === 'none' ? window.quill.root.innerHTML : document.getElementById('editor-html').value;
+            const msg = document.getElementById('msg-editar');
+            msg.style.display = 'none';
+            if (!titulo) {
+              msg.textContent = 'El título no puede estar vacío.';
+              msg.style.display = '';
+              return;
+            }
+            if (!contenido || contenido.trim() === '') {
+              msg.textContent = 'El contenido no puede estar vacío.';
+              msg.style.display = '';
+              return;
+            }
+            btnGuardar.disabled = true;
+            btnGuardar.textContent = 'Guardando...';
             try {
               const res = await fetch('/api/admin/contenido', {
                 method: 'PUT',
@@ -633,13 +689,31 @@
                 body: JSON.stringify({ pagina, seccion, titulo, contenido })
               });
               if (res.ok) {
-                alert('Sección actualizada correctamente.');
+                msg.innerHTML = '✅ Sección actualizada correctamente. <button id="btn-deshacer-editar" style="margin-left:10px;">Deshacer</button>';
+                msg.style.display = '';
+                let lastContent = contenido;
+                document.getElementById('btn-deshacer-editar').onclick = async function() {
+                  btnGuardar.disabled = true;
+                  btnGuardar.textContent = 'Restaurando...';
+                  try {
+                    await cargarContenidoSeccion();
+                    msg.textContent = 'Se restauró el contenido anterior.';
+                  } catch (e) {
+                    msg.textContent = 'Error al restaurar: ' + (e.message || e);
+                  }
+                  btnGuardar.disabled = false;
+                  btnGuardar.textContent = 'Guardar Cambios';
+                };
               } else {
-                alert('Error al guardar: ' + (await res.text()));
+                msg.textContent = 'Error al guardar: ' + (await res.text());
+                msg.style.display = '';
               }
             } catch (e) {
-              alert('Error JS: ' + (e.message || e));
+              msg.textContent = 'Error JS: ' + (e.message || e);
+              msg.style.display = '';
             }
+            btnGuardar.disabled = false;
+            btnGuardar.textContent = 'Guardar Cambios';
           };
         }
       });
