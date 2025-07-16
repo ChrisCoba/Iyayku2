@@ -47,21 +47,69 @@ INSERT INTO public.paginas_contenido (pagina, seccion, titulo, contenido, orden)
 '<section class="inicio-empresa"><div class="inicio-contenido"><h1>Innovación que trasciende, ideas que perduran</h1><p>En <strong>IYAYKU Innovación Tecnológica</strong> creemos que la tecnología, la ciencia y la educación pueden transformar el presente y proyectar un futuro más sostenible. Somos una empresa ecuatoriana con impacto latinoamericano, especializada en asesoría, capacitación, investigación y soluciones digitales a medida.</p><p>Nuestro equipo multidisciplinario de expertos trabaja con instituciones, universidades, gobiernos y empresas para brindar resultados reales, éticos y de alta calidad. Si estás buscando impulsar tu proyecto, fortalecer tu organización o publicar en las mejores bases científicas, estás en el lugar correcto.</p><a href="#nuestros-servicios" class="btn-principal">Conoce nuestros servicios</a></div><div class="inicio-imagen"><img src="/img/inovacion" alt="Innovación IYAYKU" /></div></section>', 1);
 
 INSERT INTO public.servicios (nombre, descripcion, precio, activo, orden) VALUES
-('Proyectos y Planes de Investigación', 'Desarrollo personalizado, Asesoría profesional, Entrega digital', 100.00, TRUE, 1),
+('Proyectos y Planes de Investigación',
+'<div class="servicio-precio-card card-blue">
+  <div class="servicio-precio-header">Proyectos y Planes de Investigación</div>
+  <ul>
+    <li>Desarrollo personalizado</li>
+    <li>Asesoría profesional</li>
+    <li>Entrega digital</li>
+  </ul>
+  <div class="servicio-precio-precio">$250</div>
+  <button class="servicio-precio-btn">Comprar</button>
+</div>', 
+250, TRUE, 1),
 
 ('Tesis Pregrado, Posgrado y Doctorado',
- 'Redacción y acompañamiento, Formato académico, Revisiones incluidas',
- 150.00, TRUE, 2),
+'<div class="servicio-precio-card card-yellow">
+  <div class="servicio-precio-header">Tesis Pregrado, Posgrado y Doctorado</div>
+  <ul>
+    <li>Redacción y acompañamiento</li>
+    <li>Formato académico</li>
+    <li>Revisiones incluidas</li>
+  </ul>
+  <div class="servicio-precio-precio">$350</div>
+  <button class="servicio-precio-btn">Comprar</button>
+</div>', 
+350, TRUE, 2),
 
 ('Publicación de Artículos',
- 'En revistas indexadas, Corrección de estilo, Gestión de DOI',
- 200.00, TRUE, 3),
+'<div class="servicio-precio-card card-purple">
+  <div class="servicio-precio-header">Publicación de Artículos</div>
+  <ul>
+    <li>En revistas indexadas</li>
+    <li>Corrección de estilo</li>
+    <li>Gestión de DOI</li>
+  </ul>
+  <div class="servicio-precio-precio">$180</div>
+  <button class="servicio-precio-btn">Comprar</button>
+</div>', 
+180, TRUE, 3),
 
 ('Libros Digitales y Físicos',
- 'ISBN y maquetación, Diseño de portada, Publicación internacional',
- 180.00, TRUE, 4),
+'<div class="servicio-precio-card card-orange">
+  <div class="servicio-precio-header">Libros Digitales y Físicos</div>
+  <ul>
+    <li>ISBN y maquetación</li>
+    <li>Diseño de portada</li>
+    <li>Publicación internacional</li>
+  </ul>
+  <div class="servicio-precio-precio">$400</div>
+  <button class="servicio-precio-btn">Comprar</button>
+</div>', 
+400, TRUE, 4),
 
 ('Tesis como Libro o Artículo',
- 'Conversión profesional, Publicación en línea, Difusión académica',
- 120.00, TRUE, 5);
+'<div class="servicio-precio-card card-green">
+  <div class="servicio-precio-header">Tesis como Libro o Artículo</div>
+  <ul>
+    <li>Conversión profesional</li>
+    <li>Publicación en línea</li>
+    <li>Difusión académica</li>
+  </ul>
+  <div class="servicio-precio-precio">$220</div>
+  <button class="servicio-precio-btn">Comprar</button>
+</div>', 
+220, TRUE, 5);
+
 
