@@ -298,6 +298,8 @@ app.post('/api/facturas', auth, async (req, res) => {
     const usuario = userRows[0];
     // Generar PDF
     const pdfUrl = generarFacturaPDF({ facturaId, usuario, items, total, fecha });
+    // Guardar la URL del PDF en la base de datos
+    await pool.query('UPDATE facturas SET pdf_url=$1 WHERE id=$2', [pdfUrl, facturaId]);
     res.json({ msg: 'Factura generada', facturaId, pdfUrl });
   } catch (err) {
     console.error(err);
