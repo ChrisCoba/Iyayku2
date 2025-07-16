@@ -357,7 +357,12 @@ app.get('/api/admin/facturas', auth, async (req, res) => {
   if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo el administrador puede ver facturas.' });
   try {
     const { rows } = await pool.query('SELECT f.*, u.nombre AS usuario_nombre, u.correo AS usuario_correo FROM facturas f LEFT JOIN usuarios u ON f.usuario_id = u.id ORDER BY f.fecha DESC');
-    res.json(rows);
+    // Agregar campo pdfUrl calculado
+    const facturas = rows.map(f => ({
+      ...f,
+      pdfUrl: `/facturas/factura-${f.id}.pdf`
+    }));
+    res.json(facturas);
   } catch (err) {
     res.status(500).json({ msg: 'Error al obtener facturas' });
   }
