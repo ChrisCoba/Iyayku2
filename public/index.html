@@ -79,22 +79,15 @@
   <main>
     <div id="contenido-dinamico"></div>
 
-    <!-- Formulario para subir PDFs tras la compra -->
-    <section id="formulario-pedido" style="max-width:600px;margin:30px auto 0 auto;background:#fff;color:#222;padding:24px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:none;">
-      <h2>Subir documentos para tu pedido</h2>
-      <form id="form-subir-pdfs" enctype="multipart/form-data">
-        <label>Requerimiento (PDF): <input type="file" name="pdf_requerimiento" accept="application/pdf" required></label><br><br>
-        <label>Documento/Artículo (PDF): <input type="file" name="pdf_documento" accept="application/pdf" required></label><br><br>
-        <input type="text" name="descripcion" placeholder="Descripción o mensaje para el admin" style="width:100%;margin-bottom:12px;">
-        <button type="submit" style="background:#2563eb;color:#fff;padding:8px 18px;border:none;border-radius:6px;">Enviar documentos</button>
-        <div id="msg-pedido" style="margin-top:10px;color:#059669;"></div>
-      </form>
+
+    <!-- Formulario para subir PDFs tras la compra (OCULTO) -->
+    <section id="formulario-pedido" style="display:none !important;">
+      <!-- Formulario oculto temporalmente -->
     </section>
 
-    <!-- Sección Mis pedidos -->
-    <section id="mis-pedidos" style="max-width:900px;margin:40px auto 0 auto;background:#fff;color:#222;padding:24px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:none;">
-      <h2>Mis pedidos</h2>
-      <div id="tabla-pedidos"></div>
+    <!-- Sección Mis pedidos (OCULTO) -->
+    <section id="mis-pedidos" style="display:none !important;">
+      <!-- Sección de pedidos oculta temporalmente -->
     </section>
 
     <section class="servicios-dos-columnas">

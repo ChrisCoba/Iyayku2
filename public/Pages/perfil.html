@@ -175,7 +175,7 @@
           <div>Editar página</div>
         </div>
         <div id="admin-editar-panel" class="admin-panel" style="display:none;max-width:900px;">
-        <!-- Panel Pedidos Admin -->
+        Panel Pedidos Admin
         <div id="admin-pedidos-panel" class="admin-panel" style="display:none;max-width:900px;">
           <h3>Pedidos de clientes</h3>
           <div id="msg-admin-pedidos" style="margin-bottom:10px;color:#2563eb;font-weight:bold;"></div>
@@ -650,151 +650,151 @@
           table.innerHTML = '<tr><td colspan="6">Error al cargar certificados.</td></tr>';
         }
       }
-      // --- Editar página admin ---
-      // --- Pedidos admin ---
-      async function cargarPedidosAdmin() {
-        const table = document.getElementById('tabla-admin-pedidos').getElementsByTagName('tbody')[0];
-        const msg = document.getElementById('msg-admin-pedidos');
-        table.innerHTML = '<tr><td colspan="7">Cargando...</td></tr>';
-        msg.textContent = '';
-        try {
-          const res = await fetch('/api/pedidos', { credentials: 'include' });
-          const pedidos = await res.json();
-          if (!Array.isArray(pedidos)) {
-            table.innerHTML = `<tr><td colspan='7'>Respuesta inesperada: ${JSON.stringify(pedidos)}</td></tr>`;
-            return;
-          }
-          if (pedidos.length === 0) {
-            table.innerHTML = '<tr><td colspan="7">No hay pedidos.</td></tr>';
-            return;
-          }
-          table.innerHTML = '';
-          pedidos.forEach(p => {
-            table.innerHTML += `<tr>
-              <td>${p.cliente_nombre || p.cliente_correo || ''}</td>
-              <td>${p.fecha || ''}</td>
-              <td>${p.estado || ''}</td>
-              <td>${p.requisitos_pdf_url ? `<a href='${p.requisitos_pdf_url}' target='_blank'>Ver PDF</a>` : ''}</td>
-              <td>${p.articulo_pdf_url ? `<a href='${p.articulo_pdf_url}' target='_blank'>Ver PDF</a>` : ''}</td>
-              <td>${p.correccion_pdf_url ? `<a href='${p.correccion_pdf_url}' target='_blank'>Ver PDF</a>` : ''}</td>
-              <td><button class='btn-correccion-pedido' data-id='${p.id}' style='background:#059669;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;'>Corregir/Devolver</button></td>
-            </tr>`;
-          });
-          // Evento para mostrar panel de corrección
-          table.querySelectorAll('.btn-correccion-pedido').forEach(btn => {
-            btn.addEventListener('click', function() {
-              mostrarPanelCorreccionPedido(btn.getAttribute('data-id'));
-            });
-          });
-        } catch (e) {
-          table.innerHTML = `<tr><td colspan="7">Error JS: ${e.message || e}</td></tr>`;
-        }
-      }
+      // // --- Editar página admin ---
+      // // --- Pedidos admin ---
+      // async function cargarPedidosAdmin() {
+      //   const table = document.getElementById('tabla-admin-pedidos').getElementsByTagName('tbody')[0];
+      //   const msg = document.getElementById('msg-admin-pedidos');
+      //   table.innerHTML = '<tr><td colspan="7">Cargando...</td></tr>';
+      //   msg.textContent = '';
+      //   try {
+      //     const res = await fetch('/api/pedidos', { credentials: 'include' });
+      //     const pedidos = await res.json();
+      //     if (!Array.isArray(pedidos)) {
+      //       table.innerHTML = `<tr><td colspan='7'>Respuesta inesperada: ${JSON.stringify(pedidos)}</td></tr>`;
+      //       return;
+      //     }
+      //     if (pedidos.length === 0) {
+      //       table.innerHTML = '<tr><td colspan="7">No hay pedidos.</td></tr>';
+      //       return;
+      //     }
+      //     table.innerHTML = '';
+      //     pedidos.forEach(p => {
+      //       table.innerHTML += `<tr>
+      //         <td>${p.cliente_nombre || p.cliente_correo || ''}</td>
+      //         <td>${p.fecha || ''}</td>
+      //         <td>${p.estado || ''}</td>
+      //         <td>${p.requisitos_pdf_url ? `<a href='${p.requisitos_pdf_url}' target='_blank'>Ver PDF</a>` : ''}</td>
+      //         <td>${p.articulo_pdf_url ? `<a href='${p.articulo_pdf_url}' target='_blank'>Ver PDF</a>` : ''}</td>
+      //         <td>${p.correccion_pdf_url ? `<a href='${p.correccion_pdf_url}' target='_blank'>Ver PDF</a>` : ''}</td>
+      //         <td><button class='btn-correccion-pedido' data-id='${p.id}' style='background:#059669;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;'>Corregir/Devolver</button></td>
+      //       </tr>`;
+      //     });
+      //     // Evento para mostrar panel de corrección
+      //     table.querySelectorAll('.btn-correccion-pedido').forEach(btn => {
+      //       btn.addEventListener('click', function() {
+      //         mostrarPanelCorreccionPedido(btn.getAttribute('data-id'));
+      //       });
+      //     });
+      //   } catch (e) {
+      //     table.innerHTML = `<tr><td colspan="7">Error JS: ${e.message || e}</td></tr>`;
+      //   }
+      // }
 
-      function mostrarPanelCorreccionPedido(pedidoId) {
-        const panel = document.getElementById('panel-correccion-pedido');
-        panel.style.display = '';
-        panel.querySelector('input[name="pedido_id"]').value = pedidoId;
-        document.getElementById('msg-correccion-pedido').textContent = '';
-      }
+      // function mostrarPanelCorreccionPedido(pedidoId) {
+      //   const panel = document.getElementById('panel-correccion-pedido');
+      //   panel.style.display = '';
+      //   panel.querySelector('input[name="pedido_id"]').value = pedidoId;
+      //   document.getElementById('msg-correccion-pedido').textContent = '';
+      // }
 
-      // Evento para enviar PDF corregido
-      const formCorreccion = document.getElementById('form-correccion-pedido');
-      if (formCorreccion) {
-        formCorreccion.addEventListener('submit', async function(e) {
-          e.preventDefault();
-          const pedidoId = formCorreccion.querySelector('input[name="pedido_id"]').value;
-          const fileInput = formCorreccion.querySelector('input[name="pdf_correccion"]');
-          const msg = document.getElementById('msg-correccion-pedido');
-          msg.textContent = '';
-          if (!pedidoId || !fileInput.files[0]) {
-            msg.textContent = 'Selecciona un PDF.';
-            return;
-          }
-          const formData = new FormData();
-          formData.append('pdf_correccion', fileInput.files[0]);
-          try {
-            const res = await fetch(`/api/pedidos/${pedidoId}/correccion`, {
-              method: 'POST',
-              credentials: 'include',
-              body: formData
-            });
-            if (res.ok) {
-              msg.textContent = '✅ PDF corregido devuelto correctamente.';
-              cargarPedidosAdmin();
-              panel.style.display = 'none';
-            } else {
-              msg.textContent = 'Error al devolver PDF: ' + (await res.text());
-            }
-          } catch (e) {
-            msg.textContent = 'Error JS: ' + (e.message || e);
-          }
-        });
-      }
+      // // Evento para enviar PDF corregido
+      // const formCorreccion = document.getElementById('form-correccion-pedido');
+      // if (formCorreccion) {
+      //   formCorreccion.addEventListener('submit', async function(e) {
+      //     e.preventDefault();
+      //     const pedidoId = formCorreccion.querySelector('input[name="pedido_id"]').value;
+      //     const fileInput = formCorreccion.querySelector('input[name="pdf_correccion"]');
+      //     const msg = document.getElementById('msg-correccion-pedido');
+      //     msg.textContent = '';
+      //     if (!pedidoId || !fileInput.files[0]) {
+      //       msg.textContent = 'Selecciona un PDF.';
+      //       return;
+      //     }
+      //     const formData = new FormData();
+      //     formData.append('pdf_correccion', fileInput.files[0]);
+      //     try {
+      //       const res = await fetch(`/api/pedidos/${pedidoId}/correccion`, {
+      //         method: 'POST',
+      //         credentials: 'include',
+      //         body: formData
+      //       });
+      //       if (res.ok) {
+      //         msg.textContent = '✅ PDF corregido devuelto correctamente.';
+      //         cargarPedidosAdmin();
+      //         panel.style.display = 'none';
+      //       } else {
+      //         msg.textContent = 'Error al devolver PDF: ' + (await res.text());
+      //       }
+      //     } catch (e) {
+      //       msg.textContent = 'Error JS: ' + (e.message || e);
+      //     }
+      //   });
+      // }
 
-      // Botón publicar artículo (solo muestra mensaje por ahora)
-      const btnPublicar = document.getElementById('btn-publicar-articulo');
-      if (btnPublicar) {
-        btnPublicar.onclick = function() {
-          document.getElementById('msg-correccion-pedido').textContent = 'Funcionalidad de publicación pendiente.';
-        };
-      }
-      async function cargarPaginasYSecciones() {
-        const selectPagina = document.getElementById('select-pagina');
-        const selectSeccion = document.getElementById('select-seccion');
-        const loader = document.getElementById('loader-editar');
-        const msg = document.getElementById('msg-editar');
-        loader.style.display = '';
-        msg.style.display = 'none';
-        selectPagina.innerHTML = '';
-        selectSeccion.innerHTML = '';
-        try {
-          const res = await fetch('/api/paginas', { credentials: 'include' });
-          const paginas = await res.json();
-          if (!Array.isArray(paginas)) throw new Error('No se pudo cargar páginas');
-          paginas.forEach(p => {
-            const opt = document.createElement('option');
-            opt.value = p.nombre;
-            opt.textContent = p.nombre;
-            selectPagina.appendChild(opt);
-          });
-          selectPagina.onchange = async function() {
-            loader.style.display = '';
-            msg.style.display = 'none';
-            selectSeccion.innerHTML = '';
-            const pagina = selectPagina.value;
-            try {
-              const resSec = await fetch(`/api/secciones?pagina=${encodeURIComponent(pagina)}`, { credentials: 'include' });
-              const secciones = await resSec.json();
-              if (!Array.isArray(secciones)) throw new Error('No se pudo cargar secciones');
-              secciones.forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s.seccion;
-                opt.textContent = s.seccion;
-                selectSeccion.appendChild(opt);
-              });
-              if (secciones.length > 0) {
-                selectSeccion.value = secciones[0].seccion;
-                await cargarContenidoSeccion();
-              }
-              loader.style.display = 'none';
-            } catch (e) {
-              loader.style.display = 'none';
-              msg.textContent = e.message;
-              msg.style.display = '';
-            }
-          };
-          if (paginas.length > 0) {
-            selectPagina.value = paginas[0].nombre;
-            await selectPagina.onchange();
-          }
-          loader.style.display = 'none';
-        } catch (e) {
-          loader.style.display = 'none';
-          msg.textContent = e.message;
-          msg.style.display = '';
-        }
-      }
+      // // Botón publicar artículo (solo muestra mensaje por ahora)
+      // const btnPublicar = document.getElementById('btn-publicar-articulo');
+      // if (btnPublicar) {
+      //   btnPublicar.onclick = function() {
+      //     document.getElementById('msg-correccion-pedido').textContent = 'Funcionalidad de publicación pendiente.';
+      //   };
+      // }
+      // async function cargarPaginasYSecciones() {
+      //   const selectPagina = document.getElementById('select-pagina');
+      //   const selectSeccion = document.getElementById('select-seccion');
+      //   const loader = document.getElementById('loader-editar');
+      //   const msg = document.getElementById('msg-editar');
+      //   loader.style.display = '';
+      //   msg.style.display = 'none';
+      //   selectPagina.innerHTML = '';
+      //   selectSeccion.innerHTML = '';
+      //   try {
+      //     const res = await fetch('/api/paginas', { credentials: 'include' });
+      //     const paginas = await res.json();
+      //     if (!Array.isArray(paginas)) throw new Error('No se pudo cargar páginas');
+      //     paginas.forEach(p => {
+      //       const opt = document.createElement('option');
+      //       opt.value = p.nombre;
+      //       opt.textContent = p.nombre;
+      //       selectPagina.appendChild(opt);
+      //     });
+      //     selectPagina.onchange = async function() {
+      //       loader.style.display = '';
+      //       msg.style.display = 'none';
+      //       selectSeccion.innerHTML = '';
+      //       const pagina = selectPagina.value;
+      //       try {
+      //         const resSec = await fetch(`/api/secciones?pagina=${encodeURIComponent(pagina)}`, { credentials: 'include' });
+      //         const secciones = await resSec.json();
+      //         if (!Array.isArray(secciones)) throw new Error('No se pudo cargar secciones');
+      //         secciones.forEach(s => {
+      //           const opt = document.createElement('option');
+      //           opt.value = s.seccion;
+      //           opt.textContent = s.seccion;
+      //           selectSeccion.appendChild(opt);
+      //         });
+      //         if (secciones.length > 0) {
+      //           selectSeccion.value = secciones[0].seccion;
+      //           await cargarContenidoSeccion();
+      //         }
+      //         loader.style.display = 'none';
+      //       } catch (e) {
+      //         loader.style.display = 'none';
+      //         msg.textContent = e.message;
+      //         msg.style.display = '';
+      //       }
+      //     };
+      //     if (paginas.length > 0) {
+      //       selectPagina.value = paginas[0].nombre;
+      //       await selectPagina.onchange();
+      //     }
+      //     loader.style.display = 'none';
+      //   } catch (e) {
+      //     loader.style.display = 'none';
+      //     msg.textContent = e.message;
+      //     msg.style.display = '';
+      //   }
+      // }
 
       async function cargarContenidoSeccion() {
         const pagina = document.getElementById('select-pagina').value;
