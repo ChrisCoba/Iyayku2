@@ -7,9 +7,10 @@ ALTER SEQUENCE servicios_id_seq RESTART WITH 1;
 
 -- Inserta la nueva información
 INSERT INTO public.paginas_contenido (pagina, seccion, titulo, contenido, orden) VALUES
-('nosotros', 'quienes_somos', '¿Quiénes Somos?',
+('nosotros', 'quienes_somos', NULL,
 '<section class="nuestros-servicios">
   <div class="servicios-texto">
+    <h2>¿Quiénes Somos?</h2>
     <p>Somos una empresa dedicada a brindar soluciones tecnológicas de alta calidad, especializada en la comercialización de equipos de cómputo, capacitación y asesoramiento para empresas tanto del sector público como privado. Con un enfoque centrado en la ética profesional, la responsabilidad y el trato humano, IYAYKU busca atender las diversas necesidades de sus clientes de manera eficiente. Además, la empresa apuesta por el desarrollo continuo de sus colaboradores, fomentando la lealtad, el trabajo en equipo y el compromiso con la sostenibilidad ambiental, asegurando así su rentabilidad y permanencia en el mercado.</p>
   </div>
 </section>', 1),
@@ -19,19 +20,21 @@ INSERT INTO public.paginas_contenido (pagina, seccion, titulo, contenido, orden)
   <img src="/img/acerca" alt="Acerca de Nosotros">
 </div>', 2),
 
-('nosotros', 'mision', 'Misión',
+('nosotros', 'mision', NULL,
 '<section class="mision-nosotros">
   <div class="servicios-imagen">
     <img src="/img/mision" alt="Misión">
   </div>
   <div class="mision-texto">
+    <h2>Misión</h2>
     <p>IYAYKU INNOVACIÓN TECNOLÓGICA tiene la misión de ofrecer servicios empresariales de calidad con calidez, ser especialistas en la comercialización de equipos de cómputo, capacitación y asesoría a empresas públicas y privadas, solucionando las diversas necesidades de los clientes, con ética profesional y responsabilidad. La empresa se enfoca en capacitar constantemente a sus colaboradores, promoviendo la lealtad y el trabajo en equipo para asegurar la rentabilidad de la empresa y la sostenibilidad ambiental.</p>
   </div>
 </section>', 3),
 
-('nosotros', 'vision', 'Visión',
+('nosotros', 'vision', NULL,
 '<section class="nuestros-servicios">
   <div class="servicios-texto">
+    <h2>Visión</h2>
     <p>Ser una empresa líder en innovación tecnológica, consultoría especializada y producción académica, reconocida por su excelencia, compromiso social y capacidad de adaptación, contribuyendo al fortalecimiento del ecosistema empresarial y educativo a nivel nacional e internacional.</p>
   </div>
   <div class="servicios-imagen">
@@ -65,6 +68,7 @@ INSERT INTO public.paginas_contenido (pagina, seccion, titulo, contenido, orden)
     <p>Teléfonos: 0995000484 · 0979369650 · 0997000496</p>
   </div>
 </footer>', 99);
+
 
 -- Servicios dinámicos desde tabla `servicios`
 INSERT INTO public.paginas_contenido (pagina, seccion, titulo, contenido, orden) VALUES
