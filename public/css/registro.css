@@ -223,3 +223,34 @@ body.modo-oscuro .social-icons a:hover {
     background: #23272f !important;
 }
 
+@media (max-width: 900px) {
+  .container {
+    width: 98vw;
+    min-width: 0;
+    padding: 0 2vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 99vw;
+    min-width: 0;
+    padding: 0 1vw;
+    border-radius: 10px;
+  }
+  .container form {
+    padding: 0 10px;
+  }
+  .toggle-container {
+    display: none;
+  }
+  .form-container {
+    position: static;
+    width: 100%;
+    min-width: 0;
+    max-width: 100vw;
+    height: auto;
+    padding: 0;
+  }
+}
+

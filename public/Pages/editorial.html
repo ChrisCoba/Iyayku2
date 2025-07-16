@@ -13,11 +13,9 @@
 <body class="bg-blue-800 text-white font-sans">
 
     <header class="bg-white text-black flex flex-wrap items-center justify-between px-6 py-4 shadow-md">
-    <!-- LOGO -->
     <div class="logo flex-shrink-0">
-      <img src="/Images/logo.png" alt="Logo" class="h-12 object-contain" />
+      <img src="/img/logo" alt="Logo" class="h-8 object-contain" />
     </div>
-    <!-- MENÚ -->
     <nav id="main-menu" class="w-full md:w-auto md:flex md:items-center mt-4 md:mt-0 hidden md:block">
       <ul class="flex flex-col md:flex-row gap-4 letras_menu w-full md:w-auto">
         <li><a href="/index.html" class="hover-effect block py-2 px-4">Inicio</a></li>
@@ -30,129 +28,163 @@
     <div class="social-icons">
       <a href="/Pages/registro_login.html" title="Iniciar sesión o registrarse">
         <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-500 transition">
-          <img src="/svgs/round-account-button-with-user-inside_icon-icons.com_72596.svg" alt="Usuario" class="w-6 h-6 text-white" />
+          <img src="/svg/user" alt="Usuario" class="w-6 h-6 text-white" />
         </div>
       </a>
       <!-- WhatsApp -->
       <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D"
         target="_blank" rel="noopener noreferrer">
-        <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" class="h-5 w-5 hover:scale-110 transition" />
+        <img src="/svg/whatsapp" alt="WhatsApp" class="h-5 w-5 hover:scale-110 transition" />
       </a>
       <!-- Facebook -->
       <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
-        <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" class="h-5 w-5 hover:scale-110 transition" />
+        <img src="/svg/facebook" alt="Facebook" class="h-5 w-5 hover:scale-110 transition" />
       </a>
       <!-- Instagram -->
       <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
-        <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" class="h-5 w-5 hover:scale-110 transition" />
+        <img src="/svg/instagram" alt="Instagram" class="h-5 w-5 hover:scale-110 transition" />
       </a>
       <!-- Buscar -->
       <a id="searchToggle" class="cursor-pointer">
-        <img src="/svgs/searchmagnifierinterfacesymbol1_79893.svg" alt="Buscar" class="h-5 w-5 hover:scale-110 transition" />
+        <img src="/svg/lupa" alt="Buscar" class="h-5 w-5 hover:scale-110 transition" />
       </a>
       <!-- Campo de búsqueda oculto -->
       <input id="searchInput" type="text" placeholder="Buscar..."
         class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
     </div>
   </header>
+  <!-- LOGIN STATUS BANNER -->
+  <div id="login-status-banner" style="display:none;position:fixed;top:0;right:0;z-index:9999;background:#3498db;color:#fff;padding:8px 18px;border-radius:0 0 0 12px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.10);">
+    <span id="login-status-text"></span>
+    <a id="perfil-link" href="/Pages/perfil.html" style="color:#fff;text-decoration:underline;margin-left:10px;display:none;">Ir a perfil</a>
+  </div>
+
   <!-- MAIN -->
   <main>
-    <div id="contenido-dinamico"></div>
+      <!-- MAIN -->
+      <div id="contenido-dinamico"></div>
+    
+         <section class="titulo-convenios">
+                <h2>Indexaciones</h2>
+                <p>Formamos parte de índices conocidos</p>
+            </section>
+
+            <section class="slider-convenios">
+                <div class="slider-container" id="slider">
+                    <img src="/img/crossref" alt="Crossref">
+                    <img src="/img/google_scholar" alt="Google Scholar">
+                    <img src="/img/doi_logo" alt="DOI">
+                    <img src="/img/issn_logo" alt="ISSN">
+                    <img src="/img/latindex" alt="Latindex">
+                    <img src="/img/scilit" alt="Scilit">
+                    <img src="/img/miar" alt="MIAR">
+                    <img src="/img/harvard_library" alt="Harvard Library">
+                </div>
+
+                <button class="slider-btn prev" onclick="moveSlider(-1)">&#10094;</button>
+                <button class="slider-btn next" onclick="moveSlider(1)">&#10095;</button>
+    </section>
+
+    <section class="slider-section">
+        <h2 class="slider-title">Revistas Publicadas</h2>
+        <div class="card-slider" id="slider">
+            <a href="https://editorialinnova.com/index.php/rig" target="_blank" class="card">
+            <img src="/img/ingenio" alt="RIG">
+            </a>
+            <a href="https://editorialinnova.com/index.php/rck" target="_blank" class="card">
+            <img src="/img/kosmos" alt="RCK">
+            </a>
+            <a href="https://editorialinnova.com/index.php/nrj" target="_blank" class="card">
+            <img src="/img/nexus" alt="NRJ">
+            </a>
+            <a href="https://editorialinnova.com/index.php/bij" target="_blank" class="card">
+            <img src="/img/bastcorp" alt="BIJ">
+            </a>
+        </div>
+
+        <section class="estadisticas">
+      <div class="contenedor-estadisticas">
+        <div class="bloque-estadistica">
+          <h2 class="numero">100%</h2>
+          <p class="descripcion">Revistas Indexadas</p>
+        </div>
+        <div class="bloque-estadistica">
+          <h2 class="numero">250+</h2>
+          <p class="descripcion">Artículos Publicados</p>
+        </div>
+      </div>
+    </section>
+        
+    </section>
+
+     <section class="publicaciones-info">
+        <div class="publicaciones-texto">
+            <h2>¿Qué Ofrecemos en Publicaciones?</h2>
+            <ul>
+            <li>Desarrollo de proyectos y planes de investigación</li>
+            <li>Desarrollo de Tesis de Pregrado, Posgrado y Doctorado</li>
+            <li>Publicación de artículos en: SCOPUS (Q1-Q4), WoS, Scielo, Latindex Catálogo 2.0, otros</li>
+            <li>Publicación de libros digitales y físicos</li>
+            <li>Publicación de Tesis como libro o artículo científico</li>
+            <li>Creación de revistas científicas a nivel nacional e internacional</li>
+            <li>Asesorías para Indexación de revistas en Latindex 2.0, Scielo y Scopus</li>
+            <li>Capacitación personalizada en todas las áreas</li>
+            </ul>
+        </div>
+    </section>
+
+  </main>
+
   </main>
 
   <footer class="footer">
-    <div class="footer-col">
-      <h3>Dirección</h3>
-      <p>Dirección: Av. Amazonas y Colón, Quito – Ecuador</p>
-    </div>
-    <div class="footer-col">
-      <h3>Síguenos</h3>
-      <div class="footer-socials">
-        <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D" target="_blank" rel="noopener noreferrer">
-          <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" />
-        </a>
-        <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
-          <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" />
-        </a>
-        <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
-          <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" />
-        </a>
+      <div class="footer-col">
+        <h3>Dirección</h3>
+        <p>Dirección: Av. Amazonas y Colón, Quito – Ecuador</p>
       </div>
-    </div>
-    <div class="footer-col">
-      <h3>Información</h3>
-      <p>Email: iyayku@gmail.com</p>
-      <p>Teléfonos: 0995000484 · 0979369650 · 0997000496</p>
-    </div>
-  </footer>
+
+      <div class="footer-col">
+        <h3>Síguenos</h3>
+        <div class="footer-socials">
+          <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D" target="_blank" rel="noopener noreferrer">
+            <img src="/svg/whatsapp" alt="WhatsApp" />
+          </a>
+          <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
+            <img src="/svg/facebook" alt="Facebook" />
+          </a>
+          <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
+            <img src="/svg/instagram" alt="Instagram" />
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3>Información</h3>
+        <p>Email: iyayku@gmail.com</p>
+        <p>Teléfonos: 0995000484 · 0979369650 · 0997000496</p>
+      </div>
+    </footer>
+  <script src="/scripts/cargaImagenes.js"></script>
   <script src="/script.js"></script>
   <script>
-    // Carga dinámica del contenido de la página 'editorial' desde la base de datos
-    document.addEventListener('DOMContentLoaded', async () => {
-    // Carga dinámica del contenido de la página 'editorial' desde la base de datos
-    document.addEventListener('DOMContentLoaded', async () => {
-      const cont = document.getElementById('contenido-dinamico');
-      try {
-        const res = await fetch('/api/paginas_contenido?pagina=editorial');
-        if (!res.ok) throw new Error('No se pudo cargar el contenido');
-        const data = await res.json();
-        // Solo mostrar la primera sección principal (evita duplicados)
-        const item = Array.isArray(data) ? data.find(x => x.seccion === 'principal') : data;
-        cont.innerHTML = (item && (item.html || item.contenido)) || '<p>Contenido no disponible.</p>';
-        // Si el usuario es admin, mostrar botón de edición
-        if (item && item.isAdmin) {
-          const btn = document.createElement('button');
-          btn.textContent = 'Editar contenido';
-          btn.className = 'btn-editar-admin';
-          btn.onclick = () => {
-            const nuevo = prompt('Editar contenido HTML:', item.html || item.contenido || '');
-            if (nuevo !== null) {
-              fetch('/api/paginas_contenido', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ pagina: 'editorial', seccion: 'principal', titulo: item.titulo || '', contenido: nuevo, orden: item.orden || 1 })
-              }).then(r => {
-                if (r.ok) location.reload();
-                else alert('Error al guardar');
-              });
+    // Mostrar banner de login si está logueado
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('/api/status', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+          if (data.usuario && data.usuario.correo) {
+            const banner = document.getElementById('login-status-banner');
+            const text = document.getElementById('login-status-text');
+            const perfilLink = document.getElementById('perfil-link');
+            text.textContent = `Sesión iniciada: ${data.usuario.nombre || data.usuario.correo}`;
+            if (data.usuario.correo === 'admin@iyayku.com') {
+              perfilLink.style.display = '';
+            } else {
+              perfilLink.style.display = 'none';
             }
-          };
-          cont.appendChild(btn);
-        }
-      } catch (e) {
-        cont.innerHTML = '<p>Error cargando contenido.</p>';
-      }
-    });
-      const cont = document.getElementById('contenido-dinamico');
-      try {
-        const res = await fetch('/api/paginas_contenido?pagina=editorial');
-        if (!res.ok) throw new Error('No se pudo cargar el contenido');
-        const data = await res.json();
-        const item = Array.isArray(data) ? data[0] : data;
-        cont.innerHTML = (item && (item.html || item.contenido)) || '<p>Contenido no disponible.</p>';
-        // Si el usuario es admin, mostrar botón de edición
-        if (item && item.isAdmin) {
-          const btn = document.createElement('button');
-          btn.textContent = 'Editar contenido';
-          btn.className = 'btn-editar-admin';
-          btn.onclick = () => {
-            const nuevo = prompt('Editar contenido HTML:', item.html || item.contenido || '');
-            if (nuevo !== null) {
-              fetch('/api/paginas_contenido', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ pagina: 'editorial', seccion: 'principal', titulo: item.titulo || '', contenido: nuevo, orden: item.orden || 1 })
-              }).then(r => {
-                if (r.ok) location.reload();
-                else alert('Error al guardar');
-              });
-            }
-          };
-          cont.appendChild(btn);
-        }
-      } catch (e) {
-        cont.innerHTML = '<p>Error cargando contenido.</p>';
-      }
+            banner.style.display = '';
+          }
+        });
     });
   </script>
 </body>

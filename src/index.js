@@ -6,21 +6,41 @@ const cookieParser = require('cookie-parser');
 const bcrypt  = require('bcryptjs');
 const jwt     = require('jsonwebtoken');
 require('dotenv').config();
-const { generarFacturaPDF } = require('./pdfFactura');
 
+const { generarFacturaPDF } = require('./pdfFactura');
 const pool = require('./db');
 const auth = require('./middlewares/auth');       // único middleware
 const uploadRoutes = require('./routes/upload');  // ⇠ NUEVO
 
+// Ruta absoluta para cargar el controlador (ajusta según tu estructura de carpetas)
+const imgControllerPath = path.resolve(__dirname, '../backend/controllers/imagenesControlador.js');
+
+let imgController;
+try {
+  imgController = require(imgControllerPath);
+  console.log('[DEBUG] Controlador imágenes cargado:', Object.keys(imgController));
+} catch (err) {
+  console.error('[ERROR] No se pudo cargar el controlador de imágenes:', err);
+}
+
+const app  = express();
+
 //------------------------------------------------------------
 // Config básica
 //------------------------------------------------------------
-const app  = express();
+
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret';
 
 app.use(express.json());
 app.use(cookieParser());
+
+// Servir imágenes y SVG usando el controlador personalizado
+app.get('/img/:nombre', imgController.obtenerImagen);
+app.get('/svg/:nombre', imgController.obtenerSVG);
+
+// Tus otras rutas y middlewares
+app.use('/upload', uploadRoutes);
 
 //------------------------------------------------------------
 // 1. Asegurar carpetas de almacenamiento local
@@ -36,7 +56,6 @@ dirs.forEach(d => { if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
 //------------------------------------------------------------
 const publicPath = path.join(__dirname, '..', 'public');
 app.use(express.static(publicPath));
-app.get('/', (_q, res) => res.sendFile(path.join(publicPath, 'index.html')));
 
 //------------------------------------------------------------
 // 3. Test DB
@@ -355,4 +374,3 @@ app.delete('/api/admin/servicios/:id', auth, async (req, res) => {
 // 7. Arranque
 //------------------------------------------------------------
 app.listen(PORT, () => console.log(`🚀  Servidor corriendo en http://localhost:${PORT}`));
-

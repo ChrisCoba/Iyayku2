@@ -11,11 +11,9 @@
 </head>
 <body class="bg-blue-800 text-white font-sans">
   <header class="bg-white text-black flex flex-wrap items-center justify-between px-6 py-4 shadow-md">
-    <!-- LOGO -->
     <div class="logo flex-shrink-0">
-      <img src="/Images/logo.png" alt="Logo" class="h-12 object-contain" />
+      <img src="/img/logo" alt="Logo" class="h-8 object-contain" />
     </div>
-    <!-- MENÚ -->
     <nav id="main-menu" class="w-full md:w-auto md:flex md:items-center mt-4 md:mt-0 hidden md:block">
       <ul class="flex flex-col md:flex-row gap-4 letras_menu w-full md:w-auto">
         <li><a href="/index.html" class="hover-effect block py-2 px-4">Inicio</a></li>
@@ -28,32 +26,37 @@
     <div class="social-icons">
       <a href="/Pages/registro_login.html" title="Iniciar sesión o registrarse">
         <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-500 transition">
-          <img src="/svgs/round-account-button-with-user-inside_icon-icons.com_72596.svg" alt="Usuario" class="w-6 h-6 text-white" />
+          <img src="/svg/user" alt="Usuario" class="w-6 h-6 text-white" />
         </div>
       </a>
       <!-- WhatsApp -->
       <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D"
         target="_blank" rel="noopener noreferrer">
-        <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" class="h-5 w-5 hover:scale-110 transition" />
+        <img src="/img/whatsapp" alt="WhatsApp" class="h-5 w-5 hover:scale-110 transition" />
       </a>
       <!-- Facebook -->
       <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
-        <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" class="h-5 w-5 hover:scale-110 transition" />
+        <img src="/img/facebook" alt="Facebook" class="h-5 w-5 hover:scale-110 transition" />
       </a>
       <!-- Instagram -->
       <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
-        <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" class="h-5 w-5 hover:scale-110 transition" />
+        <img src="/img/instagram" alt="Instagram" class="h-5 w-5 hover:scale-110 transition" />
       </a>
       <!-- Buscar -->
       <a id="searchToggle" class="cursor-pointer">
-        <img src="/svgs/searchmagnifierinterfacesymbol1_79893.svg" alt="Buscar" class="h-5 w-5 hover:scale-110 transition" />
+        <img src="/img/lupa" alt="Buscar" class="h-5 w-5 hover:scale-110 transition" />
       </a>
       <!-- Campo de búsqueda oculto -->
       <input id="searchInput" type="text" placeholder="Buscar..."
         class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
     </div>
   </header>
-  <main class="admin-dashboard-main">
+  <!-- LOGIN STATUS BANNER -->
+  <div id="login-status-banner" style="display:none;position:fixed;top:0;right:0;z-index:9999;background:#3498db;color:#fff;padding:8px 18px;border-radius:0 0 0 12px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.10);">
+    <span id="login-status-text"></span>
+    <a id="perfil-link" href="/Pages/perfil.html" style="color:#fff;text-decoration:underline;margin-left:10px;display:none;">Ir a perfil</a>
+  </div>
+  <main class="admin-dashboard-main admin-dashboard-main-blanco">
     <!-- Sidebar -->
     <aside class="admin-sidebar">
       <div class="admin-sidebar-content">
@@ -184,13 +187,13 @@
       <h3>Síguenos</h3>
       <div class="footer-socials">
         <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D" target="_blank" rel="noopener noreferrer">
-          <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" />
+          <img src="/img/whatsapp" alt="WhatsApp" />
         </a>
         <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
-          <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" />
+          <img src="/img/facebook" alt="Facebook" />
         </a>
         <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
-          <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" />
+          <img src="/img/instagram" alt="Instagram" />
         </a>
       </div>
     </div>
@@ -201,322 +204,28 @@
     </div>
   </footer>
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="/script.js"></script>
   <script>
-    // Permitir acceso solo si el usuario es administrador (correo admin@iyayku.com)
+    // Mostrar banner de login si está logueado
     document.addEventListener('DOMContentLoaded', function() {
       fetch('/api/status', { credentials: 'include' })
         .then(res => res.json())
         .then(data => {
-          if (!data.usuario || data.usuario.correo !== 'admin@iyayku.com') {
-            alert('Acceso restringido. Solo el administrador puede ingresar a esta página.');
-            window.location.href = '/Pages/registro_login.html';
+          if (data.usuario && data.usuario.correo) {
+            const banner = document.getElementById('login-status-banner');
+            const text = document.getElementById('login-status-text');
+            const perfilLink = document.getElementById('perfil-link');
+            text.textContent = `Sesión iniciada: ${data.usuario.nombre || data.usuario.correo}`;
+            if (data.usuario.correo === 'admin@iyayku.com') {
+              perfilLink.style.display = '';
+            } else {
+              perfilLink.style.display = 'none';
+            }
+            banner.style.display = '';
           }
-        })
-        .catch(() => {
-          window.location.href = '/Pages/registro_login.html';
         });
-
-      // --- Paneles admin ---
-      const panels = {
-        usuarios: document.getElementById('admin-usuarios-panel'),
-        facturas: document.getElementById('admin-facturas-panel'),
-        certificados: document.getElementById('admin-certificados-panel')
-      };
-      const cards = {
-        usuarios: document.querySelector('.card-perfil'),
-        facturas: document.querySelector('.card-facturas'),
-        certificados: document.querySelector('.card-certificados')
-      };
-      panels.editar = document.getElementById('admin-editar-panel');
-      cards.editar = document.querySelector('.card-editar');
-      let quill;
-      let paginasSecciones = [];
-      let modo = 'visual';
-      function hideAllPanels() {
-        Object.values(panels).forEach(p => p.style.display = 'none');
-      }
-      // Mostrar panel al hacer clic en la tarjeta
-      cards.usuarios.addEventListener('click', () => {
-        hideAllPanels();
-        panels.usuarios.style.display = 'block';
-        cargarUsuarios();
-      });
-      cards.facturas.addEventListener('click', () => {
-        hideAllPanels();
-        panels.facturas.style.display = 'block';
-        cargarFacturas();
-      });
-      cards.certificados.addEventListener('click', () => {
-        hideAllPanels();
-        panels.certificados.style.display = 'block';
-        cargarCertificados();
-      });
-
-      // --- Panel de edición avanzada ---
-      cards.editar.addEventListener('click', () => {
-        hideAllPanels();
-        panels.editar.style.display = 'block';
-        inicializarEditorAvanzado();
-      });
-
-
-      async function inicializarEditorAvanzado() {
-        // Cargar páginas y secciones disponibles
-        const res = await fetch('/api/paginas_contenido/all', { credentials: 'include' });
-        paginasSecciones = await res.json();
-        const paginas = [...new Set(paginasSecciones.map(x => x.pagina))];
-        const selectPagina = document.getElementById('select-pagina');
-        selectPagina.innerHTML = paginas.map(p => `<option value="${p}">${p}</option>`).join('');
-        actualizarSecciones();
-      }
-
-      function actualizarSecciones() {
-        const pagina = document.getElementById('select-pagina').value;
-        const secciones = paginasSecciones.filter(x => x.pagina === pagina);
-        const selectSeccion = document.getElementById('select-seccion');
-        selectSeccion.innerHTML = secciones.map(s => `<option value="${s.seccion}">${s.seccion}</option>`).join('');
-        if (secciones.length) {
-          document.getElementById('input-titulo').value = secciones[0].titulo || '';
-        }
-        cargarContenidoActual();
-      }
-
-      document.getElementById('select-pagina').addEventListener('change', actualizarSecciones);
-      document.getElementById('select-seccion').addEventListener('change', cargarContenidoActual);
-
-      document.getElementById('btn-cargar-seccion').addEventListener('click', cargarContenidoActual);
-
-      function cargarContenidoActual() {
-        const pagina = document.getElementById('select-pagina').value;
-        const seccion = document.getElementById('select-seccion').value;
-        const obj = paginasSecciones.find(x => x.pagina === pagina && x.seccion === seccion);
-        document.getElementById('input-titulo').value = obj ? (obj.titulo || '') : '';
-        if (!quill) {
-          quill = new Quill('#editor-container', { theme: 'snow' });
-        }
-        quill.root.innerHTML = obj ? (obj.contenido || '') : '';
-        document.getElementById('editor-html').value = obj ? (obj.contenido || '') : '';
-        document.getElementById('preview-html').innerHTML = obj ? (obj.contenido || '') : '';
-        mostrarModo(modo);
-      }
-
-      // Alternar entre editor visual y HTML
-      document.getElementById('btn-modo-visual').addEventListener('click', function() {
-        modo = 'visual';
-        mostrarModo('visual');
-      });
-      document.getElementById('btn-modo-html').addEventListener('click', function() {
-        modo = 'html';
-        mostrarModo('html');
-      });
-
-      function mostrarModo(m) {
-        if (m === 'visual') {
-          document.getElementById('editor-container').style.display = '';
-          document.getElementById('editor-html').style.display = 'none';
-          // Sincronizar Quill con textarea
-          quill.root.innerHTML = document.getElementById('editor-html').value;
-        } else {
-          document.getElementById('editor-container').style.display = 'none';
-          document.getElementById('editor-html').style.display = '';
-          // Sincronizar textarea con Quill
-          document.getElementById('editor-html').value = quill.root.innerHTML;
-        }
-      }
-
-      // Vista previa en vivo
-      document.getElementById('editor-html').addEventListener('input', function() {
-        document.getElementById('preview-html').innerHTML = this.value;
-      });
-      if (window.Quill) {
-        setInterval(() => {
-          if (modo === 'visual') {
-            document.getElementById('preview-html').innerHTML = quill.root.innerHTML;
-          }
-        }, 500);
-      }
-
-      document.getElementById('btn-guardar-pagina').addEventListener('click', async function() {
-        const pagina = document.getElementById('select-pagina').value;
-        const seccion = document.getElementById('select-seccion').value;
-        const titulo = document.getElementById('input-titulo').value;
-        let html;
-        if (modo === 'visual') {
-          html = quill.root.innerHTML;
-        } else {
-          html = document.getElementById('editor-html').value;
-        }
-        const resp = await fetch('/api/paginas_contenido', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({ pagina, seccion, titulo, contenido: html })
-        });
-        if (resp.ok) {
-          alert('Sección actualizada');
-          // Actualizar cache local
-          const idx = paginasSecciones.findIndex(x => x.pagina === pagina && x.seccion === seccion);
-          if (idx !== -1) {
-            paginasSecciones[idx].contenido = html;
-            paginasSecciones[idx].titulo = titulo;
-          }
-          document.getElementById('preview-html').innerHTML = html;
-        } else {
-          alert('Error al guardar');
-        }
-      });
-
-      // --- Cargar usuarios ---
-      async function cargarUsuarios() {
-        const tbody = document.querySelector('#admin-usuarios-table tbody');
-        tbody.innerHTML = '<tr><td colspan="3">Cargando...</td></tr>';
-        try {
-          const res = await fetch('/api/admin/usuarios', { credentials: 'include' });
-          const usuarios = await res.json();
-          tbody.innerHTML = '';
-          usuarios.forEach(u => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-              <td><input type="text" value="${u.nombre}" data-id="${u.id}" class="edit-nombre" style="width:120px"></td>
-              <td><input type="email" value="${u.correo}" data-id="${u.id}" class="edit-correo" style="width:180px"></td>
-              <td>
-                <input type="password" placeholder="Nueva contraseña" data-id="${u.id}" class="edit-pass" style="width:120px">
-                <button class="btn-guardar" data-id="${u.id}">Guardar</button>
-              </td>
-            `;
-            tbody.appendChild(tr);
-          });
-          // Guardar cambios
-          tbody.querySelectorAll('.btn-guardar').forEach(btn => {
-            btn.addEventListener('click', async function() {
-              const id = this.getAttribute('data-id');
-              const nombre = tbody.querySelector(`.edit-nombre[data-id='${id}']`).value;
-              const correo = tbody.querySelector(`.edit-correo[data-id='${id}']`).value;
-              const contrasena = tbody.querySelector(`.edit-pass[data-id='${id}']`).value;
-              const body = { nombre, correo };
-              if (contrasena) body.contrasena = contrasena;
-              const resp = await fetch(`/api/admin/usuarios/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify(body)
-              });
-              if (resp.ok) {
-                alert('Usuario actualizado');
-                cargarUsuarios();
-              } else {
-                alert('Error al actualizar usuario');
-              }
-            });
-          });
-        } catch {
-          tbody.innerHTML = '<tr><td colspan="3">Error al cargar usuarios</td></tr>';
-        }
-      }
-
-      // --- Cargar facturas ---
-      async function cargarFacturas() {
-        const tbody = document.querySelector('#admin-facturas-table tbody');
-        tbody.innerHTML = '<tr><td colspan="5">Cargando...</td></tr>';
-        try {
-          const res = await fetch('/api/admin/facturas', { credentials: 'include' });
-          const facturas = await res.json();
-          tbody.innerHTML = '';
-          facturas.forEach(f => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-              <td>${f.id}</td>
-              <td>${f.usuario_nombre || ''}</td>
-              <td>${f.usuario_correo || ''}</td>
-              <td>${f.fecha ? new Date(f.fecha).toLocaleString() : ''}</td>
-              <td>$${Number(f.total).toFixed(2)}</td>
-            `;
-            tbody.appendChild(tr);
-          });
-        } catch {
-          tbody.innerHTML = '<tr><td colspan="5">Error al cargar facturas</td></tr>';
-        }
-      }
-
-      // --- Cargar certificados ---
-      async function cargarCertificados() {
-        const tbody = document.querySelector('#admin-certificados-table tbody');
-        tbody.innerHTML = '<tr><td colspan="6">Cargando...</td></tr>';
-        try {
-          const res = await fetch('/api/admin/certificados', { credentials: 'include' });
-          const certs = await res.json();
-          tbody.innerHTML = '';
-          certs.forEach(c => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-              <td>${c.id}</td>
-              <td>${c.autor_nombre}</td>
-              <td>${c.articulo_titulo}</td>
-              <td>${c.articulo_url ? `<a href="${c.articulo_url}" target="_blank">PDF</a>` : ''}</td>
-              <td>${c.articulo_pagina ? `<a href="${c.articulo_pagina}" target="_blank">Ver</a>` : ''}</td>
-              <td>${c.fecha_emision ? new Date(c.fecha_emision).toLocaleString() : ''}</td>
-            `;
-            tbody.appendChild(tr);
-          });
-        } catch {
-          tbody.innerHTML = '<tr><td colspan="6">Error al cargar certificados</td></tr>';
-        }
-      }
-
-      // --- Agregar certificado ---
-      document.getElementById('form-certificado').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const fd = new FormData(this);
-        const body = Object.fromEntries(fd.entries());
-        if (body.publicacion_id === "") delete body.publicacion_id;
-        const resp = await fetch('/api/admin/certificados', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify(body)
-        });
-        if (resp.ok) {
-          alert('Certificado agregado');
-          cargarCertificados();
-          this.reset();
-        } else {
-          alert('Error al agregar certificado');
-        }
-      });
-
-      // --- Agregar factura ---
-      document.getElementById('form-factura').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const fd = new FormData(this);
-        let items;
-        try {
-          items = JSON.parse(fd.get('items'));
-          if (!Array.isArray(items)) throw new Error();
-        } catch {
-          alert('Items debe ser un JSON válido de array');
-          return;
-        }
-        const body = {
-          usuario_id: Number(fd.get('usuario_id')),
-          total: Number(fd.get('total')),
-          items
-        };
-        const resp = await fetch('/api/admin/facturas', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify(body)
-        });
-        if (resp.ok) {
-          alert('Factura agregada');
-          cargarFacturas();
-          this.reset();
-        } else {
-          alert('Error al agregar factura');
-        }
-      });
     });
   </script>
-  <script src="/script.js"></script>
+    <script src="/script.js"></script>
 </body>
 </html>

@@ -24,3 +24,22 @@
   transform: translateY(-10px);
   box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
+
+@media (max-width: 900px) {
+  .card-slider {
+    gap: 1em;
+  }
+  .card {
+    width: 90vw;
+    max-width: 300px;
+  }
+}
+@media (max-width: 600px) {
+  .card-slider {
+    gap: 0.5em;
+  }
+  .card {
+    width: 98vw;
+    max-width: 220px;
+  }
+}
