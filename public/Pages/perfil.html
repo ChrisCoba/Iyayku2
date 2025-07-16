@@ -598,13 +598,19 @@
           table.innerHTML = '';
           for (const f of data) {
             let usuario = f.usuario_nombre ? `${f.usuario_nombre} (#${f.usuario_id})` : (f.usuario_id || '');
+            let pdfBtn = '';
+            if (f.pdfUrl) {
+              pdfBtn = `<button class='btn-ver-pdf' data-url='${f.pdfUrl}' style='background:#2563eb;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;'>Ver PDF</button>`;
+            } else if (f.pdf_url) {
+              pdfBtn = `<button class='btn-ver-pdf' data-url='${f.pdf_url}' style='background:#2563eb;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;'>Ver PDF</button>`;
+            }
             table.innerHTML += `<tr>
               <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${f.id}</td>
               <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${usuario}</td>
               <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${f.correo || ''}</td>
               <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${f.fecha || ''}</td>
               <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${f.total || ''}</td>
-              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${f.pdfUrl ? `<button class='btn-ver-pdf' data-url='${f.pdfUrl}' style='background:#2563eb;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;'>Ver PDF</button>` : ''}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${pdfBtn}</td>
             </tr>`;
           }
           table.querySelectorAll('.btn-ver-pdf').forEach(btn => {
