@@ -1,3 +1,5 @@
+const express = require('express');
+const app  = express();
 //------------------------------------------------------------
 // 8. Pedidos: subida de PDFs y revisión
 //------------------------------------------------------------
@@ -84,7 +86,6 @@ app.post('/api/pedidos/:pedidoId/correccion', auth, uploadPedidos.single('pdf_co
 // Descargar PDFs (servidos como estáticos)
 app.use('/pedidos', express.static(pedidosDir));
 // index.js  (CommonJS)
-const express = require('express');
 const cookieParser = require('cookie-parser');
 const bcrypt  = require('bcryptjs');
 const jwt     = require('jsonwebtoken');
@@ -106,7 +107,7 @@ try {
   console.error('[ERROR] No se pudo cargar el controlador de imágenes:', err);
 }
 
-const app  = express();
+// ...existing code...
 
 //------------------------------------------------------------
 // Config básica
