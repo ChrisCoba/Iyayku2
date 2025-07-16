@@ -598,11 +598,12 @@
           table.innerHTML = '';
           for (const f of data) {
             let usuario = f.usuario_nombre ? `${f.usuario_nombre} (#${f.usuario_id})` : (f.usuario_id || '');
+            let pdfUrl = f.pdfUrl || f.pdf_url || f.pdf || f.factura_pdf || f.facturaPdf || f.facturaPDF || f.pdfFactura;
             let pdfBtn = '';
-            if (f.pdfUrl) {
-              pdfBtn = `<button class='btn-ver-pdf' data-url='${f.pdfUrl}' style='background:#2563eb;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;'>Ver PDF</button>`;
-            } else if (f.pdf_url) {
-              pdfBtn = `<button class='btn-ver-pdf' data-url='${f.pdf_url}' style='background:#2563eb;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;'>Ver PDF</button>`;
+            if (pdfUrl) {
+              pdfBtn = `<button class='btn-ver-pdf' data-url='${pdfUrl}' style='background:#2563eb;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;'>Ver PDF</button>`;
+            } else {
+              pdfBtn = `<button class='btn-ver-pdf' disabled style='background:#94a3b8;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:not-allowed;'>Sin PDF</button>`;
             }
             table.innerHTML += `<tr>
               <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${f.id}</td>
