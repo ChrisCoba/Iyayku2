@@ -10,22 +10,30 @@ body {
 
 header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #ffffff;
   padding: 30px 400px;
   box-sizing: border-box;
   width: 100%;
+  gap: 32px;
 }
 
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 30px 40px;
+.logo {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  box-sizing: border-box;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.logo img {
+  width: 10em;
+  height: auto;
+  max-height: 10em;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
 }
 
 nav {
@@ -380,22 +388,24 @@ button:hover {
 @media (max-width: 1440px) {
   header {
     padding: 24px 40px;
+    gap: 24px;
   }
   .logo img {
-    width: 6em;
-    max-height: 6em;
+    width: 8em;
+    max-height: 8em;
   }
 }
 
 @media (max-width: 900px) {
   header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     padding: 16px 8px;
+    gap: 12px;
   }
   .logo img {
-    width: 5em;
-    max-height: 5em;
+    width: 7em;
+    max-height: 7em;
   }
   .footer {
     flex-direction: column;
@@ -413,12 +423,13 @@ button:hover {
 @media (max-width: 600px) {
   header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     padding: 8px 4px;
+    gap: 8px;
   }
   .logo img {
-    width: 3em;
-    max-height: 3em;
+    width: 5em;
+    max-height: 5em;
   }
   .footer {
     padding: 0.8rem 1vw;
@@ -440,6 +451,7 @@ button:hover {
   font-size: 2em;
   cursor: pointer;
   margin-left: 12px;
+  color: #000; /* negro */
 }
 
 @media (max-width: 900px) {
@@ -587,12 +599,5 @@ body.modo-oscuro .mision-nosotros {
 
 body.modo-oscuro .slider-title {
   color: #fff !important;
-}
-
-.logo img {
-  width: 8em;
-  height: auto;
-  max-height: 8em;
-  object-fit: contain;
 }
 
