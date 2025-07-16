@@ -24,17 +24,17 @@
     <!-- MENÚ -->
     <nav id="main-menu" class="w-full md:w-auto md:flex md:items-center mt-4 md:mt-0 hidden md:block">
       <ul class="flex flex-col md:flex-row gap-4 letras_menu w-full md:w-auto">
-        <li><a href="/index.html" class="hover-effect block py-2 px-4">Inicio</a></li>
-        <li><a href="/Pages/nosotros.html" class="hover-effect block py-2 px-4">Nosotros</a></li>
-        <li><a href="/Pages/editorial.html" class="hover-effect block py-2 px-4">Editorial</a></li>
-        <li><a href="/Pages/servicios.html" class="hover-effect block py-2 px-4">Servicios</a></li>
-        <li><a href="/Pages/contacto.html" class="hover-effect block py-2 px-4">Contáctanos</a></li>
+        <li><a href="#inicio" class="hover-effect block py-2 px-4">Inicio</a></li>
+        <li><a href="#nosotros" class="hover-effect block py-2 px-4">Nosotros</a></li>
+        <li><a href="#editorial" class="hover-effect block py-2 px-4">Editorial</a></li>
+        <li><a href="#servicios" class="hover-effect block py-2 px-4">Servicios</a></li>
+        <li><a href="#contacto" class="hover-effect block py-2 px-4">Contáctanos</a></li>
       </ul>
     </nav>
     
     
     <div class="social-icons">
-      <a href="/Pages/registro_login.html" title="Iniciar sesión o registrarse">
+      <a href="#registro" title="Iniciar sesión o registrarse">
         <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-500 transition">
           <img src="/svg/usuario" alt="User" class="h-5 w-5 hover:scale-110 transition" />
         </div>
@@ -72,52 +72,27 @@
   <!-- LOGIN STATUS BANNER -->
   <div id="login-status-banner" style="display:none;position:fixed;top:0;right:0;z-index:9999;background:#3498db;color:#fff;padding:8px 18px;border-radius:0 0 0 12px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.10);">
     <span id="login-status-text"></span>
-    <a id="perfil-link" href="/Pages/perfil.html" style="color:#fff;text-decoration:underline;margin-left:10px;display:none;">Ir a perfil</a>
+    <a id="perfil-link" href="#perfil" style="color:#fff;text-decoration:underline;margin-left:10px;display:none;">Ir a perfil</a>
   </div>
 
   <!-- MAIN -->
   <main>
     <div id="contenido-dinamico"></div>
 
+
+    <!-- Formulario para subir PDFs tras la compra (OCULTO) -->
+    <section id="formulario-pedido" style="display:none !important;">
+      <!-- Formulario oculto temporalmente -->
+    </section>
+
+    <!-- Sección Mis pedidos (OCULTO) -->
+    <section id="mis-pedidos" style="display:none !important;">
+      <!-- Sección de pedidos oculta temporalmente -->
+    </section>
+
     <section class="servicios-dos-columnas">
-
-    <div class="columna">
-      <h2>Consultoría y soluciones empresariales digitales</h2>
-      <ul>
-        <li>Diseño y desarrollo de sitios web funcionales y creativos</li>
-        <li>Creación de aplicaciones móviles para Android y iOS</li>
-        <li>Gestión documental y automatización de procesos internos</li>
-        <li>Marketing digital orientado a la captación y fidelización</li>
-        <li>Inteligencia de negocios y análisis de datos</li>
-      </ul>
-
-      <h2>Seguridad informática y ciberseguridad</h2>
-      <ul>
-        <li>Seguridad en la nube para minimizar riesgos</li>
-        <li>Protección integral de usuarios y dispositivos</li>
-        <li>Infraestructura de seguridad híbrida</li>
-        <li>Diagnóstico de vulnerabilidades y monitoreo</li>
-      </ul>
-    </div>
-
-    <div class="columna">
-      <h2>Capacitación y formación profesional continua</h2>
-      <ul>
-        <li>Ciberseguridad: hacking ético, seguridad forense</li>
-        <li>Investigación académica y publicación científica</li>
-        <li>Educación virtual e inteligencia artificial aplicada</li>
-        <li>Marketing político, atención al cliente y más</li>
-      </ul>
-
-      <h2>Asesoría académica, científica y editorial</h2>
-      <ul>
-        <li>Gestión de proyectos de investigación</li>
-        <li>Publicación de artículos en Scopus, Scielo, etc.</li>
-        <li>Creación y publicación de libros con ISBN</li>
-        <li>Asesoría para crear e indexar revistas científicas</li>
-      </ul>
-    </div>
-  </section>
+      <!-- ...existing servicios content... -->
+    </section>
 
 
   </main>
@@ -150,6 +125,96 @@
     </footer>
   <script src="/scripts/cargaImagenes.js"></script>
   <script src="/script.js"></script>
+  <script>
+  // Mostrar formulario tras la compra (simulación: mostrar si el usuario está logueado)
+  document.addEventListener('DOMContentLoaded', async function() {
+    let usuario = null;
+    try {
+      const res = await fetch('/api/status', { credentials: 'include' });
+      const data = await res.json();
+      usuario = data.usuario;
+    } catch {}
+    if (usuario && usuario.id) {
+      document.getElementById('formulario-pedido').style.display = '';
+      document.getElementById('mis-pedidos').style.display = '';
+      cargarPedidos();
+    }
+  });
+
+  // Subida de PDFs
+  document.getElementById('form-subir-pdfs').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const msg = document.getElementById('msg-pedido');
+    msg.textContent = '';
+    // Crear pedido primero
+    let pedidoId = null;
+    try {
+      const descripcion = this.descripcion.value.trim();
+      const resPedido = await fetch('/api/pedidos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ descripcion })
+      });
+      const dataPedido = await resPedido.json();
+      if (!dataPedido.ok || !dataPedido.pedido) throw new Error('No se pudo crear el pedido');
+      pedidoId = dataPedido.pedido.id;
+    } catch (err) {
+      msg.textContent = 'Error al crear pedido: ' + (err.message || err);
+      return;
+    }
+    // Subir PDFs
+    const formData = new FormData();
+    formData.append('pdf_requerimiento', this.pdf_requerimiento.files[0]);
+    formData.append('pdf_documento', this.pdf_documento.files[0]);
+    formData.append('pedidoId', pedidoId);
+    try {
+      const resUpload = await fetch(`/api/pedidos/${pedidoId}/upload`, {
+        method: 'POST',
+        credentials: 'include',
+        body: formData
+      });
+      const dataUpload = await resUpload.json();
+      if (!dataUpload.ok) throw new Error('No se pudo subir los PDFs');
+      msg.textContent = 'Documentos enviados correctamente.';
+      this.reset();
+      cargarPedidos();
+    } catch (err) {
+      msg.textContent = 'Error al subir PDFs: ' + (err.message || err);
+    }
+  });
+
+  // Mostrar pedidos del usuario
+  async function cargarPedidos() {
+    const tabla = document.getElementById('tabla-pedidos');
+    tabla.innerHTML = '<p>Cargando...</p>';
+    try {
+      const res = await fetch('/api/pedidos', { credentials: 'include' });
+      const pedidos = await res.json();
+      if (!Array.isArray(pedidos) || pedidos.length === 0) {
+        tabla.innerHTML = '<p>No tienes pedidos aún.</p>';
+        return;
+      }
+      let html = '<table style="width:100%;border-collapse:collapse;">';
+      html += '<thead><tr><th>ID</th><th>Fecha</th><th>Estado</th><th>Requerimiento</th><th>Documento</th><th>Corrección</th><th>Comentarios</th></tr></thead><tbody>';
+      pedidos.forEach(p => {
+        html += `<tr>
+          <td>${p.id}</td>
+          <td>${p.fecha ? p.fecha.substring(0,19).replace('T',' ') : ''}</td>
+          <td>${p.estado || ''}</td>
+          <td>${p.pdf_requerimiento ? `<a href="${p.pdf_requerimiento}" target="_blank">Ver PDF</a>` : ''}</td>
+          <td>${p.pdf_documento ? `<a href="${p.pdf_documento}" target="_blank">Ver PDF</a>` : ''}</td>
+          <td>${p.pdf_correccion ? `<a href="${p.pdf_correccion}" target="_blank">Descargar PDF corregido</a>` : ''}</td>
+          <td>${p.comentarios || ''}</td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      tabla.innerHTML = html;
+    } catch (err) {
+      tabla.innerHTML = '<p>Error al cargar pedidos.</p>';
+    }
+  }
+  </script>
   <script>
   // Búsqueda flexible de certificados desde la lupa
   (function() {
@@ -266,6 +331,67 @@
         });
     });
   </script>
+  <!-- Agrega esto al final de tu <body>, antes de cerrar la etiqueta -->
+<script type="module">
+  import { renderContacto } from '/scripts/contactoVista.js';
+  import { renderEditorial } from '/scripts/editorialVista.js';
+  import { renderNosotros } from '/scripts/nosotrosVista.js';
+  import { renderPerfil } from '/scripts/perfilVista.js';
+  import { renderRegistroLogin } from '/scripts/registroLoginVista.js';
+  import { renderServicios } from '/scripts/serviciosVista.js';
+
+  // Vista de inicio (puedes personalizarla)
+  function renderInicio() {
+    document.getElementById('contenido-dinamico').innerHTML = `
+      <section class="inicio-bienvenida">
+        <h1>Bienvenido a Iyayku Innova Editores</h1>
+        <p>Tu plataforma para publicación y asesoría científica.</p>
+      </section>
+    `;
+  }
+
+  // Navegación entre vistas usando hashes
+  function mostrarVista(hash) {
+    switch (hash) {
+      case '#contacto':
+        renderContacto();
+        break;
+      case '#editorial':
+        renderEditorial();
+        break;
+      case '#nosotros':
+        renderNosotros();
+        break;
+      case '#perfil':
+        renderPerfil();
+        break;
+      case '#registro':
+      case '#registro_login':
+        renderRegistroLogin();
+        break;
+      case '#servicios':
+        renderServicios();
+        break;
+      case '#inicio':
+      case '':
+        renderInicio();
+        break;
+      default:
+        renderInicio();
+    }
+  }
+
+  // Detectar navegación por hash
+  window.addEventListener('hashchange', () => {
+    mostrarVista(window.location.hash);
+  });
+
+  // Mostrar la vista correcta al cargar
+  document.addEventListener('DOMContentLoaded', () => {
+    mostrarVista(window.location.hash || '#inicio');
+  });
+
+  // Opcional: Si usas enlaces <a href="#vista"> en el menú, la navegación será automática
+</script>
 </body>
-</html>
 </html>

@@ -322,5 +322,20 @@ ALTER TABLE public.servicios OWNER to postgres;
 
 --
 -- PostgreSQL database dump complete
+
+-- Tabla de pedidos para revisión de documentos
+CREATE TABLE IF NOT EXISTS public.pedidos (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER REFERENCES public.usuarios(id) ON DELETE SET NULL,
+    factura_id INTEGER REFERENCES public.facturas(id) ON DELETE SET NULL,
+    requerimiento TEXT,
+    descripcion TEXT,
+    pdf_requerimiento TEXT,
+    pdf_documento TEXT,
+    pdf_correccion TEXT,
+    comentarios TEXT,
+    estado VARCHAR(20) DEFAULT 'pendiente',
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 --
 

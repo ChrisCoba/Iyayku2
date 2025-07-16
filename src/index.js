@@ -1,7 +1,7 @@
-// index.js  (CommonJS)
 const express = require('express');
 const path    = require('path');
 const fs      = require('fs');
+const multer = require('multer');
 const cookieParser = require('cookie-parser');
 const bcrypt  = require('bcryptjs');
 const jwt     = require('jsonwebtoken');
@@ -11,6 +11,91 @@ const { generarFacturaPDF } = require('./pdfFactura');
 const pool = require('./db');
 const auth = require('./middlewares/auth');       // único middleware
 const uploadRoutes = require('./routes/upload');  // ⇠ NUEVO
+
+const app  = express();
+//------------------------------------------------------------
+// 8. Pedidos: subida de PDFs y revisión
+//------------------------------------------------------------
+const pedidosDir = path.join(__dirname, '..', 'public', 'pedidos');
+if (!fs.existsSync(pedidosDir)) fs.mkdirSync(pedidosDir, { recursive: true });
+const storagePedidos = multer.diskStorage({
+  destination: pedidosDir,
+  filename: (req, file, cb) => {
+    // nombre: pedido-<id>-<tipo>.pdf
+    const pedidoId = req.body.pedidoId || req.params.pedidoId || 'tmp';
+    const tipo = file.fieldname;
+    cb(null, `pedido-${pedidoId}-${tipo}.pdf`);
+  }
+});
+const uploadPedidos = multer({ storage: storagePedidos, limits: { fileSize: 10 * 1024 * 1024 } });
+
+// Crear pedido tras factura (cliente)
+app.post('/api/pedidos', auth, async (req, res) => {
+  // Espera: { factura_id, requerimiento, descripcion }
+  const { factura_id, requerimiento, descripcion } = req.body;
+  const usuario_id = req.user.id;
+  try {
+    const { rows } = await pool.query(
+      'INSERT INTO pedidos (usuario_id, factura_id, requerimiento, descripcion, estado) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+      [usuario_id, factura_id, requerimiento || '', descripcion || '', 'pendiente']
+    );
+    res.json({ ok: true, pedido: rows[0] });
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al crear pedido' });
+  }
+});
+
+// Subir PDFs al pedido (cliente)
+app.post('/api/pedidos/:pedidoId/upload', auth, uploadPedidos.fields([
+  { name: 'pdf_requerimiento', maxCount: 1 },
+  { name: 'pdf_documento', maxCount: 1 }
+]), async (req, res) => {
+  const pedidoId = req.params.pedidoId;
+  // Guardar rutas en la base
+  try {
+    const pdf_requerimiento = req.files['pdf_requerimiento'] ? `/pedidos/${req.files['pdf_requerimiento'][0].filename}` : null;
+    const pdf_documento = req.files['pdf_documento'] ? `/pedidos/${req.files['pdf_documento'][0].filename}` : null;
+    await pool.query('UPDATE pedidos SET pdf_requerimiento=$1, pdf_documento=$2 WHERE id=$3', [pdf_requerimiento, pdf_documento, pedidoId]);
+    res.json({ ok: true, pdf_requerimiento, pdf_documento });
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al subir PDFs' });
+  }
+});
+
+// Ver pedidos (admin y cliente)
+app.get('/api/pedidos', auth, async (req, res) => {
+  try {
+    let rows;
+    if (req.user.correo === 'admin@iyayku.com') {
+      const result = await pool.query('SELECT * FROM pedidos ORDER BY id DESC');
+      rows = result.rows;
+    } else {
+      const result = await pool.query('SELECT * FROM pedidos WHERE usuario_id=$1 ORDER BY id DESC', [req.user.id]);
+      rows = result.rows;
+    }
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al obtener pedidos' });
+  }
+});
+
+// Subir PDF corregido y comentarios (admin)
+app.post('/api/pedidos/:pedidoId/correccion', auth, uploadPedidos.single('pdf_correccion'), async (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo el administrador puede subir correcciones.' });
+  const pedidoId = req.params.pedidoId;
+  const comentarios = req.body.comentarios || '';
+  try {
+    const pdf_correccion = req.file ? `/pedidos/${req.file.filename}` : null;
+    await pool.query('UPDATE pedidos SET pdf_correccion=$1, comentarios=$2, estado=$3 WHERE id=$4', [pdf_correccion, comentarios, 'corregido', pedidoId]);
+    res.json({ ok: true, pdf_correccion });
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al subir corrección' });
+  }
+});
+
+// Descargar PDFs (servidos como estáticos)
+app.use('/pedidos', express.static(pedidosDir));
+// ...existing code...
 
 // Ruta absoluta para cargar el controlador (ajusta según tu estructura de carpetas)
 const imgControllerPath = path.resolve(__dirname, '../backend/controllers/imagenesControlador.js');
@@ -23,7 +108,7 @@ try {
   console.error('[ERROR] No se pudo cargar el controlador de imágenes:', err);
 }
 
-const app  = express();
+// ...existing code...
 
 //------------------------------------------------------------
 // Config básica
@@ -213,6 +298,8 @@ app.post('/api/facturas', auth, async (req, res) => {
     const usuario = userRows[0];
     // Generar PDF
     const pdfUrl = generarFacturaPDF({ facturaId, usuario, items, total, fecha });
+    // Guardar la URL del PDF en la base de datos
+    await pool.query('UPDATE facturas SET pdf_url=$1 WHERE id=$2', [pdfUrl, facturaId]);
     res.json({ msg: 'Factura generada', facturaId, pdfUrl });
   } catch (err) {
     console.error(err);
@@ -270,7 +357,12 @@ app.get('/api/admin/facturas', auth, async (req, res) => {
   if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo el administrador puede ver facturas.' });
   try {
     const { rows } = await pool.query('SELECT f.*, u.nombre AS usuario_nombre, u.correo AS usuario_correo FROM facturas f LEFT JOIN usuarios u ON f.usuario_id = u.id ORDER BY f.fecha DESC');
-    res.json(rows);
+    // Agregar campo pdfUrl calculado
+    const facturas = rows.map(f => ({
+      ...f,
+      pdfUrl: `/facturas/factura-${f.id}.pdf`
+    }));
+    res.json(facturas);
   } catch (err) {
     res.status(500).json({ msg: 'Error al obtener facturas' });
   }

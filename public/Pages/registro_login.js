@@ -1,0 +1,128 @@
+export function renderRegistroLogin() {
+  const html = `
+    <header class="bg-white text-black flex flex-wrap items-center justify-between px-6 py-4 shadow-md">
+      <div class="logo flex-shrink-0">
+        <img src="/img/logo" alt="Logo" class="h-8 object-contain" />
+      </div>
+      <nav id="main-menu" class="w-full md:w-auto md:flex md:items-center mt-4 md:mt-0 hidden md:block">
+        <ul class="flex flex-col md:flex-row gap-4 letras_menu w-full md:w-auto">
+          <li><a href="#inicio" class="hover-effect block py-2 px-4">Inicio</a></li>
+          <li><a href="#nosotros" class="hover-effect block py-2 px-4">Nosotros</a></li>
+          <li><a href="#editorial" class="hover-effect block py-2 px-4">Editorial</a></li>
+          <li><a href="#servicios" class="hover-effect block py-2 px-4">Servicios</a></li>
+          <li><a href="#contacto" class="hover-effect block py-2 px-4">Contáctanos</a></li>
+        </ul>
+      </nav>
+      <div class="social-icons">
+        <a href="#registro" title="Iniciar sesión o registrarse">
+          <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-500 transition">
+            <img src="/svg/user" alt="Usuario" class="w-6 h-6 text-white" />
+          </div>
+        </a>
+        <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D"
+          target="_blank" rel="noopener noreferrer">
+          <img src="/svg/whatsapp" alt="WhatsApp" class="h-5 w-5 hover:scale-110 transition" />
+        </a>
+        <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
+          <img src="/svg/facebook" alt="Facebook" class="h-5 w-5 hover:scale-110 transition" />
+        </a>
+        <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
+          <img src="/svg/instagram" alt="Instagram" class="h-5 w-5 hover:scale-110 transition" />
+        </a>
+        <a id="searchToggle" class="cursor-pointer">
+          <img src="/svg/lupa" alt="Buscar" class="h-5 w-5 hover:scale-110 transition" />
+        </a>
+        <input id="searchInput" type="text" placeholder="Buscar..."
+          class="hidden ml-2 px-2 py-1 rounded border border-gray-300 shadow text-black transition-all duration-300" />
+      </div>
+    </header>
+    <div id="login-status-banner" style="display:none;position:fixed;top:0;right:0;z-index:9999;background:#3498db;color:#fff;padding:8px 18px;border-radius:0 0 0 12px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.10);">
+      <span id="login-status-text"></span>
+      <a id="perfil-link" href="#perfil" style="color:#fff;text-decoration:underline;margin-left:10px;display:none;">Ir a perfil</a>
+    </div>
+    <main class="flex-grow">
+      <div class="container" id="container">
+        <div class="form-container sign-up">
+          <form id="form-register" autocomplete="off">
+            <h1>Crear Cuenta</h1>
+            <input type="text" id="register-nombre" name="nombre" placeholder="Nombre" required />
+            <input type="email" id="register-correo" name="correo" placeholder="Correo" required />
+            <input type="password" id="register-contrasena" name="contrasena" placeholder="Contraseña" required />
+            <button type="submit">Registrarse</button>
+          </form>
+        </div>
+        <div class="form-container sign-in">
+          <form id="form-login" autocomplete="off">
+            <h1>Ingresar</h1>
+            <input type="email" id="login-correo" name="correo" placeholder="Correo" required />
+            <input type="password" id="login-contrasena" name="contrasena" placeholder="Contraseña" required />
+            <a href="#">¿Olvidaste tu contraseña?</a>
+            <button type="submit">Login</button>
+          </form>
+        </div>
+        <div class="toggle-container">
+          <div class="toggle">
+            <div class="toggle-panel toggle-left">
+              <h1>Bienvenido</h1>
+              <p>Ingresa ahora</p>
+              <button class="hidden" id="login">Iniciar Sesión</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+              <h1>Hola!</h1>
+              <p>Registrate gratis aquí</p>
+              <button class="hidden" id="register">Regístrate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="footer-col">
+        <h3>Dirección</h3>
+        <p>Dirección: Av. Amazonas y Colón, Quito – Ecuador</p>
+      </div>
+      <div class="footer-col">
+        <h3>Síguenos</h3>
+        <div class="footer-socials">
+          <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D" target="_blank" rel="noopener noreferrer">
+            <img src="/svg/whatsapp" alt="WhatsApp" />
+          </a>
+          <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
+            <img src="/svg/facebook" alt="Facebook" />
+          </a>
+          <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
+            <img src="/svg/instagram" alt="Instagram" />
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Información</h3>
+        <p>Email: iyayku@gmail.com</p>
+        <p>Teléfonos: 0995000484 · 0979369650 · 0997000496</p>
+      </div>
+    </footer>
+  `;
+
+  document.getElementById('contenido-dinamico').innerHTML = html;
+
+  // Banner de login
+  fetch('/api/status', { credentials: 'include' })
+    .then(res => res.json())
+    .then(data => {
+      if (data.usuario && data.usuario.correo) {
+        const banner = document.getElementById('login-status-banner');
+        const text = document.getElementById('login-status-text');
+        const perfilLink = document.getElementById('perfil-link');
+        text.textContent = `Sesión iniciada: ${data.usuario.nombre || data.usuario.correo}`;
+        if (data.usuario.correo === 'admin@iyayku.com') {
+          perfilLink.style.display = '';
+        } else {
+          perfilLink.style.display = 'none';
+        }
+        banner.style.display = '';
+      }
+    });
+
+  // Inicializa la lógica de login y registro si tienes scripts separados
+  if (window.initLoginRegistro) window.initLoginRegistro();
+}
