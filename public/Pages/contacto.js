@@ -44,6 +44,10 @@ export function renderContacto() {
 
     <main>
       <div id="contenido-contacto">
+        <h2>Contáctanos</h2>
+        <p>Dirección: Av. Amazonas y Colón, Quito – Ecuador</p>
+        <p>Email: iyayku@gmail.com</p>
+        <p>Teléfonos: 0995000484 · 0979369650 · 0997000496</p>
         <!-- Aquí puedes cargar dinámicamente el contenido de contacto desde el backend si lo deseas -->
       </div>
     </main>
