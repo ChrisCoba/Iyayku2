@@ -1,6 +1,8 @@
 //------------------------------------------------------------
 // 8. Pedidos: subida de PDFs y revisión
 //------------------------------------------------------------
+const path    = require('path');
+const fs      = require('fs');
 const multer = require('multer');
 const pedidosDir = path.join(__dirname, '..', 'public', 'pedidos');
 if (!fs.existsSync(pedidosDir)) fs.mkdirSync(pedidosDir, { recursive: true });
