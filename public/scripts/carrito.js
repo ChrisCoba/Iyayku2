@@ -77,26 +77,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Actualizar items
     carritoItems.innerHTML = '';
     const itemsConCantidad = carrito.filter(item => item.cantidad > 0);
-    if (itemsConCantidad.length === 0) {
-      carritoItems.innerHTML = '<p class="carrito-vacio">El carrito está vacío.</p>';
-    } else {
-      itemsConCantidad.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'carrito-item';
-        div.innerHTML = `
-          <span class="carrito-item-nombre">${item.nombre} <span style="color:#888;font-size:0.95em;">x${item.cantidad}</span></span>
-          <span class="carrito-item-precio">$${(item.precio * item.cantidad).toFixed(2)}</span>
-          <button class="carrito-item-eliminar" title="Eliminar" data-nombre="${item.nombre}">&times;</button>
-        `;
-        carritoItems.appendChild(div);
+    itemsConCantidad.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'carrito-item';
+      div.innerHTML = `
+        <span class="carrito-item-nombre">${item.nombre} <span style="color:#888;font-size:0.95em;">x${item.cantidad}</span></span>
+        <span class="carrito-item-precio">$${(item.precio * item.cantidad).toFixed(2)}</span>
+        <button class="carrito-item-eliminar" title="Eliminar" data-nombre="${item.nombre}">&times;</button>
+      `;
+      carritoItems.appendChild(div);
+    });
+    // Botones eliminar
+    carritoItems.querySelectorAll('.carrito-item-eliminar').forEach(btn => {
+      btn.addEventListener('click', function () {
+        eliminarDelCarrito(this.getAttribute('data-nombre'));
       });
-      // Botones eliminar
-      carritoItems.querySelectorAll('.carrito-item-eliminar').forEach(btn => {
-        btn.addEventListener('click', function () {
-          eliminarDelCarrito(this.getAttribute('data-nombre'));
-        });
-      });
-    }
+    });
 
     // Actualizar total
     const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);

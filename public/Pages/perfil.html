@@ -546,6 +546,103 @@
           table.innerHTML = '<tr><td colspan="6">Error al cargar certificados.</td></tr>';
         }
       }
+      // --- Editar página admin ---
+      async function cargarPaginasYSecciones() {
+        const selectPagina = document.getElementById('select-pagina');
+        const selectSeccion = document.getElementById('select-seccion');
+        selectPagina.innerHTML = '';
+        selectSeccion.innerHTML = '';
+        try {
+          const res = await fetch('/api/paginas', { credentials: 'include' });
+          const paginas = await res.json();
+          if (!Array.isArray(paginas)) return;
+          paginas.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p.nombre;
+            opt.textContent = p.nombre;
+            selectPagina.appendChild(opt);
+          });
+          selectPagina.addEventListener('change', async function() {
+            selectSeccion.innerHTML = '';
+            const pagina = selectPagina.value;
+            const resSec = await fetch(`/api/secciones?pagina=${encodeURIComponent(pagina)}`, { credentials: 'include' });
+            const secciones = await resSec.json();
+            if (Array.isArray(secciones)) {
+              secciones.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.seccion;
+                opt.textContent = s.seccion;
+                selectSeccion.appendChild(opt);
+              });
+            }
+          });
+          selectPagina.dispatchEvent(new Event('change'));
+        } catch {}
+      }
+
+      async function cargarContenidoSeccion() {
+        const pagina = document.getElementById('select-pagina').value;
+        const seccion = document.getElementById('select-seccion').value;
+        const inputTitulo = document.getElementById('input-titulo');
+        const editorHtml = document.getElementById('editor-html');
+        const previewHtml = document.getElementById('preview-html');
+        try {
+          const res = await fetch(`/api/contenido?pagina=${encodeURIComponent(pagina)}&seccion=${encodeURIComponent(seccion)}`, { credentials: 'include' });
+          const data = await res.json();
+          inputTitulo.value = data.titulo || '';
+          editorHtml.value = data.contenido || '';
+          previewHtml.innerHTML = data.contenido || '';
+        } catch {}
+      }
+
+      function modoVisualHtml() {
+        document.getElementById('editor-container').style.display = '';
+        document.getElementById('editor-html').style.display = 'none';
+      }
+      function modoSoloHtml() {
+        document.getElementById('editor-container').style.display = 'none';
+        document.getElementById('editor-html').style.display = '';
+      }
+
+      // Inicializar Quill editor visual
+      let quill;
+      document.addEventListener('DOMContentLoaded', function() {
+        if (document.getElementById('admin-editar-panel')) {
+          cargarPaginasYSecciones();
+          quill = new Quill('#editor-container', { theme: 'snow' });
+          document.getElementById('btn-modo-visual').onclick = modoVisualHtml;
+          document.getElementById('btn-modo-html').onclick = modoSoloHtml;
+          document.getElementById('btn-cargar-seccion').onclick = cargarContenidoSeccion;
+          quill.on('text-change', function() {
+            document.getElementById('editor-html').value = quill.root.innerHTML;
+            document.getElementById('preview-html').innerHTML = quill.root.innerHTML;
+          });
+          document.getElementById('editor-html').addEventListener('input', function() {
+            document.getElementById('preview-html').innerHTML = this.value;
+          });
+          document.getElementById('btn-guardar-pagina').onclick = async function() {
+            const pagina = document.getElementById('select-pagina').value;
+            const seccion = document.getElementById('select-seccion').value;
+            const titulo = document.getElementById('input-titulo').value;
+            const contenido = document.getElementById('editor-html').style.display === 'none' ? quill.root.innerHTML : document.getElementById('editor-html').value;
+            try {
+              const res = await fetch('/api/admin/contenido', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ pagina, seccion, titulo, contenido })
+              });
+              if (res.ok) {
+                alert('Sección actualizada correctamente.');
+              } else {
+                alert('Error al guardar: ' + (await res.text()));
+              }
+            } catch (e) {
+              alert('Error JS: ' + (e.message || e));
+            }
+          };
+        }
+      });
     });
   </script>
     <script src="/script.js"></script>
