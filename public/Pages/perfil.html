@@ -104,6 +104,7 @@
             <form id="form-servicio" style="display:flex;gap:8px;align-items:center;margin-bottom:18px;">
               <input type="text" name="nombre" placeholder="Nombre del servicio" required style="min-width:120px;">
               <input type="number" name="precio" placeholder="Precio" required step="0.01" style="width:80px;">
+              <input type="text" name="descripcion" placeholder="Descripción" style="min-width:180px;">
               <button type="submit" style="background:#059669;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;">Añadir servicio</button>
             </form>
             <table id="admin-servicios-table" style="width:100%;border-collapse:collapse;">
@@ -312,9 +313,28 @@
               btn.disabled = true;
               btn.textContent = 'Procesando...';
               try {
-                const res = await fetch(`/api/servicios/${id}/${accion}`, {
+                // Obtener datos actuales del servicio para mantener nombre, descripcion, precio, orden
+                const resGet = await fetch(`/api/servicios`, { credentials: 'include' });
+                const servicios = await resGet.json();
+                const serv = Array.isArray(servicios) ? servicios.find(s => s.id == id) : null;
+                if (!serv) {
+                  alert('No se encontró el servicio.');
+                  btn.disabled = false;
+                  btn.textContent = accion === 'desactivar' ? 'Desactivar' : 'Activar';
+                  return;
+                }
+                const activo = accion === 'activar';
+                const res = await fetch(`/api/admin/servicios/${id}`, {
                   method: 'PUT',
-                  credentials: 'include'
+                  headers: { 'Content-Type': 'application/json' },
+                  credentials: 'include',
+                  body: JSON.stringify({
+                    nombre: serv.nombre,
+                    descripcion: serv.descripcion,
+                    precio: serv.precio,
+                    activo,
+                    orden: serv.orden || 0
+                  })
                 });
                 if (!res.ok) {
                   const text = await res.text();
@@ -335,7 +355,7 @@
               btn.disabled = true;
               btn.textContent = 'Eliminando...';
               try {
-                const res = await fetch(`/api/servicios/${id}`, {
+                const res = await fetch(`/api/admin/servicios/${id}`, {
                   method: 'DELETE',
                   credentials: 'include'
                 });
@@ -361,6 +381,7 @@
           e.preventDefault();
           const nombre = formServicio.nombre.value.trim();
           const precio = parseFloat(formServicio.precio.value);
+          const descripcion = formServicio.descripcion.value.trim();
           if (!nombre || isNaN(precio)) return alert('Completa los campos correctamente.');
           formServicio.querySelector('button[type="submit"]').disabled = true;
           try {
@@ -368,7 +389,7 @@
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               credentials: 'include',
-              body: JSON.stringify({ nombre, precio, descripcion: '', orden: 0 })
+              body: JSON.stringify({ nombre, precio, descripcion, orden: 0 })
             });
             if (!res.ok) {
               const text = await res.text();

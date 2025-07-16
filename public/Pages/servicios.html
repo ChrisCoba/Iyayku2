@@ -127,13 +127,13 @@
           // Alternar color de tarjeta
           const colores = ['card-blue','card-yellow','card-purple','card-orange','card-green'];
           const color = colores[idx % colores.length];
-          const items = s.descripcion.split(',').map(i => `<li>${i.trim()}</li>`).join('');
+          const items = s.descripcion ? s.descripcion.split(',').map(i => `<li>${i.trim()}</li>`).join('') : '';
           cont.innerHTML += `
             <div class="servicio-precio-card ${color}">
               <div class="servicio-precio-header">${s.nombre}</div>
               <ul>${items}</ul>
               <div class="servicio-precio-precio">$${s.precio}</div>
-              <button class="servicio-precio-btn">Comprar</button>
+              <button class="servicio-precio-btn" data-descripcion="${encodeURIComponent(s.descripcion || '')}">Comprar</button>
             </div>
           `;
         });
@@ -144,10 +144,11 @@
             const card = btn.closest('.servicio-precio-card');
             const nombre = card.querySelector('.servicio-precio-header').textContent.trim();
             const precio = parseFloat(card.querySelector('.servicio-precio-precio').textContent.replace('$', '').trim());
+            const descripcion = decodeURIComponent(btn.getAttribute('data-descripcion') || '');
             if (window.agregarAlCarrito) {
-              window.agregarAlCarrito(nombre, precio);
+              window.agregarAlCarrito(nombre, precio, descripcion);
             } else if (typeof agregarAlCarrito === 'function') {
-              agregarAlCarrito(nombre, precio);
+              agregarAlCarrito(nombre, precio, descripcion);
             } else {
               alert('No se pudo añadir al carrito.');
             }

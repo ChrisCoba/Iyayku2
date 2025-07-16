@@ -51,12 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  function agregarAlCarrito(nombre, precio) {
+  window.agregarAlCarrito = function(nombre, precio, descripcion) {
     const existente = carrito.find(item => item.nombre === nombre);
     if (existente) {
       existente.cantidad += 1;
     } else {
-      carrito.push({ nombre, precio, cantidad: 1 });
+      carrito.push({ nombre, precio, cantidad: 1, descripcion });
     }
     actualizarCarrito();
     guardarCarrito();
