@@ -85,8 +85,6 @@ app.post('/api/pedidos/:pedidoId/correccion', auth, uploadPedidos.single('pdf_co
 app.use('/pedidos', express.static(pedidosDir));
 // index.js  (CommonJS)
 const express = require('express');
-const path    = require('path');
-const fs      = require('fs');
 const cookieParser = require('cookie-parser');
 const bcrypt  = require('bcryptjs');
 const jwt     = require('jsonwebtoken');
