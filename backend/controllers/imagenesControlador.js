@@ -13,11 +13,10 @@ const svgUrls = {
 
 // Otras imágenes
 const imageUrls = {
-  logo: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/lgogo.jpg',
+  logo: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//lgogo.jpg',
   acerca: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/AcercaNosotros.png',
   alpha: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/Alpha_page-0001.jpg',
   fondo: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/fondo.jpg',
-  horizon: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/Horizon_page-0001.jpg',
   impact: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/Impact_page-0001.jpg',
   inovacion: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/Inovacion.jpg',
   mision: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/editorial%20sphera/mision.png',
@@ -28,7 +27,7 @@ const imageUrls = {
   kosmos: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/inovaimagenes/Kosmos_page-0001.jpg',
   nexus: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/inovaimagenes/Nexus_page-0001.jpg',
 
-  issn_logo: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//ISSN_logo.svg.png',
+  issn_logo: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//ISSN_logo.svg.pn',
   latindex: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//latindex-catalogo2.png',
   miar: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//MIAR.png',
   scilit: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//scilit.png',
