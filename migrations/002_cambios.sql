@@ -10,7 +10,6 @@ INSERT INTO public.paginas_contenido (pagina, seccion, titulo, contenido, orden)
 ('nosotros', 'quienes_somos', '¿Quiénes Somos?',
 '<section class="nuestros-servicios">
   <div class="servicios-texto">
-    <h2>¿Quiénes Somos?</h2>
     <p>Somos una empresa dedicada a brindar soluciones tecnológicas de alta calidad, especializada en la comercialización de equipos de cómputo, capacitación y asesoramiento para empresas tanto del sector público como privado. Con un enfoque centrado en la ética profesional, la responsabilidad y el trato humano, IYAYKU busca atender las diversas necesidades de sus clientes de manera eficiente. Además, la empresa apuesta por el desarrollo continuo de sus colaboradores, fomentando la lealtad, el trabajo en equipo y el compromiso con la sostenibilidad ambiental, asegurando así su rentabilidad y permanencia en el mercado.</p>
   </div>
 </section>', 1),
@@ -26,7 +25,6 @@ INSERT INTO public.paginas_contenido (pagina, seccion, titulo, contenido, orden)
     <img src="/img/mision" alt="Misión">
   </div>
   <div class="mision-texto">
-    <h2>Misión</h2>
     <p>IYAYKU INNOVACIÓN TECNOLÓGICA tiene la misión de ofrecer servicios empresariales de calidad con calidez, ser especialistas en la comercialización de equipos de cómputo, capacitación y asesoría a empresas públicas y privadas, solucionando las diversas necesidades de los clientes, con ética profesional y responsabilidad. La empresa se enfoca en capacitar constantemente a sus colaboradores, promoviendo la lealtad y el trabajo en equipo para asegurar la rentabilidad de la empresa y la sostenibilidad ambiental.</p>
   </div>
 </section>', 3),
@@ -34,7 +32,6 @@ INSERT INTO public.paginas_contenido (pagina, seccion, titulo, contenido, orden)
 ('nosotros', 'vision', 'Visión',
 '<section class="nuestros-servicios">
   <div class="servicios-texto">
-    <h2>Visión</h2>
     <p>Ser una empresa líder en innovación tecnológica, consultoría especializada y producción académica, reconocida por su excelencia, compromiso social y capacidad de adaptación, contribuyendo al fortalecimiento del ecosistema empresarial y educativo a nivel nacional e internacional.</p>
   </div>
   <div class="servicios-imagen">
