@@ -377,6 +377,16 @@ button:hover {
   border-right: none;
 }
 
+@media (max-width: 1440px) {
+  header {
+    padding: 24px 40px;
+  }
+  .logo img {
+    width: 6em;
+    max-height: 6em;
+  }
+}
+
 @media (max-width: 900px) {
   header {
     flex-direction: column;
@@ -384,8 +394,8 @@ button:hover {
     padding: 16px 8px;
   }
   .logo img {
-    width: 7em;
-    max-height: 7em;
+    width: 5em;
+    max-height: 5em;
   }
   .footer {
     flex-direction: column;
@@ -407,8 +417,8 @@ button:hover {
     padding: 8px 4px;
   }
   .logo img {
-    width: 4em;
-    max-height: 4em;
+    width: 3em;
+    max-height: 3em;
   }
   .footer {
     padding: 0.8rem 1vw;
@@ -419,6 +429,52 @@ button:hover {
     padding: 0 0.2rem;
     font-size: 0.98em;
     border-right: none;
+  }
+}
+
+/* Menú hamburguesa para tablet y móvil */
+#menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2em;
+  cursor: pointer;
+  margin-left: 12px;
+}
+
+@media (max-width: 900px) {
+  #main-menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: #fff;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  #main-menu.open {
+    display: flex;
+  }
+  #menu-toggle {
+    display: block;
+  }
+  .letras_menu {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+  .letras_menu a {
+    padding: 12px 24px;
+    border-bottom: 1px solid #eee;
+    width: 100%;
+    display: block;
+    color: #222;
+    background: #fff;
+  }
+  .letras_menu a:last-child {
+    border-bottom: none;
   }
 }
 
@@ -534,9 +590,9 @@ body.modo-oscuro .slider-title {
 }
 
 .logo img {
-  width: 10em;
+  width: 8em;
   height: auto;
-  max-height: 10em;
+  max-height: 8em;
   object-fit: contain;
 }
 
