@@ -137,6 +137,22 @@
             </div>
           `;
         });
+        // Delegar evento para botones comprar
+        cont.querySelectorAll('.servicio-precio-btn').forEach(btn => {
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const card = btn.closest('.servicio-precio-card');
+            const nombre = card.querySelector('.servicio-precio-header').textContent.trim();
+            const precio = parseFloat(card.querySelector('.servicio-precio-precio').textContent.replace('$', '').trim());
+            if (window.agregarAlCarrito) {
+              window.agregarAlCarrito(nombre, precio);
+            } else if (typeof agregarAlCarrito === 'function') {
+              agregarAlCarrito(nombre, precio);
+            } else {
+              alert('No se pudo añadir al carrito.');
+            }
+          });
+        });
       } catch (e) {
         cont.innerHTML = '<p style="color:#222;background:#fff;padding:1em;border-radius:8px;">Error al cargar servicios.</p>';
       }

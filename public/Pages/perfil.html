@@ -364,11 +364,11 @@
           if (!nombre || isNaN(precio)) return alert('Completa los campos correctamente.');
           formServicio.querySelector('button[type="submit"]').disabled = true;
           try {
-            const res = await fetch('/api/servicios', {
+            const res = await fetch('/api/admin/servicios', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               credentials: 'include',
-              body: JSON.stringify({ nombre, precio })
+              body: JSON.stringify({ nombre, precio, descripcion: '', orden: 0 })
             });
             if (!res.ok) {
               const text = await res.text();
