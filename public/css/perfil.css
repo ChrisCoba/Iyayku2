@@ -8,8 +8,8 @@
   width: 220px;
   min-width: 180px;
   max-width: 260px;
-  background: #ffffff;
-  color: #000000;
+  background: transparent;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -71,7 +71,7 @@
 }
 
 .admin-dashboard-blank {
-  background: #fff;
+  background: transparent;
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   padding: 32px;
