@@ -43,6 +43,7 @@ const imageUrls = {
 const svgDir = path.join(__dirname, '..', 'public', 'svg');
 const imgDir = path.join(__dirname, '..', 'public', 'img');
 
+// Descarga imagen o svg
 async function descargarArchivo(nombre, tipo = 'svg') {
   const urls = tipo === 'svg' ? svgUrls : imageUrls;
   const url = urls[nombre];
@@ -53,21 +54,23 @@ async function descargarArchivo(nombre, tipo = 'svg') {
   const dir = tipo === 'svg' ? svgDir : imgDir;
   const filePath = path.join(dir, fileName);
 
-  // 🧠 Si ya existe cualquier archivo con ese nombre base, lo reutilizas
-  const files = fs.readdirSync(dir);
-  const existing = files.find(f => f.startsWith(nombre + '.'));
+  // Buscar si ya existe un archivo con ese nombre (sin importar la extensión)
+  const files = fs.existsSync(dir) ? fs.readdirSync(dir) : [];
+  const existing = files.find(f => path.parse(f).name === nombre);
   if (existing) return path.join(dir, existing);
 
-  // Si no existe, descarga
+  // Descargar si no existe
   const response = await axios.get(url, { responseType: 'stream' });
   await fs.promises.mkdir(dir, { recursive: true });
   const writer = fs.createWriteStream(filePath);
   response.data.pipe(writer);
+
   return new Promise((resolve, reject) => {
     writer.on('finish', () => resolve(filePath));
     writer.on('error', reject);
   });
 }
+
 async function obtenerSVG(req, res) {
   try {
     const nombre = req.params.nombre;
