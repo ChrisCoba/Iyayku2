@@ -26,7 +26,7 @@ const imageUrls = {
   ingenio: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/inovaimagenes/Ingenio_page-0001.jpg',
   kosmos: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/inovaimagenes/Kosmos_page-0001.jpg',
   nexus: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku/inovaimagenes/Nexus_page-0001.jpg',
-  user: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//user.svg',
+  usuario: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//user.svg',
 
   issn_logo: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//ISSN_logo.png',
   latindex: 'https://nhttnwzpmxmdncpzxtxm.supabase.co/storage/v1/object/public/iyayku//latindex-catalogo2.png',

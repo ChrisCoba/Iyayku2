@@ -52,13 +52,13 @@ INSERT INTO public.paginas_contenido (pagina, seccion, titulo, contenido, orden)
     <h3>Síguenos</h3>
     <div class="footer-socials">
       <a href="https://api.whatsapp.com/send?phone=593997000496&text=%C2%A1Hola%20Iyayku%20Innova%20Editores!%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20informaci%C3%B3n%20acerca%20de%20la%20asesor%C3%ADa%20y%20publicaci%C3%B3n%20de%20art%C3%ADculos%20cient%C3%ADficos.%20%E2%9C%8D%EF%B8%8F%F0%9F%93%8A%F0%9F%93%9D" target="_blank" rel="noopener noreferrer">
-        <img src="/svgs/whatsapp_black_logo_icon_147050.svg" alt="WhatsApp" />
+        <img src="/svgs/whatsapp alt="WhatsApp" />
       </a>
       <a href="https://www.facebook.com/Iyaykutec" target="_blank" rel="noopener noreferrer">
-        <img src="/svgs/facebook_black_logo_icon_147136.svg" alt="Facebook" />
+        <img src="/svg/facebook" alt="Facebook" />
       </a>
       <a href="https://www.instagram.com/iyaykutec" target="_blank" rel="noopener noreferrer">
-        <img src="/svgs/instagram_black_logo_icon_147122.svg" alt="Instagram" />
+        <img src=""/svg/instagram"" alt="Instagram" />
       </a>
     </div>
   </div>
