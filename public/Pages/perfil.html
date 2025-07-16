@@ -224,6 +224,30 @@
             banner.style.display = '';
           }
         });
+
+      // --- Mostrar/ocultar paneles admin ---
+      function hideAllPanels() {
+        document.getElementById('admin-usuarios-panel').style.display = 'none';
+        document.getElementById('admin-facturas-panel').style.display = 'none';
+        document.getElementById('admin-certificados-panel').style.display = 'none';
+        document.getElementById('admin-editar-panel').style.display = 'none';
+      }
+      // Asocia cada tarjeta con su panel
+      const cardPanelMap = {
+        'card-perfil': 'admin-usuarios-panel',
+        'card-facturas': 'admin-facturas-panel',
+        'card-certificados': 'admin-certificados-panel',
+        'card-editar': 'admin-editar-panel'
+      };
+      document.querySelectorAll('.admin-card').forEach(card => {
+        card.addEventListener('click', function() {
+          hideAllPanels();
+          const panelId = cardPanelMap[card.classList[1]];
+          if (panelId) {
+            document.getElementById(panelId).style.display = '';
+          }
+        });
+      });
     });
   </script>
     <script src="/script.js"></script>

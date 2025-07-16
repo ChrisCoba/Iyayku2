@@ -96,7 +96,7 @@ INSERT INTO public.paginas_contenido (pagina, seccion, titulo, contenido, orden)
 ('inicio', 'principal', 'Inicio',
 '<section class="inicio-empresa"><div class="inicio-contenido"><h1>Innovación que trasciende, ideas que perduran</h1><p>En <strong>IYAYKU Innovación Tecnológica</strong> creemos que la tecnología, la ciencia y la educación pueden transformar el presente y proyectar un futuro más sostenible. Somos una empresa ecuatoriana con impacto latinoamericano, especializada en asesoría, capacitación, investigación y soluciones digitales a medida.</p><p>Nuestro equipo multidisciplinario de expertos trabaja con instituciones, universidades, gobiernos y empresas para brindar resultados reales, éticos y de alta calidad. Si estás buscando impulsar tu proyecto, fortalecer tu organización o publicar en las mejores bases científicas, estás en el lugar correcto.</p><a href="#nuestros-servicios" class="btn-principal">Conoce nuestros servicios</a></div><div class="inicio-imagen"><img src="/img/inovacion" alt="Innovación IYAYKU" /></div></section>', 1);
 
-/*INSERT INTO public.servicios (nombre, descripcion, precio, activo, orden) VALUES
+*INSERT INTO public.servicios (nombre, descripcion, precio, activo, orden) VALUES
 ('Proyectos y Planes de Investigación',
 '<div class="servicio-precio-card card-blue">
   <div class="servicio-precio-header">Proyectos y Planes de Investigación</div>
