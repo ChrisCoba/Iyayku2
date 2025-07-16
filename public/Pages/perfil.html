@@ -259,6 +259,11 @@
         table.innerHTML = '<tr><td colspan="3">Cargando...</td></tr>';
         try {
           const res = await fetch('/api/usuarios', { credentials: 'include' });
+          if (!res.ok) {
+            const text = await res.text();
+            table.innerHTML = `<tr><td colspan='3'>Error HTTP: ${res.status} - ${text}</td></tr>`;
+            return;
+          }
           const data = await res.json();
           if (!Array.isArray(data)) {
             table.innerHTML = `<tr><td colspan='3'>Respuesta inesperada: ${JSON.stringify(data)}</td></tr>`;
@@ -273,7 +278,7 @@
             table.innerHTML += `<tr><td>${u.nombre || ''}</td><td>${u.correo || ''}</td><td></td></tr>`;
           });
         } catch (e) {
-          table.innerHTML = '<tr><td colspan="3">Error al cargar usuarios.</td></tr>';
+          table.innerHTML = `<tr><td colspan="3">Error JS: ${e.message || e}</td></tr>`;
         }
       }
 
@@ -283,6 +288,11 @@
         table.innerHTML = '<tr><td colspan="5">Cargando...</td></tr>';
         try {
           const res = await fetch('/api/facturas', { credentials: 'include' });
+          if (!res.ok) {
+            const text = await res.text();
+            table.innerHTML = `<tr><td colspan='5'>Error HTTP: ${res.status} - ${text}</td></tr>`;
+            return;
+          }
           const data = await res.json();
           if (!Array.isArray(data)) {
             table.innerHTML = `<tr><td colspan='5'>Respuesta inesperada: ${JSON.stringify(data)}</td></tr>`;
@@ -297,7 +307,7 @@
             table.innerHTML += `<tr><td>${f.id}</td><td>${f.usuario_id || ''}</td><td>${f.correo || ''}</td><td>${f.fecha || ''}</td><td>${f.total || ''}</td></tr>`;
           });
         } catch (e) {
-          table.innerHTML = '<tr><td colspan="5">Error al cargar facturas.</td></tr>';
+          table.innerHTML = `<tr><td colspan="5">Error JS: ${e.message || e}</td></tr>`;
         }
       }
 
