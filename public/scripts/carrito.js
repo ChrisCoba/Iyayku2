@@ -76,10 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Actualizar items
     carritoItems.innerHTML = '';
-    if (carrito.length === 0) {
+    const itemsConCantidad = carrito.filter(item => item.cantidad > 0);
+    if (itemsConCantidad.length === 0) {
       carritoItems.innerHTML = '<p class="carrito-vacio">El carrito está vacío.</p>';
     } else {
-      carrito.forEach(item => {
+      itemsConCantidad.forEach(item => {
         const div = document.createElement('div');
         div.className = 'carrito-item';
         div.innerHTML = `

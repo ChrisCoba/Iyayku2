@@ -131,36 +131,40 @@
           <div>Facturas</div>
         </div>
         <div id="admin-facturas-panel" class="admin-panel" style="display:none">
-          <h3>Facturas</h3>
-          <form id="form-factura" style="margin-bottom:16px;">
+          <h3 style="margin-bottom:16px;color:#1e293b;font-size:1.3em;">Facturas</h3>
+          <form id="form-factura" style="margin-bottom:16px;display:flex;gap:8px;align-items:center;">
             <input type="number" name="usuario_id" placeholder="ID Usuario" required style="width:80px;">
             <input type="number" name="total" placeholder="Total" required step="0.01" style="width:80px;">
             <input type="text" name="items" placeholder='Items (JSON)' required style="width:200px;">
-            <button type="submit">Agregar</button>
+            <button type="submit" style="background:#059669;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;">Agregar</button>
             <small>Ejemplo items: [{"nombre":"Servicio","cantidad":1,"precio":10}]</small>
           </form>
-          <table id="admin-facturas-table">
-            <thead><tr><th>ID</th><th>Usuario</th><th>Correo</th><th>Fecha</th><th>Total</th></tr></thead>
-            <tbody></tbody>
-          </table>
+          <div style="background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);padding:24px 18px;max-width:700px;margin:auto;">
+            <table id="admin-facturas-table" style="width:100%;border-collapse:collapse;">
+              <thead style="background:#f1f5f9;color:#222;"><tr><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">ID</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Usuario</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Correo</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Fecha</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Total</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">PDF</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
         <div class="admin-card card-certificados">
           <div class="icon">🎓</div>
           <div>Certificados</div>
         </div>
         <div id="admin-certificados-panel" class="admin-panel" style="display:none">
-          <h3>Certificados</h3>
-          <form id="form-certificado" style="margin-bottom:16px;">
+          <h3 style="margin-bottom:16px;color:#1e293b;font-size:1.3em;">Certificados</h3>
+          <form id="form-certificado" style="margin-bottom:16px;display:flex;gap:8px;align-items:center;">
             <input type="text" name="autor_nombre" placeholder="Autor" required style="width:120px;">
             <input type="text" name="articulo_titulo" placeholder="Título" required style="width:120px;">
             <input type="url" name="articulo_url" placeholder="URL PDF" style="width:120px;">
             <input type="text" name="publicacion_id" placeholder="ID Publicación (opcional)" style="width:80px;">
-            <button type="submit">Agregar</button>
+            <button type="submit" style="background:#059669;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;">Agregar</button>
           </form>
-          <table id="admin-certificados-table">
-            <thead><tr><th>ID</th><th>Autor</th><th>Título</th><th>PDF</th><th>Página</th><th>Fecha</th></tr></thead>
-            <tbody></tbody>
-          </table>
+          <div style="background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);padding:24px 18px;max-width:700px;margin:auto;">
+            <table id="admin-certificados-table" style="width:100%;border-collapse:collapse;">
+              <thead style="background:#f1f5f9;color:#222;"><tr><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">ID</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Autor</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Título</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">PDF</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Página</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Fecha</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
         <div class="admin-card card-editar">
           <div class="icon">📝</div>
@@ -470,29 +474,43 @@
       async function cargarFacturasAdmin() {
         const table = document.querySelector('#admin-facturas-table tbody');
         if (!table) return;
-        table.innerHTML = '<tr><td colspan="5">Cargando...</td></tr>';
+        table.innerHTML = '<tr><td colspan="6">Cargando...</td></tr>';
         try {
           const res = await fetch('/api/admin/facturas', { credentials: 'include' });
           if (!res.ok) {
             const text = await res.text();
-            table.innerHTML = `<tr><td colspan='5'>Error HTTP: ${res.status} - ${text}</td></tr>`;
+            table.innerHTML = `<tr><td colspan='6'>Error HTTP: ${res.status} - ${text}</td></tr>`;
             return;
           }
           const data = await res.json();
           if (!Array.isArray(data)) {
-            table.innerHTML = `<tr><td colspan='5'>Respuesta inesperada: ${JSON.stringify(data)}</td></tr>`;
+            table.innerHTML = `<tr><td colspan='6'>Respuesta inesperada: ${JSON.stringify(data)}</td></tr>`;
             return;
           }
           if (data.length === 0) {
-            table.innerHTML = '<tr><td colspan="5">No hay facturas.</td></tr>';
+            table.innerHTML = '<tr><td colspan="6">No hay facturas.</td></tr>';
             return;
           }
           table.innerHTML = '';
-          data.forEach(f => {
-            table.innerHTML += `<tr><td>${f.id}</td><td>${f.usuario_id || ''}</td><td>${f.correo || ''}</td><td>${f.fecha || ''}</td><td>${f.total || ''}</td></tr>`;
+          for (const f of data) {
+            let usuario = f.usuario_nombre ? `${f.usuario_nombre} (#${f.usuario_id})` : (f.usuario_id || '');
+            table.innerHTML += `<tr>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${f.id}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${usuario}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${f.correo || ''}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${f.fecha || ''}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${f.total || ''}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${f.pdfUrl ? `<button class='btn-ver-pdf' data-url='${f.pdfUrl}' style='background:#2563eb;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;'>Ver PDF</button>` : ''}</td>
+            </tr>`;
+          }
+          table.querySelectorAll('.btn-ver-pdf').forEach(btn => {
+            btn.addEventListener('click', function() {
+              const url = btn.getAttribute('data-url');
+              if (url) window.open(url, '_blank');
+            });
           });
         } catch (e) {
-          table.innerHTML = `<tr><td colspan="5">Error JS: ${e.message || e}</td></tr>`;
+          table.innerHTML = `<tr><td colspan="6">Error JS: ${e.message || e}</td></tr>`;
         }
       }
 
@@ -509,7 +527,20 @@
           }
           table.innerHTML = '';
           data.forEach(c => {
-            table.innerHTML += `<tr><td>${c.id}</td><td>${c.autor_nombre || ''}</td><td>${c.articulo_titulo || ''}</td><td>${c.articulo_url ? `<a href='${c.articulo_url}' target='_blank'>PDF</a>` : ''}</td><td>${c.pagina || ''}</td><td>${c.fecha || ''}</td></tr>`;
+            table.innerHTML += `<tr>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${c.id}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${c.autor_nombre || ''}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${c.articulo_titulo || ''}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${c.articulo_url ? `<button class='btn-ver-pdf' data-url='${c.articulo_url}' style='background:#2563eb;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;'>Ver PDF</button>` : ''}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${c.pagina || ''}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${c.fecha || ''}</td>
+            </tr>`;
+          });
+          table.querySelectorAll('.btn-ver-pdf').forEach(btn => {
+            btn.addEventListener('click', function() {
+              const url = btn.getAttribute('data-url');
+              if (url) window.open(url, '_blank');
+            });
           });
         } catch (e) {
           table.innerHTML = '<tr><td colspan="6">Error al cargar certificados.</td></tr>';
