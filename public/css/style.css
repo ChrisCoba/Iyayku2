@@ -69,18 +69,28 @@ nav ul {
   border: none;
   font-size: 2em;
   cursor: pointer;
-  margin-left: 12px;
   color: #000;
-  position: absolute;
-  top: 24px;
-  right: 24px;
+  margin: 0 auto;
+  position: static;
   z-index: 110;
 }
 
-/* Asegura que el botón hamburguesa SIEMPRE se muestre en tablet/móvil */
+/* Centrado debajo del logo en tablet/móvil */
 @media (max-width: 900px) {
   #menu-toggle {
     display: block !important;
+    margin: 0.5em auto 0.5em auto;
+    position: static;
+    text-align: center;
+  }
+  header {
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 8px;
+    gap: 0;
+  }
+  .logo {
+    margin-bottom: 0;
   }
   #main-menu {
     display: none;
