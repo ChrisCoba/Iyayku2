@@ -511,10 +511,9 @@ body.modo-oscuro .slider-title {
 }
 
 .logo img {
-  width: 8em;
+  width: 10em;
   height: auto;
-  max-height: 8em;
+  max-height: 10em;
   object-fit: contain;
 }
 
-/* Asegúrate de que no hay reglas que oculten o sobrescriban .servicios-dos-columnas o .columna */
