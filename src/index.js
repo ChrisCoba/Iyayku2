@@ -1,3 +1,86 @@
+//------------------------------------------------------------
+// 8. Pedidos: subida de PDFs y revisión
+//------------------------------------------------------------
+const multer = require('multer');
+const pedidosDir = path.join(__dirname, '..', 'public', 'pedidos');
+if (!fs.existsSync(pedidosDir)) fs.mkdirSync(pedidosDir, { recursive: true });
+const storagePedidos = multer.diskStorage({
+  destination: pedidosDir,
+  filename: (req, file, cb) => {
+    // nombre: pedido-<id>-<tipo>.pdf
+    const pedidoId = req.body.pedidoId || req.params.pedidoId || 'tmp';
+    const tipo = file.fieldname;
+    cb(null, `pedido-${pedidoId}-${tipo}.pdf`);
+  }
+});
+const uploadPedidos = multer({ storage: storagePedidos, limits: { fileSize: 10 * 1024 * 1024 } });
+
+// Crear pedido tras factura (cliente)
+app.post('/api/pedidos', auth, async (req, res) => {
+  // Espera: { factura_id, requerimiento, descripcion }
+  const { factura_id, requerimiento, descripcion } = req.body;
+  const usuario_id = req.user.id;
+  try {
+    const { rows } = await pool.query(
+      'INSERT INTO pedidos (usuario_id, factura_id, requerimiento, descripcion, estado) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+      [usuario_id, factura_id, requerimiento || '', descripcion || '', 'pendiente']
+    );
+    res.json({ ok: true, pedido: rows[0] });
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al crear pedido' });
+  }
+});
+
+// Subir PDFs al pedido (cliente)
+app.post('/api/pedidos/:pedidoId/upload', auth, uploadPedidos.fields([
+  { name: 'pdf_requerimiento', maxCount: 1 },
+  { name: 'pdf_documento', maxCount: 1 }
+]), async (req, res) => {
+  const pedidoId = req.params.pedidoId;
+  // Guardar rutas en la base
+  try {
+    const pdf_requerimiento = req.files['pdf_requerimiento'] ? `/pedidos/${req.files['pdf_requerimiento'][0].filename}` : null;
+    const pdf_documento = req.files['pdf_documento'] ? `/pedidos/${req.files['pdf_documento'][0].filename}` : null;
+    await pool.query('UPDATE pedidos SET pdf_requerimiento=$1, pdf_documento=$2 WHERE id=$3', [pdf_requerimiento, pdf_documento, pedidoId]);
+    res.json({ ok: true, pdf_requerimiento, pdf_documento });
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al subir PDFs' });
+  }
+});
+
+// Ver pedidos (admin y cliente)
+app.get('/api/pedidos', auth, async (req, res) => {
+  try {
+    let rows;
+    if (req.user.correo === 'admin@iyayku.com') {
+      const result = await pool.query('SELECT * FROM pedidos ORDER BY id DESC');
+      rows = result.rows;
+    } else {
+      const result = await pool.query('SELECT * FROM pedidos WHERE usuario_id=$1 ORDER BY id DESC', [req.user.id]);
+      rows = result.rows;
+    }
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al obtener pedidos' });
+  }
+});
+
+// Subir PDF corregido y comentarios (admin)
+app.post('/api/pedidos/:pedidoId/correccion', auth, uploadPedidos.single('pdf_correccion'), async (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') return res.status(403).json({ msg: 'Solo el administrador puede subir correcciones.' });
+  const pedidoId = req.params.pedidoId;
+  const comentarios = req.body.comentarios || '';
+  try {
+    const pdf_correccion = req.file ? `/pedidos/${req.file.filename}` : null;
+    await pool.query('UPDATE pedidos SET pdf_correccion=$1, comentarios=$2, estado=$3 WHERE id=$4', [pdf_correccion, comentarios, 'corregido', pedidoId]);
+    res.json({ ok: true, pdf_correccion });
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al subir corrección' });
+  }
+});
+
+// Descargar PDFs (servidos como estáticos)
+app.use('/pedidos', express.static(pedidosDir));
 // index.js  (CommonJS)
 const express = require('express');
 const path    = require('path');

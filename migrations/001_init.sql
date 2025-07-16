@@ -78,6 +78,21 @@ CREATE TABLE IF NOT EXISTS public.servicios (
   orden INT DEFAULT 0
 );
 
+-- Tabla de pedidos para revisión de documentos
+CREATE TABLE IF NOT EXISTS public.pedidos (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER REFERENCES public.usuarios(id) ON DELETE SET NULL,
+    factura_id INTEGER REFERENCES public.facturas(id) ON DELETE SET NULL,
+    requerimiento TEXT,
+    descripcion TEXT,
+    pdf_requerimiento TEXT,
+    pdf_documento TEXT,
+    pdf_correccion TEXT,
+    comentarios TEXT,
+    estado VARCHAR(20) DEFAULT 'pendiente',
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 INSERT INTO public.paginas_contenido (pagina, seccion, titulo, contenido, orden) VALUES
 ('nosotros', 'quienes_somos', '¿Quiénes Somos?',

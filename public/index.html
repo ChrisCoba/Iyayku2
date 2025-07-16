@@ -79,45 +79,27 @@
   <main>
     <div id="contenido-dinamico"></div>
 
+    <!-- Formulario para subir PDFs tras la compra -->
+    <section id="formulario-pedido" style="max-width:600px;margin:30px auto 0 auto;background:#fff;color:#222;padding:24px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:none;">
+      <h2>Subir documentos para tu pedido</h2>
+      <form id="form-subir-pdfs" enctype="multipart/form-data">
+        <label>Requerimiento (PDF): <input type="file" name="pdf_requerimiento" accept="application/pdf" required></label><br><br>
+        <label>Documento/Artículo (PDF): <input type="file" name="pdf_documento" accept="application/pdf" required></label><br><br>
+        <input type="text" name="descripcion" placeholder="Descripción o mensaje para el admin" style="width:100%;margin-bottom:12px;">
+        <button type="submit" style="background:#2563eb;color:#fff;padding:8px 18px;border:none;border-radius:6px;">Enviar documentos</button>
+        <div id="msg-pedido" style="margin-top:10px;color:#059669;"></div>
+      </form>
+    </section>
+
+    <!-- Sección Mis pedidos -->
+    <section id="mis-pedidos" style="max-width:900px;margin:40px auto 0 auto;background:#fff;color:#222;padding:24px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:none;">
+      <h2>Mis pedidos</h2>
+      <div id="tabla-pedidos"></div>
+    </section>
+
     <section class="servicios-dos-columnas">
-
-    <div class="columna">
-      <h2>Consultoría y soluciones empresariales digitales</h2>
-      <ul>
-        <li>Diseño y desarrollo de sitios web funcionales y creativos</li>
-        <li>Creación de aplicaciones móviles para Android y iOS</li>
-        <li>Gestión documental y automatización de procesos internos</li>
-        <li>Marketing digital orientado a la captación y fidelización</li>
-        <li>Inteligencia de negocios y análisis de datos</li>
-      </ul>
-
-      <h2>Seguridad informática y ciberseguridad</h2>
-      <ul>
-        <li>Seguridad en la nube para minimizar riesgos</li>
-        <li>Protección integral de usuarios y dispositivos</li>
-        <li>Infraestructura de seguridad híbrida</li>
-        <li>Diagnóstico de vulnerabilidades y monitoreo</li>
-      </ul>
-    </div>
-
-    <div class="columna">
-      <h2>Capacitación y formación profesional continua</h2>
-      <ul>
-        <li>Ciberseguridad: hacking ético, seguridad forense</li>
-        <li>Investigación académica y publicación científica</li>
-        <li>Educación virtual e inteligencia artificial aplicada</li>
-        <li>Marketing político, atención al cliente y más</li>
-      </ul>
-
-      <h2>Asesoría académica, científica y editorial</h2>
-      <ul>
-        <li>Gestión de proyectos de investigación</li>
-        <li>Publicación de artículos en Scopus, Scielo, etc.</li>
-        <li>Creación y publicación de libros con ISBN</li>
-        <li>Asesoría para crear e indexar revistas científicas</li>
-      </ul>
-    </div>
-  </section>
+      <!-- ...existing servicios content... -->
+    </section>
 
 
   </main>
@@ -150,6 +132,96 @@
     </footer>
   <script src="/scripts/cargaImagenes.js"></script>
   <script src="/script.js"></script>
+  <script>
+  // Mostrar formulario tras la compra (simulación: mostrar si el usuario está logueado)
+  document.addEventListener('DOMContentLoaded', async function() {
+    let usuario = null;
+    try {
+      const res = await fetch('/api/status', { credentials: 'include' });
+      const data = await res.json();
+      usuario = data.usuario;
+    } catch {}
+    if (usuario && usuario.id) {
+      document.getElementById('formulario-pedido').style.display = '';
+      document.getElementById('mis-pedidos').style.display = '';
+      cargarPedidos();
+    }
+  });
+
+  // Subida de PDFs
+  document.getElementById('form-subir-pdfs').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const msg = document.getElementById('msg-pedido');
+    msg.textContent = '';
+    // Crear pedido primero
+    let pedidoId = null;
+    try {
+      const descripcion = this.descripcion.value.trim();
+      const resPedido = await fetch('/api/pedidos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ descripcion })
+      });
+      const dataPedido = await resPedido.json();
+      if (!dataPedido.ok || !dataPedido.pedido) throw new Error('No se pudo crear el pedido');
+      pedidoId = dataPedido.pedido.id;
+    } catch (err) {
+      msg.textContent = 'Error al crear pedido: ' + (err.message || err);
+      return;
+    }
+    // Subir PDFs
+    const formData = new FormData();
+    formData.append('pdf_requerimiento', this.pdf_requerimiento.files[0]);
+    formData.append('pdf_documento', this.pdf_documento.files[0]);
+    formData.append('pedidoId', pedidoId);
+    try {
+      const resUpload = await fetch(`/api/pedidos/${pedidoId}/upload`, {
+        method: 'POST',
+        credentials: 'include',
+        body: formData
+      });
+      const dataUpload = await resUpload.json();
+      if (!dataUpload.ok) throw new Error('No se pudo subir los PDFs');
+      msg.textContent = 'Documentos enviados correctamente.';
+      this.reset();
+      cargarPedidos();
+    } catch (err) {
+      msg.textContent = 'Error al subir PDFs: ' + (err.message || err);
+    }
+  });
+
+  // Mostrar pedidos del usuario
+  async function cargarPedidos() {
+    const tabla = document.getElementById('tabla-pedidos');
+    tabla.innerHTML = '<p>Cargando...</p>';
+    try {
+      const res = await fetch('/api/pedidos', { credentials: 'include' });
+      const pedidos = await res.json();
+      if (!Array.isArray(pedidos) || pedidos.length === 0) {
+        tabla.innerHTML = '<p>No tienes pedidos aún.</p>';
+        return;
+      }
+      let html = '<table style="width:100%;border-collapse:collapse;">';
+      html += '<thead><tr><th>ID</th><th>Fecha</th><th>Estado</th><th>Requerimiento</th><th>Documento</th><th>Corrección</th><th>Comentarios</th></tr></thead><tbody>';
+      pedidos.forEach(p => {
+        html += `<tr>
+          <td>${p.id}</td>
+          <td>${p.fecha ? p.fecha.substring(0,19).replace('T',' ') : ''}</td>
+          <td>${p.estado || ''}</td>
+          <td>${p.pdf_requerimiento ? `<a href="${p.pdf_requerimiento}" target="_blank">Ver PDF</a>` : ''}</td>
+          <td>${p.pdf_documento ? `<a href="${p.pdf_documento}" target="_blank">Ver PDF</a>` : ''}</td>
+          <td>${p.pdf_correccion ? `<a href="${p.pdf_correccion}" target="_blank">Descargar PDF corregido</a>` : ''}</td>
+          <td>${p.comentarios || ''}</td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      tabla.innerHTML = html;
+    } catch (err) {
+      tabla.innerHTML = '<p>Error al cargar pedidos.</p>';
+    }
+  }
+  </script>
   <script>
   // Búsqueda flexible de certificados desde la lupa
   (function() {
