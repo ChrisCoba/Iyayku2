@@ -378,6 +378,15 @@ button:hover {
 }
 
 @media (max-width: 900px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 8px;
+  }
+  .logo img {
+    width: 7em;
+    max-height: 7em;
+  }
   .footer {
     flex-direction: column;
     align-items: stretch;
@@ -386,16 +395,30 @@ button:hover {
   .footer-col {
     min-width: 0;
     padding: 0 0.5rem;
+    border-right: none;
+    font-size: 1em;
   }
 }
 
 @media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px 4px;
+  }
+  .logo img {
+    width: 4em;
+    max-height: 4em;
+  }
   .footer {
     padding: 0.8rem 1vw;
+    flex-direction: column;
+    gap: 0.5em;
   }
   .footer-col {
     padding: 0 0.2rem;
     font-size: 0.98em;
+    border-right: none;
   }
 }
 

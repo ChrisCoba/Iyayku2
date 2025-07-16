@@ -172,12 +172,13 @@
   }
   .servicios-dos-columnas {
     flex-direction: column;
-    gap: 28px;
-    padding: 32px 8px 24px 8px;
+    gap: 18px;
+    padding: 18px 4vw 12px 4vw;
+    max-width: 100vw;
   }
   .columna {
     max-width: 100%;
-    padding: 24px 10px;
+    padding: 16px 8px;
   }
 }
 
@@ -195,13 +196,12 @@
     border-radius: 0.2rem;
   }
   .servicios-dos-columnas {
-    gap: 14px;
-    padding: 12px 2vw 12px 2vw;
+    gap: 8px;
+    padding: 6px 1vw 6px 1vw;
   }
   .columna {
-    padding: 10px 2vw;
-    font-size: 0.98em;
+    padding: 6px 1vw;
+    font-size: 0.95em;
   }
 }
-
 /* ...existing code... */

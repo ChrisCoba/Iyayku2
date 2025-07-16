@@ -60,7 +60,7 @@ a {
   cursor: pointer;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .letras_menu a {
     font-size: 13px;
     padding: 8px 0;
@@ -75,5 +75,19 @@ a {
   #searchToggle img {
     width: 22px;
     height: 22px;
+  }
+}
+@media (max-width: 600px) {
+  .letras_menu a {
+    font-size: 12px;
+    padding: 6px 0;
+  }
+  .social-icons {
+    gap: 4px;
+  }
+  .social-icons a img,
+  #searchToggle img {
+    width: 18px;
+    height: 18px;
   }
 }

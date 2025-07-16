@@ -73,24 +73,24 @@
 
 @media (max-width: 900px) {
   .slider-container {
-    gap: 80px;
+    gap: 40px;
   }
   .slider-convenios {
-    padding: 24px 4vw; /* antes: 40px 4vw */
+    padding: 18px 2vw;
   }
   .slider-container img {
-    max-height: 70px; /* antes: 100px */
+    max-height: 50px;
   }
 }
 
 @media (max-width: 600px) {
   .slider-container {
-    gap: 24px;
+    gap: 12px;
   }
   .slider-container img {
-    max-height: 40px; /* antes: 60px */
+    max-height: 28px;
   }
   .slider-convenios {
-    padding: 12px 2vw; /* antes: 20px 2vw */
+    padding: 8px 1vw;
   }
 }
