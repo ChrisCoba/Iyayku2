@@ -280,6 +280,78 @@
             if (panelId === 'admin-facturas-panel') cargarFacturasAdmin();
             if (panelId === 'admin-certificados-panel') cargarCertificadosAdmin();
             if (panelId === 'admin-servicios-panel') cargarServiciosAdmin();
+            if (panelId === 'admin-editar-panel') {
+              // Inicializar editor visual y eventos SOLO una vez
+              if (!window.quill) {
+                window.quill = new Quill('#editor-container', { theme: 'snow' });
+                document.getElementById('btn-modo-visual').onclick = modoVisualHtml;
+                document.getElementById('btn-modo-html').onclick = modoSoloHtml;
+                document.getElementById('btn-cargar-seccion').onclick = cargarContenidoSeccion;
+                document.getElementById('select-seccion').onchange = cargarContenidoSeccion;
+                window.quill.on('text-change', function() {
+                  document.getElementById('editor-html').value = window.quill.root.innerHTML;
+                  document.getElementById('preview-html').innerHTML = window.quill.root.innerHTML;
+                });
+                document.getElementById('editor-html').addEventListener('input', function() {
+                  document.getElementById('preview-html').innerHTML = this.value;
+                });
+                const btnGuardar = document.getElementById('btn-guardar-pagina');
+                btnGuardar.onclick = async function() {
+                  const pagina = document.getElementById('select-pagina').value;
+                  const seccion = document.getElementById('select-seccion').value;
+                  const titulo = document.getElementById('input-titulo').value.trim();
+                  const contenido = document.getElementById('editor-html').style.display === 'none' ? window.quill.root.innerHTML : document.getElementById('editor-html').value;
+                  const msg = document.getElementById('msg-editar');
+                  msg.style.display = 'none';
+                  if (!titulo) {
+                    msg.textContent = 'El título no puede estar vacío.';
+                    msg.style.display = '';
+                    return;
+                  }
+                  if (!contenido || contenido.trim() === '') {
+                    msg.textContent = 'El contenido no puede estar vacío.';
+                    msg.style.display = '';
+                    return;
+                  }
+                  btnGuardar.disabled = true;
+                  btnGuardar.textContent = 'Guardando...';
+                  try {
+                    const res = await fetch('/api/admin/contenido', {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json' },
+                      credentials: 'include',
+                      body: JSON.stringify({ pagina, seccion, titulo, contenido })
+                    });
+                    if (res.ok) {
+                      msg.innerHTML = '✅ Sección actualizada correctamente. <button id="btn-deshacer-editar" style="margin-left:10px;">Deshacer</button>';
+                      msg.style.display = '';
+                      let lastContent = contenido;
+                      document.getElementById('btn-deshacer-editar').onclick = async function() {
+                        btnGuardar.disabled = true;
+                        btnGuardar.textContent = 'Restaurando...';
+                        try {
+                          await cargarContenidoSeccion();
+                          msg.textContent = 'Se restauró el contenido anterior.';
+                        } catch (e) {
+                          msg.textContent = 'Error al restaurar: ' + (e.message || e);
+                        }
+                        btnGuardar.disabled = false;
+                        btnGuardar.textContent = 'Guardar Cambios';
+                      };
+                    } else {
+                      msg.textContent = 'Error al guardar: ' + (await res.text());
+                      msg.style.display = '';
+                    }
+                  } catch (e) {
+                    msg.textContent = 'Error JS: ' + (e.message || e);
+                    msg.style.display = '';
+                  }
+                  btnGuardar.disabled = false;
+                  btnGuardar.textContent = 'Guardar Cambios';
+                };
+              }
+              cargarPaginasYSecciones();
+            }
           }
         });
       });
@@ -644,79 +716,7 @@
         document.getElementById('editor-html').style.display = '';
       }
 
-      // Inicializar Quill editor visual y mejorar UX
-      let quill;
-      document.addEventListener('DOMContentLoaded', function() {
-        if (document.getElementById('admin-editar-panel')) {
-          cargarPaginasYSecciones();
-          window.quill = new Quill('#editor-container', { theme: 'snow' });
-          document.getElementById('btn-modo-visual').onclick = modoVisualHtml;
-          document.getElementById('btn-modo-html').onclick = modoSoloHtml;
-          document.getElementById('btn-cargar-seccion').onclick = cargarContenidoSeccion;
-          document.getElementById('select-seccion').onchange = cargarContenidoSeccion;
-          window.quill.on('text-change', function() {
-            document.getElementById('editor-html').value = window.quill.root.innerHTML;
-            document.getElementById('preview-html').innerHTML = window.quill.root.innerHTML;
-          });
-          document.getElementById('editor-html').addEventListener('input', function() {
-            document.getElementById('preview-html').innerHTML = this.value;
-          });
-          const btnGuardar = document.getElementById('btn-guardar-pagina');
-          btnGuardar.onclick = async function() {
-            const pagina = document.getElementById('select-pagina').value;
-            const seccion = document.getElementById('select-seccion').value;
-            const titulo = document.getElementById('input-titulo').value.trim();
-            const contenido = document.getElementById('editor-html').style.display === 'none' ? window.quill.root.innerHTML : document.getElementById('editor-html').value;
-            const msg = document.getElementById('msg-editar');
-            msg.style.display = 'none';
-            if (!titulo) {
-              msg.textContent = 'El título no puede estar vacío.';
-              msg.style.display = '';
-              return;
-            }
-            if (!contenido || contenido.trim() === '') {
-              msg.textContent = 'El contenido no puede estar vacío.';
-              msg.style.display = '';
-              return;
-            }
-            btnGuardar.disabled = true;
-            btnGuardar.textContent = 'Guardando...';
-            try {
-              const res = await fetch('/api/admin/contenido', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ pagina, seccion, titulo, contenido })
-              });
-              if (res.ok) {
-                msg.innerHTML = '✅ Sección actualizada correctamente. <button id="btn-deshacer-editar" style="margin-left:10px;">Deshacer</button>';
-                msg.style.display = '';
-                let lastContent = contenido;
-                document.getElementById('btn-deshacer-editar').onclick = async function() {
-                  btnGuardar.disabled = true;
-                  btnGuardar.textContent = 'Restaurando...';
-                  try {
-                    await cargarContenidoSeccion();
-                    msg.textContent = 'Se restauró el contenido anterior.';
-                  } catch (e) {
-                    msg.textContent = 'Error al restaurar: ' + (e.message || e);
-                  }
-                  btnGuardar.disabled = false;
-                  btnGuardar.textContent = 'Guardar Cambios';
-                };
-              } else {
-                msg.textContent = 'Error al guardar: ' + (await res.text());
-                msg.style.display = '';
-              }
-            } catch (e) {
-              msg.textContent = 'Error JS: ' + (e.message || e);
-              msg.style.display = '';
-            }
-            btnGuardar.disabled = false;
-            btnGuardar.textContent = 'Guardar Cambios';
-          };
-        }
-      });
+      // ...el resto del código...
     });
   </script>
     <script src="/script.js"></script>
