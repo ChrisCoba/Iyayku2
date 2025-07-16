@@ -94,16 +94,36 @@
         ¡Bienvenido, Administrador!
       </div>
       <div class="admin-dashboard-cards">
+        <div class="admin-card card-servicios">
+          <div class="icon">🛒</div>
+          <div>Servicios</div>
+        </div>
+        <div id="admin-servicios-panel" class="admin-panel" style="display:none">
+          <h3 style="margin-bottom:16px;color:#1e293b;font-size:1.3em;">Administrar servicios</h3>
+          <div style="background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);padding:24px 18px;max-width:700px;margin:auto;">
+            <form id="form-servicio" style="display:flex;gap:8px;align-items:center;margin-bottom:18px;">
+              <input type="text" name="nombre" placeholder="Nombre del servicio" required style="min-width:120px;">
+              <input type="number" name="precio" placeholder="Precio" required step="0.01" style="width:80px;">
+              <button type="submit" style="background:#059669;color:#fff;border:none;padding:6px 16px;border-radius:6px;cursor:pointer;">Añadir servicio</button>
+            </form>
+            <table id="admin-servicios-table" style="width:100%;border-collapse:collapse;">
+              <thead style="background:#f1f5f9;color:#222;"><tr><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Nombre</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Precio</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Estado</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Acción</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
         <div class="admin-card card-perfil">
           <div class="icon">👤</div>
           <div>Editar Perfil</div>
         </div>
         <div id="admin-usuarios-panel" class="admin-panel" style="display:none">
-          <h3>Usuarios registrados</h3>
-          <table id="admin-usuarios-table">
-            <thead><tr><th>Nombre</th><th>Correo</th><th>Acciones</th></tr></thead>
-            <tbody></tbody>
-          </table>
+          <h3 style="margin-bottom:16px;color:#1e293b;font-size:1.3em;">Usuarios registrados</h3>
+          <div style="background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);padding:24px 18px;max-width:600px;margin:auto;">
+            <table id="admin-usuarios-table" style="width:100%;border-collapse:collapse;">
+              <thead style="background:#f1f5f9;color:#222;"><tr><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Nombre</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Correo</th><th style="padding:8px 4px;border-bottom:1px solid #e5e7eb;">Acción</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
         <div class="admin-card card-facturas">
           <div class="icon">🧾</div>
@@ -237,7 +257,8 @@
         'card-perfil': 'admin-usuarios-panel',
         'card-facturas': 'admin-facturas-panel',
         'card-certificados': 'admin-certificados-panel',
-        'card-editar': 'admin-editar-panel'
+        'card-editar': 'admin-editar-panel',
+        'card-servicios': 'admin-servicios-panel'
       };
       document.querySelectorAll('.admin-card').forEach(card => {
         card.addEventListener('click', function() {
@@ -249,10 +270,119 @@
             if (panelId === 'admin-usuarios-panel') cargarUsuariosAdmin();
             if (panelId === 'admin-facturas-panel') cargarFacturasAdmin();
             if (panelId === 'admin-certificados-panel') cargarCertificadosAdmin();
+            if (panelId === 'admin-servicios-panel') cargarServiciosAdmin();
           }
         });
       });
       // --- Funciones para cargar datos admin ---
+      // --- Servicios admin ---
+      async function cargarServiciosAdmin() {
+        const table = document.querySelector('#admin-servicios-table tbody');
+        if (!table) return;
+        table.innerHTML = '<tr><td colspan="4">Cargando...</td></tr>';
+        try {
+          const res = await fetch('/api/servicios', { credentials: 'include' });
+          const data = await res.json();
+          if (!Array.isArray(data)) {
+            table.innerHTML = `<tr><td colspan='4'>Respuesta inesperada: ${JSON.stringify(data)}</td></tr>`;
+            return;
+          }
+          if (data.length === 0) {
+            table.innerHTML = '<tr><td colspan="4">No hay servicios.</td></tr>';
+            return;
+          }
+          table.innerHTML = '';
+          data.forEach(s => {
+            table.innerHTML += `<tr>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${s.nombre || ''}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${s.precio || ''}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${s.activo ? 'Activo' : 'Desactivado'}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>
+                <button class='btn-desactivar-serv' data-id='${s.id}' style='background:#f59e42;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;margin-right:6px;'>${s.activo ? 'Desactivar' : 'Activar'}</button>
+                <button class='btn-eliminar-serv' data-id='${s.id}' style='background:#ef4444;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;'>Eliminar</button>
+              </td>
+            </tr>`;
+          });
+          // Eventos desactivar/activar
+          table.querySelectorAll('.btn-desactivar-serv').forEach(btn => {
+            btn.addEventListener('click', async function() {
+              const id = btn.getAttribute('data-id');
+              const accion = btn.textContent.includes('Desactivar') ? 'desactivar' : 'activar';
+              if (!confirm(`¿Seguro que desea ${accion} este servicio?`)) return;
+              btn.disabled = true;
+              btn.textContent = 'Procesando...';
+              try {
+                const res = await fetch(`/api/servicios/${id}/${accion}`, {
+                  method: 'PUT',
+                  credentials: 'include'
+                });
+                if (!res.ok) {
+                  const text = await res.text();
+                  alert('Error: ' + text);
+                } else {
+                  cargarServiciosAdmin();
+                }
+              } catch (e) {
+                alert('Error JS: ' + (e.message || e));
+              }
+            });
+          });
+          // Evento eliminar
+          table.querySelectorAll('.btn-eliminar-serv').forEach(btn => {
+            btn.addEventListener('click', async function() {
+              const id = btn.getAttribute('data-id');
+              if (!confirm('¿Seguro que desea eliminar este servicio?')) return;
+              btn.disabled = true;
+              btn.textContent = 'Eliminando...';
+              try {
+                const res = await fetch(`/api/servicios/${id}`, {
+                  method: 'DELETE',
+                  credentials: 'include'
+                });
+                if (!res.ok) {
+                  const text = await res.text();
+                  alert('Error: ' + text);
+                } else {
+                  cargarServiciosAdmin();
+                }
+              } catch (e) {
+                alert('Error JS: ' + (e.message || e));
+              }
+            });
+          });
+        } catch (e) {
+          table.innerHTML = `<tr><td colspan="4">Error JS: ${e.message || e}</td></tr>`;
+        }
+      }
+      // Evento añadir servicio
+      const formServicio = document.getElementById('form-servicio');
+      if (formServicio) {
+        formServicio.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const nombre = formServicio.nombre.value.trim();
+          const precio = parseFloat(formServicio.precio.value);
+          if (!nombre || isNaN(precio)) return alert('Completa los campos correctamente.');
+          formServicio.querySelector('button[type="submit"]').disabled = true;
+          try {
+            const res = await fetch('/api/servicios', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'include',
+              body: JSON.stringify({ nombre, precio })
+            });
+            if (!res.ok) {
+              const text = await res.text();
+              alert('Error: ' + text);
+            } else {
+              formServicio.reset();
+              cargarServiciosAdmin();
+            }
+          } catch (e) {
+            alert('Error JS: ' + (e.message || e));
+          }
+          formServicio.querySelector('button[type="submit"]').disabled = false;
+        });
+      }
       async function cargarUsuariosAdmin() {
         const table = document.querySelector('#admin-usuarios-table tbody');
         if (!table) return;
@@ -275,7 +405,41 @@
           }
           table.innerHTML = '';
           data.forEach(u => {
-            table.innerHTML += `<tr><td>${u.nombre || ''}</td><td>${u.correo || ''}</td><td></td></tr>`;
+            table.innerHTML += `<tr>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${u.nombre || ''}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>${u.correo || ''}</td>
+              <td style='padding:8px 4px;border-bottom:1px solid #e5e7eb;'>
+                <button class='btn-cambiar-pass' data-id='${u.id}' style='background:#2563eb;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;'>Cambiar contraseña</button>
+              </td>
+            </tr>`;
+          });
+          // Agregar evento para cambiar contraseña
+          table.querySelectorAll('.btn-cambiar-pass').forEach(btn => {
+            btn.addEventListener('click', async function() {
+              const userId = btn.getAttribute('data-id');
+              const newPass = prompt('Nueva contraseña para el usuario:');
+              if (!newPass) return;
+              btn.disabled = true;
+              btn.textContent = 'Guardando...';
+              try {
+                const res = await fetch(`/api/admin/usuarios/${userId}`, {
+                  method: 'PUT',
+                  headers: { 'Content-Type': 'application/json' },
+                  credentials: 'include',
+                  body: JSON.stringify({ contraseña: newPass })
+                });
+                if (!res.ok) {
+                  const text = await res.text();
+                  alert('Error: ' + text);
+                } else {
+                  alert('Contraseña actualizada correctamente.');
+                }
+              } catch (e) {
+                alert('Error JS: ' + (e.message || e));
+              }
+              btn.disabled = false;
+              btn.textContent = 'Cambiar contraseña';
+            });
           });
         } catch (e) {
           table.innerHTML = `<tr><td colspan="3">Error JS: ${e.message || e}</td></tr>`;
