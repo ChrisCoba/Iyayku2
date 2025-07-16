@@ -1,5 +1,5 @@
 export function renderNosotros() {
-  document.getElementById('contenido-dinamico').innerHTML = `
+  document.getElementById('contenido-dinamico').innerHTML = html; `
     <header class="bg-white text-black flex flex-wrap items-center justify-between px-6 py-4 shadow-md">
       <div class="logo flex-shrink-0">
         <img src="/img/logo" alt="Logo" class="h-8 object-contain" />
@@ -46,7 +46,7 @@ export function renderNosotros() {
         <p>Somos Iyayku Innova Editores, comprometidos con la publicación y asesoría científica.</p>
         <p>Misión: Impulsar la investigación y la divulgación científica en Latinoamérica.</p>
         <p>Visión: Ser líderes en innovación editorial y formación académica.</p>
-        <!-- Agrega aquí más contenido sobre tu equipo, historia, valores, etc. -->
+        <!-- Más contenido aquí -->
       </div>
     </main>
     <footer class="footer">
