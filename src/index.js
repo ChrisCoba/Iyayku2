@@ -108,6 +108,7 @@ app.get('/img/:nombre', imgController.obtenerImagen);
 app.get('/svg/:nombre', imgController.obtenerSVG);
 
 // Tus otras rutas y middlewares
+const uploadRoutes = require('../routes/uploadRoutes');
 app.use('/upload', uploadRoutes);
 
 
