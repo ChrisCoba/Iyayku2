@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "migrate": "for f in migrations/*.sql; do psql $DATABASE_URL -f \"$f\"; done"
+    "migrate:linux": "for f in db/migrations/*.sql; do psql $DATABASE_URL -f \"$f\"; done",
+    "migrate:win": "powershell -Command \"Get-ChildItem db/migrations/*.sql | ForEach-Object { psql $env:DATABASE_URL -f $_.FullName }\""
   },
   "dependencies": {
     "axios": "^1.10.0",
