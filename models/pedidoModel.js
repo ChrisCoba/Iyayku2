@@ -1,4 +1,4 @@
-const db = require('../db/conexion');
+const db = require('../src/db');
 
 const Pedido = {
   async create({ usuario_id, factura_id, requerimiento, descripcion }) {
