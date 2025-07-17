@@ -12,7 +12,11 @@ const pool = require('./db');
 const { authMiddleware } = require('../controllers/authController');
 const pedidoRoutes = require('../routes/pedidoRoutes');  
 
+
+
 const app  = express();
+
+app.use(express.static('public'));
 
 //Cambio por el tema de los pedidos y subir el PDF
 app.use(express.json());
