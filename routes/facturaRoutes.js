@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { crearNuevaFactura } = require('../controllers/facturaController');
-const auth = require('../middlewares/auth'); // Middleware de autenticación
+const { authMiddleware } = require('../controllers/authController'); // Middleware de autenticación JWT
 
-router.post('/api/facturas', auth, crearNuevaFactura);
+router.post('/api/facturas', authMiddleware, crearNuevaFactura);
 
 module.exports = router;

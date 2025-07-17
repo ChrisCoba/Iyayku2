@@ -37,6 +37,19 @@ function logout(_req, res) {
   res.clearCookie('token').json({ ok: true });
 }
 
+
+function authMiddleware(req, res, next) {
+  const token = req.cookies.token || (req.headers.authorization && req.headers.authorization.replace('Bearer ', ''));
+  if (!token) return res.status(401).json({ msg: 'No autorizado' });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(401).json({ msg: 'Token inválido' });
+  }
+}
+
 function status(req, res) {
   res.json({ usuario: req.user });
 }
@@ -46,4 +59,5 @@ module.exports = {
   login,
   logout,
   status,
+  authMiddleware,
 };

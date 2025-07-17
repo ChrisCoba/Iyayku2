@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const { generarFacturaPDF } = require('./pdfFactura');
 const pool = require('./db');
-const auth = require('../routes/auth');      
+const { authMiddleware } = require('../controllers/authController');
 const pedidoRoutes = require('../routes/pedidoRoutes');  
 
 const app  = express();

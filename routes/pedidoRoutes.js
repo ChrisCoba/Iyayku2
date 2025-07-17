@@ -1,23 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('./auth'); // Asegúrate de tener tu middleware de auth
+const { authMiddleware } = require('../controllers/authController'); // Middleware de autenticación JWT
 const pedidoCtrl = require('../controllers/pedidoController');
 const uploadPedidos = require('../utils/uploadPedidos');
 const db = require('../src/db');
 
 // Crear pedido
-router.post('/', auth, pedidoCtrl.crearPedido);
+router.post('/', authMiddleware, pedidoCtrl.crearPedido);
 
 // Subir PDFs
-router.post('/:pedidoId/upload', auth, uploadPedidos.fields([
+router.post('/:pedidoId/upload', authMiddleware, uploadPedidos.fields([
   { name: 'pdf_requerimiento', maxCount: 1 },
   { name: 'pdf_documento', maxCount: 1 }
 ]), pedidoCtrl.subirPDFs);
 
 // Ver pedidos
-router.get('/', auth, pedidoCtrl.verPedidos);
+router.get('/', authMiddleware, pedidoCtrl.verPedidos);
 
 // Subir corrección
-router.post('/:pedidoId/correccion', auth, uploadPedidos.single('pdf_correccion'), pedidoCtrl.subirCorreccion);
+router.post('/:pedidoId/correccion', authMiddleware, uploadPedidos.single('pdf_correccion'), pedidoCtrl.subirCorreccion);
 
 module.exports = router;
