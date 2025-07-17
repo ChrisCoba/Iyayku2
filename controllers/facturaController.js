@@ -4,7 +4,7 @@ const {
   obtenerUsuario,
   actualizarPDFUrl
 } = require('../models/facturaModel');
-const generarFacturaPDF = require('../utils/generarFacturaPDF'); // Asegúrate de tener esto
+const { generarFacturaPDF } = require('../src/pdfFactura');
 
 const crearNuevaFactura = async (req, res) => {
   const { items, total } = req.body;
