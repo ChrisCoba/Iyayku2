@@ -9,6 +9,7 @@ require('dotenv').config();
 
 const { generarFacturaPDF } = require('./pdfFactura');
 const pool = require('./db');
+const auth = require('../routes/auth');      
 const pedidoRoutes = require('./routes/pedidoRoutes');  
 
 const app  = express();
