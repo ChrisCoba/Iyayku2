@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/public/css/style.css" />
-    <link rel="stylesheet" href="/public/css/menu.css" />
-    <link rel="stylesheet" href="/public/css/servicios.css" />
-    <link rel="stylesheet" href="/public/css/inicio.css" />
-    <link rel="stylesheet" href="/public/css/slider_index.css" />
-    <link rel="stylesheet" href="/public/css/cards.css" />
-    <link rel="stylesheet" href="/public/css/carrito.css" />
-    <link rel="stylesheet" href="/public/css/contacto.css" />
-    <link rel="stylesheet" href="/public/css/perfil.css" />
-    <link rel="stylesheet" href="/public/css/publicaciones.css" />
-    <link rel="stylesheet" href="/public/css/registro.css" />
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <title>Iyayku – Innova Editores</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/public/css/style.css" />
+  <link rel="stylesheet" href="/public/css/menu.css" />
+  <link rel="stylesheet" href="/public/css/servicios.css" />
+  <link rel="stylesheet" href="/public/css/inicio.css" />
+  <link rel="stylesheet" href="/public/css/slider_index.css" />
+  <link rel="stylesheet" href="/public/css/cards.css" />
+  <link rel="stylesheet" href="/public/css/carrito.css" />
+  <link rel="stylesheet" href="/public/css/contacto.css" />
+  <link rel="stylesheet" href="/public/css/perfil.css" />
+  <link rel="stylesheet" href="/public/css/publicaciones.css" />
+  <link rel="stylesheet" href="/public/css/registro.css" />
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
   <title>Iyayku – Innova Editores</title>
@@ -80,3 +76,51 @@
     <span id="login-status-text"></span>
     <a id="perfil-link" href="#perfil" style="color:#fff;text-decoration:underline;margin-left:10px;display:none;">Ir a perfil</a>
   </div>
+
+  <script>
+    // Mostrar u ocultar el menú al hacer clic en el botón de menú (hamburguesa)
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      var menu = document.getElementById('main-menu');
+      menu.classList.toggle('hidden');
+      menu.classList.toggle('flex');
+    });
+
+    // Función para mostrar el banner de estado de inicio de sesión
+    function showLoginStatus(message, isLoggedIn) {
+      var banner = document.getElementById('login-status-banner');
+      var text = document.getElementById('login-status-text');
+      var perfilLink = document.getElementById('perfil-link');
+
+      text.textContent = message;
+      perfilLink.style.display = isLoggedIn ? 'inline' : 'none';
+
+      banner.style.display = 'block';
+
+      // Ocultar el banner después de 3 segundos
+      setTimeout(function() {
+        banner.style.display = 'none';
+      }, 3000);
+    }
+
+    // Ejemplo de uso:
+    // showLoginStatus('Has iniciado sesión correctamente.', true);
+    // showLoginStatus('Error al iniciar sesión. Por favor, intenta nuevamente.', false);
+
+    // Función para mostrar el campo de búsqueda
+    document.getElementById('searchToggle').addEventListener('click', function() {
+      var searchInput = document.getElementById('searchInput');
+      searchInput.classList.toggle('hidden');
+      searchInput.focus();
+    });
+  </script>
+
+  <!-- Resto del contenido de tu página... -->
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white py-8 px-4 mt-16">
+    <div class="container mx-auto text-center">
+      <p class="text-sm">&copy; 2023 Iyayku – Innova Editores. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+</body>
+</html>
