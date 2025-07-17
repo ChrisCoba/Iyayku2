@@ -1,0 +1,38 @@
+<%- include('partials/header', { titulo: 'Login' }) %>
+<main class="flex-grow">
+      <div class="container" id="container">
+        <div class="form-container sign-up">
+          <form id="form-register" autocomplete="off">
+            <h1>Crear Cuenta</h1>
+            <input type="text" id="register-nombre" name="nombre" placeholder="Nombre" required />
+            <input type="email" id="register-correo" name="correo" placeholder="Correo" required />
+            <input type="password" id="register-contrasena" name="contrasena" placeholder="Contraseña" required />
+            <button type="submit">Registrarse</button>
+          </form>
+        </div>
+        <div class="form-container sign-in">
+          <form id="form-login" autocomplete="off">
+            <h1>Ingresar</h1>
+            <input type="email" id="login-correo" name="correo" placeholder="Correo" required />
+            <input type="password" id="login-contrasena" name="contrasena" placeholder="Contraseña" required />
+            <a href="#">¿Olvidaste tu contraseña?</a>
+            <button type="submit">Login</button>
+          </form>
+        </div>
+        <div class="toggle-container">
+          <div class="toggle">
+            <div class="toggle-panel toggle-left">
+              <h1>Bienvenido</h1>
+              <p>Ingresa ahora</p>
+              <button class="hidden" id="login">Iniciar Sesión</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+              <h1>Hola!</h1>
+              <p>Registrate gratis aquí</p>
+              <button class="hidden" id="register">Regístrate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</main>
+<%- include('partials/footer') %>

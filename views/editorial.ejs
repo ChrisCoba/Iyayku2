@@ -1,0 +1,67 @@
+<%- include('partials/header', { titulo: 'Editoriales' }) %>
+<main>
+      <div id="contenido-dinamico"></div>
+      <section class="titulo-convenios">
+        <h2>Indexaciones</h2>
+        <p>Formamos parte de índices conocidos</p>
+      </section>
+      <section class="slider-convenios">
+        <div class="slider-container" id="slider">
+          <img src="/img/crossref" alt="Crossref">
+          <img src="/img/google_scholar" alt="Google Scholar">
+          <img src="/img/doi_logo" alt="DOI">
+          <img src="/img/issn_logo" alt="ISSN">
+          <img src="/img/latindex" alt="Latindex">
+          <img src="/img/scilit" alt="Scilit">
+          <img src="/img/miar" alt="MIAR">
+          <img src="/img/harvard_library" alt="Harvard Library">
+        </div>
+        <button class="slider-btn prev" onclick="moveSlider(-1)">&#10094;</button>
+        <button class="slider-btn next" onclick="moveSlider(1)">&#10095;</button>
+      </section>
+      <section class="slider-section">
+        <h2 class="slider-title">Revistas Publicadas</h2>
+        <div class="card-slider" id="slider">
+          <a href="https://editorialinnova.com/index.php/rig" target="_blank" class="card">
+            <img src="/img/ingenio" alt="RIG">
+          </a>
+          <a href="https://editorialinnova.com/index.php/rck" target="_blank" class="card">
+            <img src="/img/kosmos" alt="RCK">
+          </a>
+          <a href="https://editorialinnova.com/index.php/nrj" target="_blank" class="card">
+            <img src="/img/nexus" alt="NRJ">
+          </a>
+          <a href="https://editorialinnova.com/index.php/bij" target="_blank" class="card">
+            <img src="/img/bastcorp" alt="BIJ">
+          </a>
+        </div>
+        <section class="estadisticas">
+          <div class="contenedor-estadisticas">
+            <div class="bloque-estadistica">
+              <h2 class="numero">100%</h2>
+              <p class="descripcion">Revistas Indexadas</p>
+            </div>
+            <div class="bloque-estadistica">
+              <h2 class="numero">250+</h2>
+              <p class="descripcion">Artículos Publicados</p>
+            </div>
+          </div>
+        </section>
+      </section>
+      <section class="publicaciones-info">
+        <div class="publicaciones-texto">
+          <h2>¿Qué Ofrecemos en Publicaciones?</h2>
+          <ul>
+            <li>Desarrollo de proyectos y planes de investigación</li>
+            <li>Desarrollo de Tesis de Pregrado, Posgrado y Doctorado</li>
+            <li>Publicación de artículos en: SCOPUS (Q1-Q4), WoS, Scielo, Latindex Catálogo 2.0, otros</li>
+            <li>Publicación de libros digitales y físicos</li>
+            <li>Publicación de Tesis como libro o artículo científico</li>
+            <li>Creación de revistas científicas a nivel nacional e internacional</li>
+            <li>Asesorías para Indexación de revistas en Latindex 2.0, Scielo y Scopus</li>
+            <li>Capacitación personalizada en todas las áreas</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+<%- include('partials/footer') %>

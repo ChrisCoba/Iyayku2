@@ -1,0 +1,82 @@
+<%- include('partials/header', { titulo: 'Perfil' }) %>
+
+<main class="admin-dashboard-main">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-content">
+        <div class="admin-title">Admin</div>
+        <nav>
+          <ul>
+            <li>
+              <a href="#" class="active">
+                <span class="icon">👤</span> Editar Perfil
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="icon">🧾</span> Facturas
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="icon">🎓</span> Certificados
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="icon">📝</span> Editar página
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <!-- Main dashboard content -->
+    <section class="admin-dashboard-content">
+      <div class="admin-dashboard-blank"></div>
+      <div class="admin-dashboard-welcome">
+        ¡Bienvenido, Administrador!
+      </div>
+      <div class="admin-dashboard-cards">
+        <div class="admin-card card-perfil">
+          <div class="icon">👤</div>
+          <div>Editar Perfil</div>
+        </div>
+        <div id="admin-usuarios-panel" class="admin-panel" style="display:none">
+          <h3>Usuarios registrados</h3>
+          <table id="admin-usuarios-table">
+            <thead><tr><th>Nombre</th><th>Correo</th><th>Acciones</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="admin-card card-facturas">
+          <div class="icon">🧾</div>
+          <div>Facturas</div>
+        </div>
+        <div id="admin-facturas-panel" class="admin-panel" style="display:none">
+          <h3>Facturas</h3>
+          <table id="admin-facturas-table">
+            <thead><tr><th>ID</th><th>Usuario</th><th>Correo</th><th>Fecha</th><th>Total</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="admin-card card-certificados">
+          <div class="icon">🎓</div>
+          <div>Certificados</div>
+        </div>
+        <div id="admin-certificados-panel" class="admin-panel" style="display:none">
+          <h3>Certificados</h3>
+          <table id="admin-certificados-table">
+            <thead><tr><th>ID</th><th>Autor</th><th>Título</th><th>PDF</th><th>Página</th><th>Fecha</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="admin-card card-editar">
+          <div class="icon">📝</div>
+          <div>Editar página</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<%- include('partials/footer') %>
