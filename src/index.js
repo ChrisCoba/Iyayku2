@@ -93,8 +93,6 @@ try {
   console.error('[ERROR] No se pudo cargar el controlador de imágenes:', err);
 }
 
-// ...existing code...
-
 //------------------------------------------------------------
 // Config básica
 //------------------------------------------------------------
@@ -148,3 +146,5 @@ app.get('/test-db', async (_q, res) => {
 // 7. Arranque
 //------------------------------------------------------------
 app.listen(PORT, () => console.log(`🚀  Servidor corriendo en http://localhost:${PORT}`));
+
+const db = require('../src/db');
