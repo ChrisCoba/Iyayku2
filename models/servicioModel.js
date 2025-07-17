@@ -1,4 +1,4 @@
-const pool = require('../db');
+const pool = require('../src/db');
 
 async function listarServiciosActivos() {
   const { rows } = await pool.query('SELECT * FROM servicios WHERE activo = TRUE ORDER BY orden, id');

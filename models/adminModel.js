@@ -1,4 +1,4 @@
-const pool = require('../db');
+const pool = require('../src/db');
 
 async function listarCertificados() {
   const { rows } = await pool.query('SELECT * FROM certificados ORDER BY fecha_emision DESC');

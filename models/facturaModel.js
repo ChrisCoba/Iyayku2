@@ -1,4 +1,4 @@
-const pool = require('../db');
+const pool = require('../src/db');
 
 const crearFactura = async (usuario_id, total) => {
   const { rows } = await pool.query(

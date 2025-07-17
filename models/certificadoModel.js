@@ -1,4 +1,4 @@
-const pool = require('../db');
+const pool = require('../src/db');
 
 // Buscar publicaciones por nombre de autor
 async function buscarCertificadosPorNombre(nombre) {

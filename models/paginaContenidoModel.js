@@ -1,4 +1,4 @@
-const pool = require('../db');
+const pool = require('../src/db');
 
 let paginaHtmlCache = ''; // Cache temporal si quieres, aunque mejor BD.
 
