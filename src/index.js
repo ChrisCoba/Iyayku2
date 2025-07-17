@@ -22,34 +22,34 @@ app.use('/pedidos', express.static('public/pedidos'));
 app.use('/api/pedidos', pedidoRoutes);
 
 //ccambio en el tema de creación, búsqueda y eliminación de certificados
-const certificadoRoutes = require('./routes/certificadoRoutes');
+const certificadoRoutes = require('../routes/certificadoRoutes');
 app.use(express.json());
 app.use(certificadoRoutes);
 
 //cambio para la generación de facturas
-const facturaRoutes = require('./routes/facturaRoutes');
+const facturaRoutes = require('../routes/facturaRoutes');
 app.use(express.json());
 app.use(facturaRoutes);
 
 
 //cambio para el listado y cambio de usuarios que puede ahcer el admin
-const usuarioRoutes = require('./routes/usuarioRoutes');
+const usuarioRoutes = require('../routes/usuarioRoutes');
 app.use(usuarioRoutes);
 
 //listado de certificados y pdf
-const adminRoutes = require('./routes/adminRoutes');
+const adminRoutes = require('../routes/adminRoutes');
 app.use(adminRoutes);
 
 //cambio y creación de nuevos servicios esde el admin
-const servicioRoutes = require('./routes/servicioRoutes');
+const servicioRoutes = require('../routes/servicioRoutes');
 app.use(servicioRoutes);
 
 //cambio  para la personalización de la página y cambios en esta si se quiere desde la BDD
-const paginaRoutes = require('./routes/paginaRoutes');
+const paginaRoutes = require('../routes/paginaRoutes');
 app.use(paginaRoutes);
 
 //autentificación del login del usuario
-const authRoutes = require('./routes/authRoutes');
+const authRoutes = require('../routes/authRoutes');
 app.use(authRoutes);
 
 
