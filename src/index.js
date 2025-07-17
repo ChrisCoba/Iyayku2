@@ -58,6 +58,12 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // ejemplo de rutas
+
+// Página principal: renderiza la vista 'nosotros.ejs'
+app.get('/', (req, res) => {
+  res.render('nosotros', { titulo: 'Nosotros' });
+});
+
 app.get('/contacto', (req, res) => {
   res.render('contacto', { titulo: 'Contacto' });
 });
