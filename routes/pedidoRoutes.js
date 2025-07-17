@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middlewares/auth'); // Asegúrate de tener tu middleware de auth
+const auth = require('./auth'); // Asegúrate de tener tu middleware de auth
 const pedidoCtrl = require('../controllers/pedidoController');
 const uploadPedidos = require('../utils/uploadPedidos');
 
