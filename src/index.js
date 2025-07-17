@@ -83,7 +83,7 @@ app.get('/servicios', (req, res) => {
 
 
 // Ruta absoluta para cargar el controlador (ajusta según tu estructura de carpetas)
-const imgControllerPath = path.resolve(__dirname, '../backend/controllers/imagenesControlador.js');
+const imgControllerPath = path.resolve(__dirname, '../controllers/imagenesControlador.js');
 
 let imgController;
 try {
