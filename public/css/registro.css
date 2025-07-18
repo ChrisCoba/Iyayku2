@@ -1,15 +1,99 @@
+
+.login-bg {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 41, 59, 0.45);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+
 .container {
     background-color: #fff;
     border-radius: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    box-shadow: 0 8px 32px rgba(52,152,219,0.18);
+    position: relative;
+    margin: 0 auto;
+    top: auto;
+    left: auto;
+    transform: none;
     overflow: hidden;
-    width: 768px;
-    max-width: 100%;
-    min-height: 480px;
+    width: 420px;
+    max-width: 95vw;
+    min-height: 420px;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 32px 32px 32px;
+}
+
+.container h1, .container h2 {
+    color: #2563eb;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.container input {
+    background-color: #f3f6fa;
+    border: 1.5px solid #e5e7eb;
+    margin: 8px 0;
+    padding: 12px 18px;
+    font-size: 15px;
+    border-radius: 8px;
+    width: 100%;
+    outline: none;
+    transition: border 0.18s;
+}
+
+.container input:focus {
+    border: 1.5px solid #2563eb;
+}
+
+.container button {
+    background-color: #2563eb;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 18px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+    transition: background 0.18s;
+}
+
+.container button:hover {
+    background-color: #174ea6;
+}
+
+.container a {
+    color: #2563eb;
+    text-decoration: underline;
+    font-size: 0.98em;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.container .login-extra {
+    margin-top: 12px;
+    font-size: 0.98em;
+    color: #888;
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 98vw;
+    min-width: 0;
+    padding: 0 2vw;
+    border-radius: 16px;
+  }
 }
 
 

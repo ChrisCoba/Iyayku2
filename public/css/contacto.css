@@ -1,3 +1,71 @@
+/* Fondo y centrado del formulario de contacto */
+.contacto-form-bg {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.contacto-form {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(52,152,219,0.13);
+  padding: 36px 32px 28px 32px;
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contacto-form h2 {
+  color: #2563eb;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.contacto-form label {
+  font-weight: 600;
+  color: #222;
+  margin-top: 8px;
+}
+
+.contacto-form input,
+.contacto-form select,
+.contacto-form textarea {
+  background: #f3f6fa;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  margin-bottom: 4px;
+  transition: border 0.18s;
+}
+
+.contacto-form input:focus,
+.contacto-form select:focus,
+.contacto-form textarea:focus {
+  border: 1.5px solid #2563eb;
+}
+
+.contacto-form button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 12px;
+  box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+  transition: background 0.18s;
+}
+
+.contacto-form button:hover {
+  background: #174ea6;
+}
 .contacto-wrapper {
   display: flex;
   justify-content: flex-end;

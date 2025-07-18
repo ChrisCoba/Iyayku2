@@ -1,5 +1,25 @@
 <%- include('partials/header', { titulo: 'Contacto' }) %>
 <main>
-<div id="contenido-contacto"></div>
+  <div class="contacto-form-bg">
+    <form class="contacto-form" method="POST" action="/enviar-contacto">
+      <h2>Contáctanos</h2>
+      <p>¿Tienes preguntas, sugerencias o necesitas un servicio? ¡Escríbenos!</p>
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+      <label for="correo">Correo electrónico</label>
+      <input type="email" id="correo" name="correo" required placeholder="tucorreo@ejemplo.com">
+      <label for="tipo">Motivo</label>
+      <select id="tipo" name="tipo" required>
+        <option value="">Selecciona una opción</option>
+        <option value="pregunta">Pregunta</option>
+        <option value="requerimiento">Requerimiento</option>
+        <option value="sugerencia">Sugerencia</option>
+        <option value="otro">Otro</option>
+      </select>
+      <label for="mensaje">Mensaje</label>
+      <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Escribe tu mensaje..."></textarea>
+      <button type="submit">Enviar mensaje</button>
+    </form>
+  </div>
 </main>
 <%- include('partials/footer') %>
