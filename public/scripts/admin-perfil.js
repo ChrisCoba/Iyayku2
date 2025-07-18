@@ -1,13 +1,38 @@
-// Alterna paneles
+// Alterna paneles y resalta el botón activo
 function mostrarPanel(panel) {
-  document.getElementById('admin-usuarios-panel').style.display = 'none';
-  document.getElementById('admin-facturas-panel').style.display = 'none';
-  document.getElementById('admin-certificados-panel').style.display = 'none';
-  document.getElementById('admin-servicios-panel').style.display = 'none';
+  const panels = ['usuarios', 'facturas', 'certificados', 'servicios'];
+  panels.forEach(p => {
+    document.getElementById('admin-' + p + '-panel').style.display = 'none';
+    const btn = document.querySelector('.admin-card.card-' + p);
+    if (btn) btn.classList.remove('active-card');
+  });
   if (panel === 'usuarios') cargarUsuarios();
   if (panel === 'facturas') cargarFacturas();
   if (panel === 'certificados') cargarCertificados();
   document.getElementById('admin-' + panel + '-panel').style.display = 'block';
+  const btn = document.querySelector('.admin-card.card-' + panel);
+  if (btn) btn.classList.add('active-card');
+}
+
+// Descargar PDF con token (para evitar 401)
+window.descargarFacturaPDF = async function(facturaId) {
+  const token = localStorage.getItem('token');
+  const res = await fetch(`/api/admin/facturas/${facturaId}/pdf`, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  });
+  if (!res.ok) {
+    alert('No autorizado o error al descargar PDF');
+    return;
+  }
+  const blob = await res.blob();
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `factura-${facturaId}.pdf`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  window.URL.revokeObjectURL(url);
 }
 
 // USUARIOS
@@ -59,7 +84,7 @@ async function cargarFacturas() {
       <td>${f.correo || ''}</td>
       <td>${f.fecha ? f.fecha.substring(0,10) : ''}</td>
       <td>$${f.total}</td>
-      <td><a href="/api/admin/facturas/${f.id}/pdf" target="_blank">Descargar PDF</a></td>
+      <td><button onclick="descargarFacturaPDF(${f.id})">Descargar PDF</button></td>
     </tr>`;
   });
 }

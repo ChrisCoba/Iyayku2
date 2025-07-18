@@ -98,7 +98,11 @@ app.get('/nosotros', async (req, res) => {
     res.render('nosotros', { titulo: 'Nosotros', secciones: [] });
   }
 });
-app.get('/perfil', (req, res) => {
+const { authMiddleware } = require('../controllers/authController');
+app.get('/perfil', authMiddleware, (req, res) => {
+  if (!req.user || req.user.correo !== 'admin@iyayku.com') {
+    return res.redirect('/registro_login');
+  }
   res.render('perfil', { titulo: 'Perfil' });
 });
 

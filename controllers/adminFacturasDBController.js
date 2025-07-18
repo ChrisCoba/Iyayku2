@@ -53,12 +53,6 @@ async function listarFacturasDB(req, res) {
   if (!req.user || req.user.correo !== 'admin@iyayku.com') {
     return res.status(403).json({ msg: 'No autorizado' });
   }
-  // Buscar archivos PDF
-  const facturasDir = path.join(__dirname, '..', 'public', 'facturas');
-  let pdfs = [];
-  try {
-    pdfs = fs.readdirSync(facturasDir).filter(f => f.endsWith('.pdf'));
-  } catch (e) {}
   // Buscar facturas en la base (ahora incluye pdf_url)
   const { rows } = await pool.query(`
     SELECT f.id, f.fecha, f.total, u.nombre, u.correo, f.pdf_url
@@ -66,15 +60,13 @@ async function listarFacturasDB(req, res) {
     LEFT JOIN usuarios u ON f.usuario_id = u.id
     ORDER BY f.fecha DESC
   `);
-  // Relacionar con PDF
-  const facturas = rows.map(f => {
-    let pdf = f.pdf_url;
-    if (!pdf) {
-      const found = pdfs.find(p => p.includes(`factura-${f.id}`));
-      if (found) pdf = '/facturas/' + found;
-    }
-    return { ...f, pdf };
-  });
+  // Siempre enviar nombre y correo
+  const facturas = rows.map(f => ({
+    ...f,
+    pdf: f.pdf_url,
+    nombre: f.nombre,
+    correo: f.correo
+  }));
   res.json(facturas);
 }
 
