@@ -37,9 +37,10 @@ function logout(_req, res) {
   res.clearCookie('token').json({ ok: true });
 }
 
-
 function authMiddleware(req, res, next) {
-  const token = req.cookies.token || (req.headers.authorization && req.headers.authorization.replace('Bearer ', ''));
+  const token =
+    (req.cookies && req.cookies.token) ||
+    (req.headers && req.headers.authorization && req.headers.authorization.replace('Bearer ', ''));
   if (!token) return res.status(401).json({ msg: 'No autorizado' });
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
