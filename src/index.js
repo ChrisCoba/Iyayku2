@@ -16,7 +16,7 @@ const pedidoRoutes = require('../routes/pedidoRoutes');
 const app  = express();
 
 app.use(express.static('public'));
-
+app.use(cookieParser());
 //Cambio por el tema de los pedidos y subir el PDF
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
