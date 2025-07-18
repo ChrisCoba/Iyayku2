@@ -36,7 +36,7 @@ async function eliminarCertificado(id) {
 }
 
 module.exports = {
-  buscarCertificadosPorNombre,
+  buscarCertificados,
   agregarCertificado,
   obtenerTodosCertificados,
   eliminarCertificado
