@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (correo === 'admin@iyayku.com') {
             window.location.href = '/Pages/perfil.html';
           } else {
-            window.location.href = '/index.html';
+            window.location.href = '/';
           }
         } else {
           alert(data.msg || 'Error en el login');
