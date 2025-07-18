@@ -26,7 +26,8 @@ async function login(req, res) {
 
     delete user.contraseña;
     const token = jwt.sign({ id: user.id, nombre: user.nombre, correo: user.correo }, JWT_SECRET, { expiresIn: '2h' });
-    res.cookie('token', token, { httpOnly: true }).json({ msg: 'Login exitoso', usuario: user });
+    res.cookie('token', token, { httpOnly: true })
+      .json({ msg: 'Login exitoso', usuario: user, token });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Error al iniciar sesión' });

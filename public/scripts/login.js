@@ -64,10 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const data = await respLogin.json();
         if (respLogin.ok) {
+          if (data.token) {
+            localStorage.setItem('token', data.token);
+          }
           alert('¡Login exitoso!');
           formLogin.reset();
           if (correo === 'admin@iyayku.com') {
-            window.location.href = '/Pages/perfil.html';
+            window.location.href = '/perfil';
           } else {
             window.location.href = '/';
           }
