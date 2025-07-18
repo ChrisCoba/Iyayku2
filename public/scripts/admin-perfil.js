@@ -48,20 +48,39 @@ function mostrarEditarUsuario(id, nombre, correo) {
 // FACTURAS
 async function cargarFacturas() {
   const token = localStorage.getItem('token');
-  const res = await fetch('/admin/facturas', { headers: { 'Authorization': 'Bearer ' + token } });
-  const data = await res.json();
+  const res = await fetch('/api/admin/facturas', { headers: { 'Authorization': 'Bearer ' + token } });
+  const facturas = await res.json();
   const tbody = document.querySelector('#admin-facturas-table tbody');
   tbody.innerHTML = '';
-  data.pdfs.forEach(pdf => {
-    tbody.innerHTML += `<tr><td>${pdf}</td><td><a href='/admin/facturas/${pdf}' target='_blank'>Descargar</a></td></tr>`;
+  facturas.forEach(f => {
+    tbody.innerHTML += `<tr>
+      <td>${f.id}</td>
+      <td>${f.nombre || ''}</td>
+      <td>${f.correo || ''}</td>
+      <td>${f.fecha ? f.fecha.substring(0,10) : ''}</td>
+      <td>$${f.total}</td>
+      <td>${f.pdf ? `<a href='/admin/facturas/${f.pdf}' target='_blank'>PDF</a>` : 'Sin PDF'}</td>
+    </tr>`;
   });
 }
 
 // CERTIFICADOS (placeholder)
 async function cargarCertificados() {
-  // Aquí deberías hacer un fetch a tu endpoint de certificados
+  const token = localStorage.getItem('token');
+  const res = await fetch('/api/certificados-todos', { headers: { 'Authorization': 'Bearer ' + token } });
+  const certificados = await res.json();
   const tbody = document.querySelector('#admin-certificados-table tbody');
-  tbody.innerHTML = `<tr><td>1</td><td>Autor Demo</td><td>Título Demo</td><td><a href='#'>PDF</a></td><td>URL</td><td>2025-07-17</td></tr>`;
+  tbody.innerHTML = '';
+  certificados.forEach(c => {
+    tbody.innerHTML += `<tr>
+      <td>${c.id}</td>
+      <td>${c.autor_nombre || ''}</td>
+      <td>${c.articulo_titulo || ''}</td>
+      <td>${c.articulo_url ? `<a href='${c.articulo_url}' target='_blank'>PDF</a>` : ''}</td>
+      <td>${c.articulo_pagina || ''}</td>
+      <td>${c.fecha_emision ? c.fecha_emision.substring(0,10) : ''}</td>
+    </tr>`;
+  });
 }
 
 // SERVICIOS

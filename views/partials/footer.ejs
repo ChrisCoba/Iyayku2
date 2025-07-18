@@ -83,7 +83,10 @@ async function comprarCarrito() {
     });
     const data = await res.json();
     if (res.ok) {
-      alert('¡Factura generada! Puedes descargarla en tu perfil.');
+      if (data.pdfUrl) {
+        window.open(data.pdfUrl.replace(/^.*public\//, '/facturas/'), '_blank');
+      }
+      alert('¡Factura generada!');
       window.carritoServicios = [];
       localStorage.removeItem('carritoServicios');
       actualizarCarritoUI();
