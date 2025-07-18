@@ -1,3 +1,5 @@
+const pool = require('../src/db');
+
 // Obtener contenido dinámico de una página por nombre
 async function obtenerContenidoPorPagina(pagina) {
   const query = `
@@ -9,12 +11,6 @@ async function obtenerContenidoPorPagina(pagina) {
   const { rows } = await pool.query(query, [pagina]);
   return rows;
 }
-
-module.exports = {
-  ...module.exports,
-  obtenerContenidoPorPagina
-};
-const pool = require('../src/db');
 
 let paginaHtmlCache = ''; // Cache temporal si quieres, aunque mejor BD.
 
@@ -67,4 +63,5 @@ module.exports = {
   setPaginaHtml,
   obtenerContenido,
   guardarContenido,
+  obtenerContenidoPorPagina,
 };
