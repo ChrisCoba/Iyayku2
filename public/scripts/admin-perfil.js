@@ -80,11 +80,11 @@ async function cargarFacturas() {
   facturas.forEach(f => {
     tbody.innerHTML += `<tr>
       <td>${f.id}</td>
-      <td>${f.nombre || ''}</td>
-      <td>${f.correo || ''}</td>
+      <td>${f.nombre ? f.nombre : (f.usuario_nombre || '')}</td>
+      <td>${f.correo ? f.correo : (f.usuario_correo || '')}</td>
       <td>${f.fecha ? f.fecha.substring(0,10) : ''}</td>
       <td>$${f.total}</td>
-      <td><button onclick="descargarFacturaPDF(${f.id})">Descargar PDF</button></td>
+      <td><button onclick=\"descargarFacturaPDF(${f.id})\">Descargar PDF</button></td>
     </tr>`;
   });
 }
