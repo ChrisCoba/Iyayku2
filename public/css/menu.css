@@ -1,14 +1,24 @@
+
 .letras_menu a {
-  font-size: 14px;
+  font-size: 15px;
   text-decoration: none;
-  color: black;
+  color: #23272f;
   font-weight: 600;
   cursor: pointer;
-  transition: color 0.3s ease;
+  padding: 10px 22px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.7);
+  box-shadow: 0 2px 12px rgba(52,152,219,0.07);
+  margin: 0 2px;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  backdrop-filter: blur(2px);
 }
 
-.letras_menu a:hover {
-  color: blue;
+.letras_menu a:hover, .letras_menu a:focus {
+  color: #3498db;
+  background: rgba(52,152,219,0.12);
+  box-shadow: 0 4px 18px rgba(52,152,219,0.13);
+  text-decoration: none;
 }
 
 .flex {
@@ -63,7 +73,9 @@ a {
 @media (max-width: 900px) {
   .letras_menu a {
     font-size: 13px;
-    padding: 8px 0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin: 0 1px;
   }
   .social-icons {
     gap: 8px;

@@ -59,7 +59,7 @@ async function cargarFacturas() {
       <td>${f.correo || ''}</td>
       <td>${f.fecha ? f.fecha.substring(0,10) : ''}</td>
       <td>$${f.total}</td>
-      <td>${f.pdf ? `<a href='${f.pdf}' target='_blank'>PDF</a>` : 'Sin PDF'}</td>
+      <td><a href="/api/admin/facturas/${f.id}/pdf" target="_blank">Descargar PDF</a></td>
     </tr>`;
   });
 }
