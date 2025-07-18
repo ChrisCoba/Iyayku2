@@ -46,9 +46,7 @@ async function descargarFacturaPDFMem(req, res) {
     res.send(pdfBuffer);
   });
 }
-const pool = require('../src/db');
-const path = require('path');
-const fs = require('fs');
+// ...existing code...
 
 // Devuelve la lista de facturas con usuario, correo, total, fecha y nombre de PDF
 async function listarFacturasDB(req, res) {
