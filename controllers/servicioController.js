@@ -16,6 +16,11 @@ async function listarServicios(req, res) {
 async function crearServicio(req, res) {
   if (!esAdmin(req)) return res.status(403).json({ msg: 'Solo el administrador puede agregar servicios.' });
 
+  // Validar que el precio no sea negativo
+  if (req.body.precio && req.body.precio < 0) {
+    return res.status(400).json({ msg: 'El precio no puede ser negativo' });
+  }
+
   try {
     await servicioModel.crearServicio(req.body);
     res.json({ msg: 'Servicio creado' });
@@ -28,6 +33,11 @@ async function actualizarServicio(req, res) {
   if (!esAdmin(req)) return res.status(403).json({ msg: 'Solo el administrador puede editar servicios.' });
 
   const { id } = req.params;
+
+  // Validar que el precio no sea negativo
+  if (req.body.precio && req.body.precio < 0) {
+    return res.status(400).json({ msg: 'El precio no puede ser negativo' });
+  }
 
   try {
     await servicioModel.actualizarServicio(id, req.body);
