@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS public.pedidos (
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
+ALTER TABLE facturas ADD COLUMN IF NOT EXISTS pdf_url TEXT;
 
 -- Bloques seguros para evitar duplicados en paginas_contenido
 DO $$

@@ -4,9 +4,15 @@ const certificadoModel = require('../models/certificadoModel');
 async function buscarCertificados(req, res) {
   const nombre = (req.query.nombre || '').trim();
   if (!nombre) return res.status(400).json({ msg: 'Debes proporcionar un nombre.' });
-
   try {
-    const certificados = await certificadoModel.buscarCertificadosPorNombre(nombre);
+    const certificados = await certificadoModel.buscarCertificados(nombre);
+    // Convertir ruta absoluta a pública si existe
+    certificados.forEach(c => {
+      if (c.articulo_url && c.articulo_url.startsWith('/')) return;
+      if (c.articulo_url && c.articulo_url.includes('certificados')) {
+        c.articulo_url = '/certificados/' + c.articulo_url.split('certificados').pop().replace(/\\/g, '/').replace(/^\//, '');
+      }
+    });
     res.json(certificados);
   } catch (err) {
     console.error(err);

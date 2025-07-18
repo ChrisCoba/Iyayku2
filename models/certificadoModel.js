@@ -1,12 +1,12 @@
 const pool = require('../src/db');
 
-// Buscar publicaciones por nombre de autor
-async function buscarCertificadosPorNombre(nombre) {
+
+// Buscar certificados por nombre de autor o título
+async function buscarCertificados(nombre) {
   const query = `
-    SELECT p.id, p.titulo, u.nombre AS autor
-    FROM publicaciones p
-    JOIN usuarios u ON p.usuario_id = u.id
-    WHERE u.nombre ILIKE $1
+    SELECT * FROM certificados
+    WHERE autor_nombre ILIKE $1 OR articulo_titulo ILIKE $1
+    ORDER BY fecha_emision DESC
   `;
   const { rows } = await pool.query(query, [`%${nombre}%`]);
   return rows;

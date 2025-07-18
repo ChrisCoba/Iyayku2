@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Buscar Certificados</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; }
+    .buscador-cert { margin: 40px auto 20px; max-width: 400px; display: flex; }
+    .buscador-cert input { flex: 1; padding: 10px; font-size: 1.1em; border: 1px solid #bbb; border-radius: 6px 0 0 6px; }
+    .buscador-cert button { padding: 10px 18px; font-size: 1.1em; border: 1px solid #bbb; border-left: none; background: #c2410c; color: #fff; border-radius: 0 6px 6px 0; cursor: pointer; }
+    .resultados-cert { max-width: 800px; margin: 0 auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 12px #0001; padding: 24px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 18px; }
+    th, td { padding: 8px 10px; border-bottom: 1px solid #eee; }
+    th { background: #f3f3f3; }
+    a.pdf-link { color: #c2410c; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center; margin-top:32px;">Buscar Certificados</h2>
+  <form class="buscador-cert" id="form-buscar-cert">
+    <input type="text" id="input-buscar-cert" placeholder="Buscar por autor o título..." required>
+    <button type="submit">🔍</button>
+  </form>
+  <div class="resultados-cert" id="resultados-cert" style="display:none">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Autor</th>
+          <th>Título</th>
+          <th>PDF</th>
+          <th>Página</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-certificados"></tbody>
+    </table>
+  </div>
+  <script>
+    const form = document.getElementById('form-buscar-cert');
+    const input = document.getElementById('input-buscar-cert');
+    const resultados = document.getElementById('resultados-cert');
+    const tabla = document.getElementById('tabla-certificados');
+    form.onsubmit = async e => {
+      e.preventDefault();
+      const q = input.value.trim();
+      if (!q) return;
+      tabla.innerHTML = '<tr><td colspan="6">Buscando...</td></tr>';
+      resultados.style.display = 'block';
+      const res = await fetch(`/api/certificados?nombre=${encodeURIComponent(q)}`);
+      const data = await res.json();
+      if (!Array.isArray(data) || !data.length) {
+        tabla.innerHTML = '<tr><td colspan="6">No se encontraron certificados.</td></tr>';
+        return;
+      }
+      tabla.innerHTML = '';
+      data.forEach(c => {
+        tabla.innerHTML += `<tr>
+          <td>${c.id}</td>
+          <td>${c.autor_nombre || ''}</td>
+          <td>${c.articulo_titulo || ''}</td>
+          <td>${c.articulo_url ? `<a class='pdf-link' href='${c.articulo_url}' target='_blank'>PDF</a>` : ''}</td>
+          <td>${c.articulo_pagina || ''}</td>
+          <td>${c.fecha_emision ? c.fecha_emision.substring(0,10) : ''}</td>
+        </tr>`;
+      });
+    };
+  </script>
+</body>
+</html>

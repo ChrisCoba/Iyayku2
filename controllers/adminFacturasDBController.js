@@ -13,16 +13,20 @@ async function listarFacturasDB(req, res) {
   try {
     pdfs = fs.readdirSync(facturasDir).filter(f => f.endsWith('.pdf'));
   } catch (e) {}
-  // Buscar facturas en la base
+  // Buscar facturas en la base (ahora incluye pdf_url)
   const { rows } = await pool.query(`
-    SELECT f.id, f.fecha, f.total, u.nombre, u.correo
+    SELECT f.id, f.fecha, f.total, u.nombre, u.correo, f.pdf_url
     FROM facturas f
     LEFT JOIN usuarios u ON f.usuario_id = u.id
     ORDER BY f.fecha DESC
   `);
   // Relacionar con PDF
   const facturas = rows.map(f => {
-    const pdf = pdfs.find(p => p.includes(`factura-${f.id}`));
+    let pdf = f.pdf_url;
+    if (!pdf) {
+      const found = pdfs.find(p => p.includes(`factura-${f.id}`));
+      if (found) pdf = '/facturas/' + found;
+    }
     return { ...f, pdf };
   });
   res.json(facturas);

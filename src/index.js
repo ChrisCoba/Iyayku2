@@ -101,6 +101,11 @@ app.get('/nosotros', async (req, res) => {
 app.get('/perfil', (req, res) => {
   res.render('perfil', { titulo: 'Perfil' });
 });
+
+// Vista de búsqueda de certificados
+app.get('/certificados', (req, res) => {
+  res.render('certificados', { titulo: 'Buscar Certificados' });
+});
 app.get('/registro_login', (req, res) => {
   res.render('registro_login', { titulo: 'Login' });
 });
