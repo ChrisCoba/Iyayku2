@@ -101,9 +101,12 @@ nav ul {
     top: 100%;
     left: 0;
     z-index: 100;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.12);
     margin: 0;
     padding: 0;
+    border-radius: 0 0 18px 18px;
+    border-top: 2px solid #c2410c;
+    transition: box-shadow 0.2s;
   }
   #main-menu.open {
     display: flex;
@@ -114,10 +117,22 @@ nav ul {
     width: 100%;
   }
   .letras_menu a {
-    padding: 12px 24px;
+    padding: 14px 28px;
     border-bottom: 1px solid #eee;
     width: 100%;
     display: block;
+    color: #222 !important;
+    background: transparent;
+    font-size: 1.13em;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    transition: background 0.18s, color 0.18s;
+  }
+  .letras_menu a:hover, .letras_menu a:focus {
+    background: #f3f4f6;
+    color: #c2410c !important;
+    text-decoration: none;
+  }
     color: #222;
     background: #fff;
     text-align: left;

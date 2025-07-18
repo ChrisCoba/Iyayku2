@@ -12,3 +12,5 @@ router.get('/admin/facturas', authMiddleware, listarFacturasPDF);
 router.get('/admin/facturas/:filename', authMiddleware, descargarFacturaPDF);
 
 module.exports = router;
+
+<td>${f.pdf ? `<a href='${f.pdf}' target='_blank'>PDF</a>` : 'Sin PDF'}</td>

@@ -1,0 +1,51 @@
+/* Estilos modernos y limpios para la página Nosotros */
+#main-content {
+  max-width: 900px;
+  margin: 40px auto 0;
+  padding: 32px 24px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px #0002;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+#main-content h2 {
+  color: #c2410c;
+  font-size: 2.2rem;
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+#main-content section {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eee;
+}
+
+#main-content section:last-child {
+  border-bottom: none;
+}
+
+#main-content p, #main-content li {
+  color: #333;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+#main-content ul {
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+@media (max-width: 700px) {
+  #main-content {
+    padding: 16px 4vw;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  #main-content h2 {
+    font-size: 1.4rem;
+  }
+}
