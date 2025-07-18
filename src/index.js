@@ -64,8 +64,18 @@ app.set('views', path.join(__dirname, '..', 'views'));
 // ejemplo de rutas
 
 // Página principal: renderiza la vista 'nosotros.ejs'
-app.get('/', (req, res) => {
-  res.render('nosotros', { titulo: 'Nosotros' });
+
+const { obtenerContenidoPorPagina } = require('../models/paginaContenidoModel');
+
+// Página principal: renderiza la vista 'nosotros.ejs' con contenido dinámico
+app.get('/', async (req, res) => {
+  try {
+    const secciones = await obtenerContenidoPorPagina('nosotros');
+    res.render('nosotros', { titulo: 'Nosotros', secciones });
+  } catch (err) {
+    console.error('Error obteniendo contenido de "nosotros":', err);
+    res.render('nosotros', { titulo: 'Nosotros', secciones: [] });
+  }
 });
 
 app.get('/contacto', (req, res) => {

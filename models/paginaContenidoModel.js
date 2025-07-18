@@ -1,3 +1,19 @@
+// Obtener contenido dinámico de una página por nombre
+async function obtenerContenidoPorPagina(pagina) {
+  const query = `
+    SELECT seccion, titulo, contenido, orden
+    FROM paginas_contenido
+    WHERE pagina = $1
+    ORDER BY orden ASC
+  `;
+  const { rows } = await pool.query(query, [pagina]);
+  return rows;
+}
+
+module.exports = {
+  ...module.exports,
+  obtenerContenidoPorPagina
+};
 const pool = require('../src/db');
 
 let paginaHtmlCache = ''; // Cache temporal si quieres, aunque mejor BD.

@@ -1,5 +1,16 @@
 <%- include('partials/header', { titulo: 'Nosotros' }) %>
 <main id="main-content">
-    <div id="contenido-dinamico"></div>
+  <% if (secciones && secciones.length) { %>
+    <% secciones.forEach(function(seccion) { %>
+      <section class="seccion-<%= seccion.seccion %>">
+        <% if (seccion.titulo) { %>
+          <h2><%= seccion.titulo %></h2>
+        <% } %>
+        <%- seccion.contenido %>
+      </section>
+    <% }) %>
+  <% } else { %>
+    <p>No hay información disponible.</p>
+  <% } %>
 </main>
 <%- include('partials/footer') %>
