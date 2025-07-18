@@ -1,10 +1,28 @@
 <%- include('partials/header', { titulo: 'Servicios' }) %>
 <main>
-      <section class="servicios-precios-section">
-        <div class="servicios-precios-container">
-          <h2 class="servicios-precios-title">Nuestros Servicios y Precios</h2>
-          <div id="servicios-dinamicos" class="servicios-precios-cards"></div>
-        </div>
-      </section>
+  <section class="servicios-precios-section">
+    <div class="servicios-precios-container">
+      <h2 class="servicios-precios-title">Nuestros Servicios y Precios</h2>
+      <div class="servicios-precios-cards">
+        <% if (servicios && servicios.length) { %>
+          <% servicios.forEach(servicio => { %>
+            <div class="servicio-precio-card card-blue">
+              <div class="servicio-precio-header"><%= servicio.nombre %></div>
+              <ul>
+                <% (servicio.descripcion || '').split(',').forEach(desc => { %>
+                  <li><%= desc.trim() %></li>
+                <% }) %>
+              </ul>
+              <div class="servicio-precio-precio">$<%= servicio.precio %></div>
+              <button onclick='agregarAlCarrito(JSON.parse(this.dataset.servicio))' data-servicio='<%- JSON.stringify(servicio) %>' class="btn-agregar-carrito">Agregar al carrito</button>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p>No hay servicios disponibles.</p>
+        <% } %>
+      </div>
+    </div>
+  </section>
 </main>
+<script src="/scripts/carrito.js"></script>
 <%- include('partials/footer') %>

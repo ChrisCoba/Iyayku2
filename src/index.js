@@ -99,8 +99,15 @@ app.get('/perfil', (req, res) => {
 app.get('/registro_login', (req, res) => {
   res.render('registro_login', { titulo: 'Login' });
 });
-app.get('/servicios', (req, res) => {
-  res.render('servicios', { titulo: 'Servicios' });
+const { listarServiciosActivos } = require('../models/servicioModel');
+app.get('/servicios', async (req, res) => {
+  try {
+    const servicios = await listarServiciosActivos();
+    res.render('servicios', { titulo: 'Servicios', servicios });
+  } catch (err) {
+    console.error('Error obteniendo servicios:', err);
+    res.render('servicios', { titulo: 'Servicios', servicios: [] });
+  }
 });
 
 

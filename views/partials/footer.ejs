@@ -26,4 +26,73 @@
       </div>
     </footer>
     </body>
+<div class="carrito-flotante">
+  <button class="carrito-toggle-btn" onclick="document.getElementById('carrito-lista').classList.toggle('hidden')">
+    🛒 Carrito <span id="carrito-cantidad">0</span>
+  </button>
+  <div id="carrito-lista" class="hidden" style="background:#fff;color:#222;padding:18px 22px;border-radius:12px;min-width:260px;box-shadow:0 2px 12px rgba(0,0,0,0.13);margin-top:8px;">
+    <div id="carrito-items"></div>
+    <div style="margin-top:12px;text-align:right;">
+      <button onclick="comprarCarrito()" class="btn-agregar-carrito" style="background:#c2410c;color:#fff;padding:8px 18px;border:none;border-radius:6px;font-weight:600;">Comprar</button>
+    </div>
+  </div>
+</div>
+<script src="/scripts/carrito.js"></script>
+<script>
+function renderCarritoItems() {
+  const items = window.carritoServicios || [];
+  const cont = document.getElementById('carrito-items');
+  if (!cont) return;
+  if (!items.length) {
+    cont.innerHTML = '<p style="color:#888">El carrito está vacío.</p>';
+    return;
+  }
+  let html = '<ul style="padding:0;list-style:none;">';
+  let total = 0;
+  items.forEach(item => {
+    html += `<li style='margin-bottom:8px;'>${item.nombre} x${item.cantidad} <span style='color:#c2410c;font-weight:600;'>$${item.precio}</span> <button onclick='quitarDelCarrito(${item.id})' style='background:none;border:none;color:#c2410c;font-size:1.1em;cursor:pointer;'>&times;</button></li>`;
+    total += item.precio * item.cantidad;
+  });
+  html += `</ul><div style='margin-top:8px;font-weight:600;'>Total: $${total.toFixed(2)}</div>`;
+  cont.innerHTML = html;
+}
+window.actualizarCarritoUI = function() {
+  let cantidad = (window.carritoServicios||[]).reduce((acc, item) => acc + item.cantidad, 0);
+  let btn = document.getElementById('carrito-cantidad');
+  if (btn) btn.textContent = cantidad;
+  renderCarritoItems();
+}
+document.addEventListener('DOMContentLoaded', renderCarritoItems);
+
+async function comprarCarrito() {
+  const items = window.carritoServicios || [];
+  if (!items.length) return alert('El carrito está vacío.');
+  // Calcular total
+  let total = items.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+  // Enviar a backend (requiere login)
+  const token = localStorage.getItem('token');
+  if (!token) return alert('Debes iniciar sesión para comprar.');
+  try {
+    const res = await fetch('/api/facturas', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({ items, total })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert('¡Factura generada! Puedes descargarla en tu perfil.');
+      window.carritoServicios = [];
+      localStorage.removeItem('carritoServicios');
+      actualizarCarritoUI();
+    } else {
+      alert(data.msg || 'Error al generar factura');
+    }
+  } catch (e) {
+    alert('Error de conexión al generar factura');
+  }
+}
+</script>
 </html>
