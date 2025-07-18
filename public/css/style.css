@@ -126,16 +126,12 @@ nav ul {
     font-size: 1.13em;
     font-weight: 500;
     letter-spacing: 0.2px;
-    transition: background 0.18s, color 0.18s;
+    transition: background-color 0.18s, color 0.18s;
   }
   .letras_menu a:hover, .letras_menu a:focus {
     background: #f3f4f6;
     color: #c2410c !important;
     text-decoration: none;
-  }
-    color: #222;
-    background: #fff;
-    text-align: left;
   }
   .letras_menu a:last-child {
     border-bottom: none;
