@@ -84,14 +84,8 @@ app.get('/contacto', (req, res) => {
 app.get('/editorial', (req, res) => {
   res.render('editorial', { titulo: 'Editorial' });
 });
-app.get('/nosotros', async (req, res) => {
-  try {
-    const secciones = await obtenerContenidoPorPagina('nosotros');
-    res.render('nosotros', { titulo: 'Nosotros', secciones });
-  } catch (err) {
-    console.error('Error obteniendo contenido de "nosotros":', err);
-    res.render('nosotros', { titulo: 'Nosotros', secciones: [] });
-  }
+app.get('/nosotros', (req, res) => {
+  res.redirect('/');
 });
 app.get('/perfil', (req, res) => {
   res.render('perfil', { titulo: 'Perfil' });
