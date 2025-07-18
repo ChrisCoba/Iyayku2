@@ -36,9 +36,9 @@ const crearNuevaFactura = async (req, res) => {
       cantidad: item.cantidad,
       precio_unitario: item.precio
     }));
-    const pdfUrl = await generarFacturaPDF(facturaData, itemsPDF);
-
-    // Ya no se guarda la ruta del PDF en la base de datos
+    const pdfPath = await generarFacturaPDF(facturaData, itemsPDF);
+    // Convertir a ruta pública
+    const pdfUrl = '/facturas/' + pdfPath.split('facturas').pop().replace(/\\/g, '/').replace(/^\//, '');
     res.json({ msg: 'Factura generada', facturaId, pdfUrl });
   } catch (err) {
     console.error(err);
