@@ -52,6 +52,11 @@ app.use(servicioRoutes);
 const paginaRoutes = require('../routes/paginaRoutes');
 app.use(paginaRoutes);
 
+
+// Rutas para listar y descargar facturas PDF del admin
+const adminFacturasRoutes = require('../routes/adminFacturasRoutes');
+app.use(adminFacturasRoutes);
+
 //autentificación del login del usuario
 const authRoutes = require('../routes/authRoutes');
 app.use(authRoutes);

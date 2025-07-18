@@ -22,10 +22,23 @@ const crearNuevaFactura = async (req, res) => {
     }
 
     const usuario = await obtenerUsuario(usuario_id);
-    const pdfUrl = generarFacturaPDF({ facturaId, usuario, items, total, fecha });
+    // Preparar objeto plano para el PDF
+    const facturaData = {
+      id: facturaId,
+      fecha,
+      usuario_nombre: usuario.nombre,
+      usuario_correo: usuario.correo,
+      total
+    };
+    // Los items deben tener las propiedades que espera el PDF
+    const itemsPDF = items.map(item => ({
+      servicio_nombre: item.nombre,
+      cantidad: item.cantidad,
+      precio_unitario: item.precio
+    }));
+    const pdfUrl = await generarFacturaPDF(facturaData, itemsPDF);
 
-    await actualizarPDFUrl(facturaId, pdfUrl);
-
+    // Ya no se guarda la ruta del PDF en la base de datos
     res.json({ msg: 'Factura generada', facturaId, pdfUrl });
   } catch (err) {
     console.error(err);

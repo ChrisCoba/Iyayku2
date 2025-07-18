@@ -38,45 +38,59 @@
         ¡Bienvenido, Administrador!
       </div>
       <div class="admin-dashboard-cards">
-        <div class="admin-card card-perfil">
+        <div class="admin-card card-perfil" onclick="mostrarPanel('usuarios')">
           <div class="icon">👤</div>
-          <div>Editar Perfil</div>
+          <div>Usuarios</div>
         </div>
-        <div id="admin-usuarios-panel" class="admin-panel" style="display:none">
-          <h3>Usuarios registrados</h3>
-          <table id="admin-usuarios-table">
-            <thead><tr><th>Nombre</th><th>Correo</th><th>Acciones</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <div class="admin-card card-facturas">
+        <div class="admin-card card-facturas" onclick="mostrarPanel('facturas')">
           <div class="icon">🧾</div>
           <div>Facturas</div>
         </div>
-        <div id="admin-facturas-panel" class="admin-panel" style="display:none">
-          <h3>Facturas</h3>
-          <table id="admin-facturas-table">
-            <thead><tr><th>ID</th><th>Usuario</th><th>Correo</th><th>Fecha</th><th>Total</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <div class="admin-card card-certificados">
+        <div class="admin-card card-certificados" onclick="mostrarPanel('certificados')">
           <div class="icon">🎓</div>
           <div>Certificados</div>
         </div>
-        <div id="admin-certificados-panel" class="admin-panel" style="display:none">
-          <h3>Certificados</h3>
-          <table id="admin-certificados-table">
-            <thead><tr><th>ID</th><th>Autor</th><th>Título</th><th>PDF</th><th>Página</th><th>Fecha</th></tr></thead>
-            <tbody></tbody>
-          </table>
+        <div class="admin-card card-servicios" onclick="mostrarPanel('servicios')">
+          <div class="icon">➕</div>
+          <div>Añadir servicio</div>
         </div>
-        <div class="admin-card card-editar">
-          <div class="icon">📝</div>
-          <div>Editar página</div>
-        </div>
+      </div>
+      <!-- Panel Usuarios -->
+      <div id="admin-usuarios-panel" class="admin-panel" style="display:none">
+        <h3>Usuarios registrados</h3>
+        <table id="admin-usuarios-table">
+          <thead><tr><th>Nombre</th><th>Correo</th><th>Acciones</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <!-- Panel Facturas -->
+      <div id="admin-facturas-panel" class="admin-panel" style="display:none">
+        <h3>Facturas</h3>
+        <table id="admin-facturas-table">
+          <thead><tr><th>Archivo PDF</th><th>Descargar</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <!-- Panel Certificados -->
+      <div id="admin-certificados-panel" class="admin-panel" style="display:none">
+        <h3>Certificados</h3>
+        <table id="admin-certificados-table">
+          <thead><tr><th>ID</th><th>Autor</th><th>Título</th><th>PDF</th><th>Página</th><th>Fecha</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <!-- Panel Añadir Servicio -->
+      <div id="admin-servicios-panel" class="admin-panel" style="display:none">
+        <h3>Añadir servicio</h3>
+        <form id="form-servicio">
+          <input type="text" name="nombre" placeholder="Nombre del servicio" required><br>
+          <input type="text" name="descripcion" placeholder="Descripción" required><br>
+          <input type="number" name="precio" placeholder="Precio" step="0.01" required><br>
+          <button type="submit">Añadir</button>
+        </form>
       </div>
     </section>
   </main>
 
+<script src="/scripts/admin-perfil.js"></script>
 <%- include('partials/footer') %>
